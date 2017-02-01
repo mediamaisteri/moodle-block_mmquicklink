@@ -35,6 +35,8 @@ jotta lohko toimii halutulla tavalla.
 Mediamaisteri Oy
 ************************/
 
+defined('MOODLE_INTERNAL') || die();
+
 global $USER;
 // Lohkon esittäminen vain admineille, managereille ja opettajille (oletetaan, että role id:itä ei ole muutettu).
 if(is_siteadmin() OR user_has_role_assignment($USER->id, 1, context_system::instance()->id) OR user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
