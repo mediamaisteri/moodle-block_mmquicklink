@@ -39,15 +39,16 @@ defined('MOODLE_INTERNAL') || die();
 
 global $USER;
 // Lohkon esittäminen vain admineille, managereille ja opettajille (oletetaan, että role id:itä ei ole muutettu).
-if(is_siteadmin() OR user_has_role_assignment($USER->id, 1, context_system::instance()->id) OR user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
+if (is_siteadmin() OR user_has_role_assignment($USER->id, 1, context_system::instance()->id) OR
+user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
 
     class block_mmquicklink extends block_base {
         public function init() {
-            $this->title = get_string('title','block_mmquicklink');
+            $this->title = get_string('title', 'block_mmquicklink');
         }
 
         public function instance_allow_multiple() {
-          return false;
+            return false;
         }
 
         public function html_attributes() {
@@ -61,33 +62,39 @@ if(is_siteadmin() OR user_has_role_assignment($USER->id, 1, context_system::inst
 
         public function get_content() {
             if ($this->content !== null) {
-              return $this->content;
+                return $this->content;
             }
 
-            $this->content =  new stdClass;
+            $this->content = new stdClass;
 
-              global $PAGE;
-              // Tämän alle linkit, jotka löytyvät etusivulta.
-              if($PAGE->pagelayout == 'frontpage' || $PAGE->pagelayout == 'admin' || $PAGE->pagelayout == 'mydashboard') {
-                  // Näytetään kurssinlisäyspainike, jos siihen on oikeuksia.
-                  if(has_capability('moodle/course:create', context_system::instance())) {
-                      $this->content->text   = "<li class='list'><a href='" . new moodle_url("course/edit.php?category=1") . "'>". get_string('addnewcourse') . "</a></li>";
-                  }
-                  $this->content->text   .= "<li class='list'><a href='" . new moodle_url("admin/settings.php?section=frontpagesettings") . "'>". get_string('frontpagesettings') . "</a></li>";
+            global $PAGE;
+            // Tämän alle linkit, jotka löytyvät etusivulta.
+            if ($PAGE->pagelayout == 'frontpage' || $PAGE->pagelayout == 'admin' || $PAGE->pagelayout == 'mydashboard') {
+                // Näytetään kurssinlisäyspainike, jos siihen on oikeuksia.
+                if (has_capability('moodle/course:create', context_system::instance())) {
+                    $this->content->text   = "<li class='list'><a href='" .
+                        new moodle_url("course/edit.php?category=1") . "'>". get_string('addnewcourse') . "</a></li>";
+                }
+                $this->content->text   .= "<li class='list'><a href='" .
+                    new moodle_url("admin/settings.php?section=frontpagesettings") . "'>" .
+                    get_string('frontpagesettings') . "</a></li>";
 
-              // Tämän alle linkit, jotka löytyvät kurssisivulta.
-              } else if($PAGE->pagelayout == 'course' || $PAGE->pagelayout == 'incourse' || $PAGE->pagelayout == 'report' ){
-                  // Näytetään kurssiavaimenluontipainike, jos kurssinmuokkaukseen on oikeus.
-                  if(has_capability('block/course_list:myaddinstance', context_system::instance())) {
-                      $this->content->text   .= "<li class='list'><a href='" . new moodle_url($CFG->wwwroot . "/enrol/editinstance.php?courseid=" . $PAGE->course->id . "&type=self") . "'>" . get_string('set','portfolio_flickr') . " " . strtolower(get_string('password', 'enrol_self')) . "</a></li>";
-                  }
-                  if(has_capability('mod/assign:reviewgrades', context_system::instance())) {
-                      $this->content->text   .= "<li class='list'><a href='" . new moodle_url($CFG->wwwroot . "/grade/report/grader/index.php?id=" . $PAGE->course->id) . "'>" . get_string('coursegrades') . "</a></li>";
-                  }
-              }
+                // Tämän alle linkit, jotka löytyvät kurssisivulta.
+            } else if ($PAGE->pagelayout == 'course' || $PAGE->pagelayout == 'incourse' || $PAGE->pagelayout == 'report' ) {
+                // Näytetään kurssiavaimenluontipainike, jos kurssinmuokkaukseen on oikeus.
+                if (has_capability('block/course_list:myaddinstance', context_system::instance())) {
+                    $this->content->text   .= "<li class='list'><a href='" .
+                        new moodle_url($CFG->wwwroot . "/enrol/editinstance.php?courseid=" . $PAGE->course->id . "&type=self") .
+                        "'>" . get_string('set', 'portfolio_flickr') . " " .
+                        strtolower(get_string('password', 'enrol_self')) . "</a></li>";
+                }
+                if (has_capability('mod/assign:reviewgrades', context_system::instance())) {
+                    $this->content->text   .= "<li class='list'><a href='" . new moodle_url($CFG->wwwroot .
+                    "/grade/report/grader/index.php?id=" . $PAGE->course->id) . "'>" . get_string('coursegrades') . "</a></li>";
+                }
+            }
 
-              // $this->content->footer = 'Footer';
-              return $this->content;
+            return $this->content;
         }
     }
 
