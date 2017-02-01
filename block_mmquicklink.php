@@ -5,7 +5,7 @@ lohko, jossa on pikalinkkejä näppäriin toimenpiteisiin.
 Linkit vaihtuvat dynaamisesti sivun mukaan, eli kursseilla
 on eri toimintoja, kuin etusivulla.
 
-"Missä tämä lohko näkyy" -asetus tulee olla "Mikä tahansa sivu",
+Moduulin "Missä tämä lohko näkyy" -asetus tulee olla "Mikä tahansa sivu",
 jotta lohko toimii halutulla tavalla.
 
 2017
@@ -43,18 +43,18 @@ if(is_siteadmin() OR user_has_role_assignment($USER->id, 1, context_system::inst
 
               global $PAGE;
               // Tämän alle linkit, jotka löytyvät etusivulta.
-              if($PAGE->pagelayout == 'frontpage' || $PAGE->pagelayout == 'admin') {
+              if($PAGE->pagelayout == 'frontpage' || $PAGE->pagelayout == 'admin' || $PAGE->pagelayout == 'mydashboard') {
                   // Näytetään kurssinlisäyspainike, jos siihen on oikeuksia.
                   if(has_capability('moodle/course:create', context_system::instance())) {
-                      $this->content->text   = "<li><a href='" . new moodle_url("course/edit.php?category=1") . "'>". get_string('addnewcourse') . "</a></li>";
+                      $this->content->text   = "<li class='list'><a href='" . new moodle_url("course/edit.php?category=1") . "'>". get_string('addnewcourse') . "</a></li>";
                   }
-                  $this->content->text   .= "<li><a href='" . new moodle_url("admin/settings.php?section=frontpagesettings") . "'>". get_string('frontpagesettings') . "</a></li>";
+                  $this->content->text   .= "<li class='list'><a href='" . new moodle_url("admin/settings.php?section=frontpagesettings") . "'>". get_string('frontpagesettings') . "</a></li>";
 
               // Tämän alle linkit, jotka löytyvät kurssisivulta.
               } else if($PAGE->pagelayout == 'course' || $PAGE->pagelayout == 'incourse' || $PAGE->pagelayout == 'report' ){
                   // Näytetään kurssiavaimenluontipainike, jos kurssinmuokkaukseen on oikeus.
                   if(has_capability('block/course_list:myaddinstance', context_system::instance())) {
-                      $this->content->text   .= "<li><a href='" . new moodle_url("../enrol/editinstance.php?courseid=" . $PAGE->course->id . "&type=self") . "'>" . get_string('set','portfolio_flickr') . " " . strtolower(get_string('password', 'enrol_self')) . "</a></li>";
+                      $this->content->text   .= "<li class='list'><a href='" . new moodle_url("../enrol/editinstance.php?courseid=" . $PAGE->course->id . "&type=self") . "'>" . get_string('set','portfolio_flickr') . " " . strtolower(get_string('password', 'enrol_self')) . "</a></li>";
                   }
               }
 
