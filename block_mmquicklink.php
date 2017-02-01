@@ -18,7 +18,7 @@ if(is_siteadmin() OR user_has_role_assignment($USER->id, 1, context_system::inst
 
     class block_mmquicklink extends block_base {
         public function init() {
-            $this->title = get_string('tools','core_admin');
+            $this->title = get_string('title','block_mmquicklink');
         }
 
         public function instance_allow_multiple() {
