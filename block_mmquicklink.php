@@ -15,8 +15,6 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Form for editing HTML block instances.
- *
  * @package   block_mmquicklink
  * @copyright 2017 Mediamaisteri Oy
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -67,16 +65,16 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
 
             $this->content = new stdClass;
 
-            global $PAGE;
+            global $PAGE, $CFG;
             // Tämän alle linkit, jotka löytyvät etusivulta.
             if ($PAGE->pagelayout == 'frontpage' || $PAGE->pagelayout == 'admin' || $PAGE->pagelayout == 'mydashboard') {
                 // Näytetään kurssinlisäyspainike, jos siihen on oikeuksia.
                 if (has_capability('moodle/course:create', context_system::instance())) {
                     $this->content->text   = "<li class='list'><a href='" .
-                        new moodle_url("course/edit.php?category=1") . "'>". get_string('addnewcourse') . "</a></li>";
+                        new moodle_url($CFG->wwwroot . "/course/edit.php?category=1") . "'>". get_string('addnewcourse') . "</a></li>";
                 }
                 $this->content->text   .= "<li class='list'><a href='" .
-                    new moodle_url("admin/settings.php?section=frontpagesettings") . "'>" .
+                    new moodle_url($CFG->wwwroot . "/admin/settings.php?section=frontpagesettings") . "'>" .
                     get_string('frontpagesettings') . "</a></li>";
 
                 // Tämän alle linkit, jotka löytyvät kurssisivulta.
