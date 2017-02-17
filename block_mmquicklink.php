@@ -70,10 +70,15 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
             if ($PAGE->pagelayout == 'frontpage' || $PAGE->pagelayout == 'admin' || $PAGE->pagelayout == 'mydashboard') {
                 // Näytetään kurssinlisäyspainike, jos siihen on oikeuksia.
                 if (has_capability('moodle/course:create', context_system::instance())) {
-                    $this->content->text   = "<li class='list'><a href='" .
+                    $this->content->text = "<li class='list'><a href='" .
                         new moodle_url($CFG->wwwroot . "/course/edit.php?category=1") . "'>". get_string('addnewcourse') . "</a></li>";
                 }
-                $this->content->text   .= "<li class='list'><a href='" .
+                // Näytetään kurssienhallintalinkki, jos sellaiseen on oikeudet.
+                if (has_capability('moodle/category:manage', context_system::instance())) {
+                    $this->content->text .= "<li class='list'><a href='" .
+                        new moodle_url($CFG->wwwroot . "/course/management.php?categoryid=0") . "'>". get_string('administrationsite') . "</a></li>";
+                }
+                $this->content->text .= "<li class='list'><a href='" .
                     new moodle_url($CFG->wwwroot . "/admin/settings.php?section=frontpagesettings") . "'>" .
                     get_string('frontpagesettings') . "</a></li>";
 
@@ -81,7 +86,7 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
             } else if ($PAGE->pagelayout == 'course' || $PAGE->pagelayout == 'incourse' || $PAGE->pagelayout == 'report' || $PAGE->pagetype == 'course-view-topics') {
                 // Näytetään kurssiavaimenluontipainike, jos kurssinmuokkaukseen on oikeus.
                 if (has_capability('block/course_list:myaddinstance', context_system::instance())) {
-                    $this->content->text   .= "<li class='list'><a href='" .
+                    $this->content->text .= "<li class='list'><a href='" .
                         new moodle_url($CFG->wwwroot . "/enrol/editinstance.php?courseid=" . $PAGE->course->id . "&type=self") .
                         "'>" . get_string('set', 'portfolio_flickr') . " " .
                         strtolower(get_string('password', 'enrol_self')) . "</a></li>";
@@ -91,7 +96,7 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
                     "/user/index.php?id=" . $PAGE->course->id) . "'>" . get_string('participants') . "</a></li>";
                 }
                 if (has_capability('mod/assign:reviewgrades', context_system::instance())) {
-                    $this->content->text   .= "<li class='list'><a href='" . new moodle_url($CFG->wwwroot .
+                    $this->content->text .= "<li class='list'><a href='" . new moodle_url($CFG->wwwroot .
                     "/grade/report/grader/index.php?id=" . $PAGE->course->id) . "'>" . get_string('coursegrades') . "</a></li>";
                 }
             }
