@@ -76,7 +76,7 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
                 // Näytetään kurssienhallintalinkki, jos sellaiseen on oikeudet.
                 if (has_capability('moodle/category:manage', context_system::instance())) {
                     $this->content->text .= "<li class='list'><a href='" .
-                        new moodle_url($CFG->wwwroot . "/course/management.php?categoryid=0") . "'>". get_string('administrationsite') . "</a></li>";
+                        new moodle_url($CFG->wwwroot . "/course/management.php") . "'>". get_string('coursecatmanagement') . "</a></li>";
                 }
                 $this->content->text .= "<li class='list'><a href='" .
                     new moodle_url($CFG->wwwroot . "/admin/settings.php?section=frontpagesettings") . "'>" .
