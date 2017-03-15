@@ -66,25 +66,9 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
             $this->content = new stdClass;
 
             global $PAGE, $CFG;
-            // Tämän alle linkit, jotka löytyvät etusivulta.
-            if ($PAGE->pagelayout == 'frontpage' || $PAGE->pagelayout == 'admin' || $PAGE->pagelayout == 'mydashboard') {
-                // Näytetään kurssinlisäyspainike, jos siihen on oikeuksia.
-                if (has_capability('moodle/course:create', context_system::instance())) {
-                    $this->content->text = "<li class='list'><a href='" .
-                        new moodle_url($CFG->wwwroot . "/course/edit.php?category=1") . "'>". get_string('addnewcourse') . "</a></li>";
-                }
-                // Näytetään kurssienhallintalinkki, jos sellaiseen on oikeudet.
-                if (has_capability('moodle/category:manage', context_system::instance())) {
-                    $this->content->text .= "<li class='list'><a href='" .
-                        new moodle_url($CFG->wwwroot . "/course/management.php") . "'>". get_string('coursecatmanagement') . "</a></li>";
-                }
-                // Etusivun asetukset -linkki näytetään kaikille, joille lohko näkyy.
-                $this->content->text .= "<li class='list'><a href='" .
-                    new moodle_url($CFG->wwwroot . "/admin/settings.php?section=frontpagesettings") . "'>" .
-                    get_string('frontpagesettings') . "</a></li>";
 
             // Tämän alle linkit, jotka löytyvät kurssisivulta.
-            } else if ($PAGE->pagelayout == 'course' || $PAGE->pagelayout == 'incourse' || $PAGE->pagelayout == 'report' || $PAGE->pagetype == 'course-view-topics') {
+            if ($PAGE->pagelayout == 'course' || $PAGE->pagelayout == 'incourse' || $PAGE->pagelayout == 'report' || $PAGE->pagetype == 'course-view-topics') {
                 // Näytetään kurssiavaimenluontipainike, jos kurssinmuokkaukseen on oikeus.
                 if (has_capability('moodle/course:update', context_system::instance())) {
                     $this->content->text .= "<li class='list'><a href='" .
@@ -102,6 +86,24 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
                     $this->content->text .= "<li class='list'><a href='" . new moodle_url($CFG->wwwroot .
                     "/grade/report/grader/index.php?id=" . $PAGE->course->id) . "'>" . get_string('coursegrades') . "</a></li>";
                 }
+
+            // Tämän alle linkit, jotka löytyvät etusivulta.
+            } else {
+                // Näytetään kurssinlisäyspainike, jos siihen on oikeuksia.
+                if (has_capability('moodle/course:create', context_system::instance())) {
+                    $this->content->text = "<li class='list'><a href='" .
+                        new moodle_url($CFG->wwwroot . "/course/edit.php?category=1") . "'>". get_string('addnewcourse') . "</a></li>";
+                }
+                // Näytetään kurssienhallintalinkki, jos sellaiseen on oikeudet.
+                if (has_capability('moodle/category:manage', context_system::instance())) {
+                    $this->content->text .= "<li class='list'><a href='" .
+                        new moodle_url($CFG->wwwroot . "/course/management.php") . "'>". get_string('coursecatmanagement') . "</a></li>";
+                }
+                // Etusivun asetukset -linkki näytetään kaikille, joille lohko näkyy.
+                $this->content->text .= "<li class='list'><a href='" .
+                    new moodle_url($CFG->wwwroot . "/admin/settings.php?section=frontpagesettings") . "'>" .
+                    get_string('frontpagesettings') . "</a></li>";
+
             }
 
             return $this->content;
