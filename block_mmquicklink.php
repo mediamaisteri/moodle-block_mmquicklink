@@ -70,6 +70,7 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
             // Tämän alle linkit, jotka löytyvät kurssisivulta.
             if ($PAGE->pagelayout == 'course' || $PAGE->pagelayout == 'incourse' || $PAGE->pagelayout == 'report' || $PAGE->pagetype == 'course-view-topics') {
                 // Näytetään kurssiavaimenluontipainike, jos kurssinmuokkaukseen on oikeus.
+                $this->content->text = "";
                 if (has_capability('moodle/course:update', context_system::instance())) {
                     $this->content->text .= "<li class='list'><a href='" .
                         new moodle_url($CFG->wwwroot . "/enrol/editinstance.php?courseid=" . $PAGE->course->id . "&type=self") .
