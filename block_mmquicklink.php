@@ -65,12 +65,12 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
 
             $this->content = new stdClass;
 
-            global $PAGE, $CFG;
+            global $PAGE, $CFG, $USER; // Load required globals.
+            $this->content->text = ""; // Set variable.
 
             // Tämän alle linkit, jotka löytyvät kurssisivulta.
             if ($PAGE->pagelayout == 'course' || $PAGE->pagelayout == 'incourse' || $PAGE->pagelayout == 'report' || $PAGE->pagetype == 'course-view-topics') {
                 // Näytetään kurssiavaimenluontipainike, jos kurssinmuokkaukseen on oikeus.
-                $this->content->text = "";
                 if (has_capability('moodle/course:update', context_system::instance())) {
                     $this->content->text .= "<li class='list'><a href='" .
                         new moodle_url($CFG->wwwroot . "/enrol/editinstance.php?courseid=" . $PAGE->course->id . "&type=self") .
@@ -90,9 +90,22 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
 
             // Tämän alle linkit, jotka löytyvät etusivulta.
             } else {
+
+                // Muokkaustila päälle tai pois -painike. Ensin tarkistetaan onko oikeuksia asiaan.
+                if (is_siteadmin() OR user_has_role_assignment($USER->id, 1, context_system::instance()->id)) {
+                    if($PAGE->user_is_editing()) {
+                        $editingmode = "off";
+                        $editingmode_string = get_string("turneditingoff");
+                    } else {
+                        $editingmode = "on";
+                        $editingmode_string = get_string("turneditingon");
+                    }
+                    $this->content->text .= "<li class='list'><a href='" . new moodle_url($CFG->wwwroot . "/course/view.php?id=1&edit=" . $editingmode . "&sesskey=" . $USER->sesskey) . "'>" . $editingmode_string . "</a>";
+                }
+
                 // Näytetään kurssinlisäyspainike, jos siihen on oikeuksia.
                 if (has_capability('moodle/course:create', context_system::instance())) {
-                    $this->content->text = "<li class='list'><a href='" .
+                    $this->content->text .= "<li class='list'><a href='" .
                         new moodle_url($CFG->wwwroot . "/course/edit.php?category=1") . "'>". get_string('addnewcourse') . "</a></li>";
                 }
                 // Näytetään kurssienhallintalinkki, jos sellaiseen on oikeudet.
