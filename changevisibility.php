@@ -14,13 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
- * User's 'preferred theme' value changer
- *
- * Each user can select a preferred theme
- * that is updated to database with this script
+ * Change course visibility.
  *
  *
- * @package    theme_maistericlean
+ * @package    block_mmquicklink
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  *
  */
