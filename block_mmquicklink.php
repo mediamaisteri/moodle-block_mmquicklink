@@ -65,11 +65,33 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
 
             $this->content = new stdClass;
 
-            global $PAGE, $CFG, $USER; // Load required globals.
+            global $PAGE, $CFG, $USER, $COURSE; // Load required globals.
             $this->content->text = ""; // Set variable.
 
             // Tämän alle linkit, jotka löytyvät kurssisivulta.
             if ($PAGE->pagelayout == 'course' || $PAGE->pagelayout == 'incourse' || $PAGE->pagelayout == 'report' || $PAGE->pagetype == 'course-view-topics') {
+
+                // Muokkaustila päälle tai pois -painike. Ensin tarkistetaan onko oikeuksia asiaan.
+                if (has_capability('moodle/course:update', context_system::instance())) {
+                    if($PAGE->user_is_editing()) {
+                        $editingmode = "off";
+                        $editingmode_string = get_string("turneditingoff");
+                    } else {
+                        $editingmode = "on";
+                        $editingmode_string = get_string("turneditingon");
+                    }
+                    $this->content->text .= "<li class='list'><a href='" . new moodle_url($CFG->wwwroot . "/course/view.php?id=1&edit=" . $editingmode . "&sesskey=" . $USER->sesskey) . "'>" . $editingmode_string . "</a>";
+                }
+
+                // Piilota/Näytä kurssi -painike.
+                if (has_capability('moodle/course:visibility', context_system::instance())) {
+                    if($COURSE->visible == "1") {
+                        $this->content->text .= "<li class='list'><a href='" . new moodle_url($CFG->wwwroot . "/blocks/mmquicklink/changevisibility.php?hide=1&sesskey=" . $USER->sesskey . "&id=" . $COURSE->id) . "'>" . get_string('hide') . " " . strtolower(get_string('course')) . "</a>";
+                    } else {
+                        $this->content->text .= "<li class='list'><a href='" . new moodle_url($CFG->wwwroot . "/blocks/mmquicklink/changevisibility.php?hide=0&sesskey=" . $USER->sesskey . "&id=" . $COURSE->id) . "'>" . get_string('show') . " " . strtolower(get_string('course')) . "</a>";
+                    }
+                }
+
                 // Näytetään kurssiavaimenluontipainike, jos kurssinmuokkaukseen on oikeus.
                 if (has_capability('moodle/course:update', context_system::instance())) {
                     $this->content->text .= "<li class='list'><a href='" .
