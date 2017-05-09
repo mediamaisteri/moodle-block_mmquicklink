@@ -33,29 +33,29 @@ $courseid = strip_tags($_GET["id"]);
 // Check if user has permission to edit visibility.
 if (has_capability('moodle/course:visibility', context_system::instance())) {
 
-	if(strip_tags($_GET["hide"]) == 1) {
-		// Update DB to hide course.
-		$DB->set_field('course', 'visible', '0', array('id' => $courseid));
+    if (strip_tags($_GET["hide"]) == 1) {
+        // Update DB to hide course.
+        $DB->set_field('course', 'visible', '0', array('id' => $courseid));
 
-		// Redirect user back to course page with proper string.
-		$urltogo = $_SERVER['HTTP_REFERER'];
-		redirect("$urltogo", get_string('course') . " " . strtolower(get_string('hidden', 'core_grades')), 5);
-	}
+        // Redirect user back to course page with proper string.
+        $urltogo = $_SERVER['HTTP_REFERER'];
+        redirect("$urltogo", get_string('course') . " " . strtolower(get_string('hidden', 'core_grades')), 5);
+    }
 
-	if(strip_tags($_GET["hide"]) == 0) {
-		// Update DB to show course..
-		$DB->set_field('course', 'visible', '1', array('id' => $courseid));
+    if (strip_tags($_GET["hide"]) == 0) {
+        // Update DB to show course..
+        $DB->set_field('course', 'visible', '1', array('id' => $courseid));
 
-		// Redirect user back to course page with proper string.
-		$urltogo = $_SERVER['HTTP_REFERER'];
-		redirect("$urltogo", get_string('course') . " " . strtolower(get_string('shown', 'core_calendar')), 5);
-	}
+        // Redirect user back to course page with proper string.
+        $urltogo = $_SERVER['HTTP_REFERER'];
+        redirect("$urltogo", get_string('course') . " " . strtolower(get_string('shown', 'core_calendar')), 5);
+    }
 
 
 } else {
 
-	// Redirect user back to course page with an error message.
-	$urltogo = $_SERVER['HTTP_REFERER'];
-	redirect("$urltogo", get_string('error') . "(" . get_string('manageroles') . ")", 5);
+    // Redirect user back to course page with an error message.
+    $urltogo = $_SERVER['HTTP_REFERER'];
+    redirect("$urltogo", get_string('error') . "(" . get_string('manageroles') . ")", 5);
 
 }

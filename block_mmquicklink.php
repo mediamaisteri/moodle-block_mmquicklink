@@ -69,26 +69,35 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
             $this->content->text = ""; // Set variable.
 
             // Tämän alle linkit, jotka löytyvät kurssisivulta.
-            if ($PAGE->pagelayout == 'course' || $PAGE->pagelayout == 'incourse' || $PAGE->pagelayout == 'report' || $PAGE->pagetype == 'course-view-topics') {
+            if ($PAGE->pagelayout == 'course' || $PAGE->pagelayout == 'incourse' || $PAGE->pagelayout == 'report' ||
+            $PAGE->pagetype == 'course-view-topics') {
 
                 // Muokkaustila päälle tai pois -painike. Ensin tarkistetaan onko oikeuksia asiaan.
                 if (has_capability('moodle/course:update', context_system::instance())) {
-                    if($PAGE->user_is_editing()) {
+                    if ($PAGE->user_is_editing()) {
                         $editingmode = "off";
-                        $editingmode_string = get_string("turneditingoff");
+                        $editingmodestring = get_string("turneditingoff");
                     } else {
                         $editingmode = "on";
-                        $editingmode_string = get_string("turneditingon");
+                        $editingmodestring = get_string("turneditingon");
                     }
-                    $this->content->text .= "<li class='list'><a href='" . new moodle_url($CFG->wwwroot . "/course/view.php?id=1&edit=" . $editingmode . "&sesskey=" . $USER->sesskey) . "'>" . $editingmode_string . "</a>";
+                    $this->content->text .= "<li class='list'><a href='" .
+                        new moodle_url($CFG->wwwroot . "/course/view.php?id=1&edit=" . $editingmode .
+                        "&sesskey=" . $USER->sesskey) . "'>" . $editingmodestring . "</a>";
                 }
 
                 // Piilota/Näytä kurssi -painike.
                 if (has_capability('moodle/course:visibility', context_system::instance())) {
-                    if($COURSE->visible == "1") {
-                        $this->content->text .= "<li class='list'><a href='" . new moodle_url($CFG->wwwroot . "/blocks/mmquicklink/changevisibility.php?hide=1&sesskey=" . $USER->sesskey . "&id=" . $COURSE->id) . "'>" . get_string('hide') . " " . strtolower(get_string('course')) . "</a>";
+                    if ($COURSE->visible == "1") {
+                        $this->content->text .= "<li class='list'><a href='" .
+                            new moodle_url($CFG->wwwroot . "/blocks/mmquicklink/changevisibility.php?hide=1&sesskey=" .
+                            $USER->sesskey . "&id=" . $COURSE->id) . "'>" . get_string('hide') . " " .
+                            strtolower(get_string('course')) . "</a>";
                     } else {
-                        $this->content->text .= "<li class='list'><a href='" . new moodle_url($CFG->wwwroot . "/blocks/mmquicklink/changevisibility.php?hide=0&sesskey=" . $USER->sesskey . "&id=" . $COURSE->id) . "'>" . get_string('show') . " " . strtolower(get_string('course')) . "</a>";
+                        $this->content->text .= "<li class='list'><a href='" .
+                            new moodle_url($CFG->wwwroot . "/blocks/mmquicklink/changevisibility.php?hide=0&sesskey=" .
+                            $USER->sesskey . "&id=" . $COURSE->id) . "'>" . get_string('show') . " " .
+                            strtolower(get_string('course')) . "</a>";
                     }
                 }
 
@@ -102,7 +111,8 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
                 // Osallistujat -sivu.
                 if (has_capability('moodle/course:viewparticipants', context_system::instance())) {
                     $this->content->text .= "<li class='list'><a href='" . new moodle_url($CFG->wwwroot .
-                    "/user/index.php?id=" . $PAGE->course->id) . "'>" . get_string('show') . " " . strtolower(get_string('participants')) . "</a></li>";
+                    "/user/index.php?id=" . $PAGE->course->id) . "'>" .
+                        get_string('show') . " " . strtolower(get_string('participants')) . "</a></li>";
                 }
                 // Kurssin arvioinnit -sivut.
                 if (has_capability('mod/assign:grade', context_system::instance())) {
@@ -115,25 +125,29 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
 
                 // Muokkaustila päälle tai pois -painike. Ensin tarkistetaan onko oikeuksia asiaan.
                 if (is_siteadmin() OR user_has_role_assignment($USER->id, 1, context_system::instance()->id)) {
-                    if($PAGE->user_is_editing()) {
+                    if ($PAGE->user_is_editing()) {
                         $editingmode = "off";
-                        $editingmode_string = get_string("turneditingoff");
+                        $editingmodestring = get_string("turneditingoff");
                     } else {
                         $editingmode = "on";
-                        $editingmode_string = get_string("turneditingon");
+                        $editingmodestring = get_string("turneditingon");
                     }
-                    $this->content->text .= "<li class='list'><a href='" . new moodle_url($CFG->wwwroot . "/course/view.php?id=1&edit=" . $editingmode . "&sesskey=" . $USER->sesskey) . "'>" . $editingmode_string . "</a>";
+                    $this->content->text .= "<li class='list'><a href='" .
+                        new moodle_url($CFG->wwwroot . "/course/view.php?id=1&edit=" . $editingmode .
+                        "&sesskey=" . $USER->sesskey) . "'>" . $editingmodestring . "</a>";
                 }
 
                 // Näytetään kurssinlisäyspainike, jos siihen on oikeuksia.
                 if (has_capability('moodle/course:create', context_system::instance())) {
                     $this->content->text .= "<li class='list'><a href='" .
-                        new moodle_url($CFG->wwwroot . "/course/edit.php?category=1") . "'>". get_string('addnewcourse') . "</a></li>";
+                        new moodle_url($CFG->wwwroot . "/course/edit.php?category=1") . "'>".
+                        get_string('addnewcourse') . "</a></li>";
                 }
                 // Näytetään kurssienhallintalinkki, jos sellaiseen on oikeudet.
                 if (has_capability('moodle/category:manage', context_system::instance())) {
                     $this->content->text .= "<li class='list'><a href='" .
-                        new moodle_url($CFG->wwwroot . "/course/management.php") . "'>". get_string('coursecatmanagement') . "</a></li>";
+                        new moodle_url($CFG->wwwroot . "/course/management.php") . "'>".
+                        get_string('coursecatmanagement') . "</a></li>";
                 }
                 // Etusivun asetukset -linkki näytetään kaikille, joille lohko näkyy.
                 $this->content->text .= "<li class='list'><a href='" .
