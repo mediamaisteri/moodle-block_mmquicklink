@@ -131,7 +131,7 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
                 }
 
             } else {
-                // Tähän alle linkit, jotka löytyvät etusivulta.
+                // Tähän alle linkit, jotka löytyvät muilta sivuilta.
 
                 // Muokkaustila päälle tai pois -painike. Ensin tarkistetaan onko oikeuksia asiaan.
                 if (is_siteadmin() OR user_has_role_assignment($USER->id, 1, context_system::instance()->id)) {
@@ -159,10 +159,14 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
                         new moodle_url($CFG->wwwroot . "/course/management.php") . "'>".
                         get_string('coursecatmanagement') . "</a></li>";
                 }
-                // Etusivun asetukset -linkki näytetään kaikille, joille lohko näkyy.
-                $this->content->text .= "<li class='list'><a href='" .
-                    new moodle_url($CFG->wwwroot . "/admin/settings.php?section=frontpagesettings") . "'>" .
-                    get_string('frontpagesettings') . "</a></li>";
+                // Etusivun asetukset -linkki näytetään etusivulla kaikille, joille lohko näkyy.
+                if (is_siteadmin() OR user_has_role_assignment($USER->id, 1, context_system::instance()->id)) {
+                    if($PAGE->pagelayout == 'frontpage') {
+                        $this->content->text .= "<li class='list'><a href='" .
+                            new moodle_url($CFG->wwwroot . "/admin/settings.php?section=frontpagesettings") . "'>" .
+                            get_string('frontpagesettings') . "</a></li>";
+                    }
+                }
 
             }
 
