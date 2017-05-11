@@ -63,6 +63,8 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
                 return $this->content;
             }
 
+            $this->page->requires->js_call_amd('block_mmquicklink/enrolmentdiv','init', []);
+
             $this->content = new stdClass;
 
             global $PAGE, $CFG, $USER, $COURSE; // Load required globals.
@@ -103,10 +105,13 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
 
                 // Näytetään kurssiavaimenluontipainike, jos kurssinmuokkaukseen on oikeus.
                 if (has_capability('moodle/course:update', context_system::instance())) {
-                    $this->content->text .= "<li class='list'><a href='" .
-                        new moodle_url($CFG->wwwroot . "/enrol/editinstance.php?courseid=" . $PAGE->course->id . "&type=self") .
-                        "'>" . get_string('set', 'portfolio_flickr') . " " .
-                        strtolower(get_string('password', 'enrol_self')) . "</a></li>";
+                    $this->content->text .= "<li class='list mmquicklink-enrolmentkey'><a href='#'>" . get_string('set', 'portfolio_flickr') . " " .
+                        strtolower(get_string('password', 'enrol_self')) . "</a></li>
+                        <div class='mmquicklink-enrolmentkey-div'>
+                            <form method='get' action='" . $CFG->wwwroot . "/blocks/mmquicklink/setenrolmentkey.php'>
+                            <input type='hidden' name='courseid' value='" . $COURSE->id . "'>
+                            <input type='text' name='enrolmentkey'> <input type='submit' value='" . get_string('save', 'core_admin') . "'>
+                        </div>";
                 }
                 // Osallistujat -sivu.
                 if (has_capability('moodle/course:viewparticipants', context_system::instance())) {
