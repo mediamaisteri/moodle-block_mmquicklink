@@ -120,8 +120,8 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
                     "/grade/report/grader/index.php?id=" . $PAGE->course->id) . "'>" . get_string('coursegrades') . "</a></li>";
                 }
 
-            // Tämän alle linkit, jotka löytyvät etusivulta.
             } else {
+                // Tähän alle linkit, jotka löytyvät etusivulta.
 
                 // Muokkaustila päälle tai pois -painike. Ensin tarkistetaan onko oikeuksia asiaan.
                 if (is_siteadmin() OR user_has_role_assignment($USER->id, 1, context_system::instance()->id)) {
