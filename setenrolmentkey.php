@@ -38,7 +38,7 @@ if (has_capability('moodle/course:enrolconfig', context_system::instance())) {
 
     // Update field to either set or disable enrolment key.
     if ($enrolmentkey) {
-        $DB->set_field('enrol', 'status', '1', array('courseid' => $courseid, 'enrol' => 'self'));
+        $DB->set_field('enrol', 'status', '0', array('courseid' => $courseid, 'enrol' => 'self'));
         $DB->set_field('enrol', 'password', $enrolmentkey, array('courseid' => $courseid, 'enrol' => 'self'));
 
         // Redirect user back to course page with proper string.
@@ -46,7 +46,7 @@ if (has_capability('moodle/course:enrolconfig', context_system::instance())) {
         redirect("$urltogo", get_string('password', 'enrol_self') . " " . strtolower(get_string('saved', 'core_completion')), 5);
 
     } else {
-        $DB->set_field('enrol', 'status', '0', array('courseid' => $courseid, 'enrol' => 'self'));
+        $DB->set_field('enrol', 'status', '1', array('courseid' => $courseid, 'enrol' => 'self'));
         $DB->set_field('enrol', 'password', '', array('courseid' => $courseid, 'enrol' => 'self'));
 
         // Redirect user back to course page with proper string.
