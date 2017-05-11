@@ -103,6 +103,11 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
                     }
                 }
 
+                // Lisää "completion progress" -lohko.
+                if (has_capability('block/completion_progress:addinstance', context_system::instance())) {
+                        $this->content->text .= "<li class='list'><a href='" . $CFG->wwwroot . "/course/view.php?id=" . $COURSE->id . "&sesskey=" . $USER->sesskey . "&bui_addblock=completion_progress'>" . get_string('add') . " " . strtolower(get_string('pluginname', 'block_completion_progress')) . "</a></li>";
+                }
+
                 // Näytetään kurssiavaimenluontipainike, jos kurssinmuokkaukseen on oikeus.
                 if (has_capability('moodle/course:update', context_system::instance())) {
                     $this->content->text .= "<li class='list mmquicklink-enrolmentkey'><a href='#'>" . get_string('set', 'portfolio_flickr') . " " .
