@@ -110,7 +110,7 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
 
                 // Näytetään kurssiavaimenluontipainike, jos kurssinmuokkaukseen on oikeus.
                 if (has_capability('moodle/course:update', context_system::instance())) {
-                    $this->content->text .= "<li class='list mmquicklink-enrolmentkey'><a href='#'>" . get_string('set', 'portfolio_flickr') . " " .
+                    $this->content->text .= "<li class='list mmquicklink-enrolmentkey'><a href=''>" . get_string('set', 'portfolio_flickr') . " " .
                         strtolower(get_string('password', 'enrol_self')) . "</a></li>
                         <div class='mmquicklink-enrolmentkey-div'>
                             <form method='get' action='" . $CFG->wwwroot . "/blocks/mmquicklink/setenrolmentkey.php'>
