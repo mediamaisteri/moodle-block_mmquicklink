@@ -142,9 +142,18 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
                         $editingmode = "on";
                         $editingmodestring = get_string("turneditingon");
                     }
-                    $this->content->text .= "<li class='list'><a href='" .
-                        new moodle_url($CFG->wwwroot . "/course/view.php?id=1&edit=" . $editingmode .
-                        "&sesskey=" . $USER->sesskey) . "'>" . $editingmodestring . "</a>";
+
+                    if($PAGE->pagelayout == "frontpage") {
+                        $this->content->text .= "<li class='list'><a href='" .
+                            new moodle_url($CFG->wwwroot . "/course/view.php?id=1&edit=" . $editingmode .
+                            "&sesskey=" . $USER->sesskey) . "'>" . $editingmodestring . "</a></li>";
+                    }
+                    if($PAGE->pagelayout == "mydashboard") {
+                        $this->content->text .= "<li class='list'><a href='" .
+                            new moodle_url($CFG->wwwroot . "/my/?edit=" . $editingmode .
+                            "&sesskey=" . $USER->sesskey) . "'>" . $editingmodestring . "</a></li>";
+                    }
+
                 }
 
                 // Näytetään kurssinlisäyspainike, jos siihen on oikeuksia.
