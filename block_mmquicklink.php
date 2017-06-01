@@ -84,7 +84,7 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
                         $editingmodestring = get_string("turneditingon");
                     }
                     $this->content->text .= "<li class='list'><a href='" .
-                        new moodle_url($CFG->wwwroot . "/course/view.php?id=1&edit=" . $editingmode .
+                        new moodle_url($CFG->wwwroot . "/course/view.php?id=" . $COURSE->id . "&edit=" . $editingmode .
                         "&sesskey=" . $USER->sesskey) . "'>" . $editingmodestring . "</a>";
                 }
 
