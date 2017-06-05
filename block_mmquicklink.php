@@ -65,6 +65,12 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
             global $PAGE, $CFG, $USER, $COURSE; // Load required globals.
             $this->content->text = ""; // Set variable.
 
+            // mRapsa.
+            $reports = $PAGE->navigation->find('local_reports', navigation_node::TYPE_CUSTOM);
+            if ($reports) {
+                $this->content->text .= "<li class='list'><a href=" . new moodle_url($CFG->wwwroot . '/local/reports/summary.php') . ">" . get_string('pluginname', 'local_reports') . "</a></li>";
+            }
+
             // Links to show on course pages.
             if ($PAGE->pagelayout == 'course' || $PAGE->pagelayout == 'incourse' || $PAGE->pagelayout == 'report' ||
             $PAGE->pagetype == 'course-view-topics') {
@@ -80,7 +86,7 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
                     }
                     $this->content->text .= "<li class='list'><a href='" .
                         new moodle_url($CFG->wwwroot . "/course/view.php?id=" . $COURSE->id . "&edit=" . $editingmode .
-                        "&sesskey=" . $USER->sesskey) . "'>" . $editingmodestring . "</a>";
+                        "&sesskey=" . $USER->sesskey) . "'>" . $editingmodestring . "</a></li>";
                 }
 
                 // Show/hide course link.
@@ -89,12 +95,12 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
                         $this->content->text .= "<li class='list'><a href='" .
                             new moodle_url($CFG->wwwroot . "/blocks/mmquicklink/changevisibility.php?hide=1&sesskey=" .
                             $USER->sesskey . "&id=" . $COURSE->id) . "'>" . get_string('hide') . " " .
-                            strtolower(get_string('course')) . "</a>";
+                            strtolower(get_string('course')) . "</a></li>";
                     } else {
                         $this->content->text .= "<li class='list'><a href='" .
                             new moodle_url($CFG->wwwroot . "/blocks/mmquicklink/changevisibility.php?hide=0&sesskey=" .
                             $USER->sesskey . "&id=" . $COURSE->id) . "'>" . get_string('show') . " " .
-                            strtolower(get_string('course')) . "</a>";
+                            strtolower(get_string('course')) . "</a></li>";
                     }
                 }
 
@@ -126,7 +132,7 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
                 }
 
             } else {
-                // Link on otherp ages.
+                // Link on other pages.
 
                 // Editing mode on/off link.
                 if (is_siteadmin() OR user_has_role_assignment($USER->id, 1, context_system::instance()->id)) {
