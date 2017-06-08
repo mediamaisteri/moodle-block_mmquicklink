@@ -41,7 +41,7 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
         }
 
         public function instance_allow_multiple() {
-            return false;
+            return true;
         }
 
         public function html_attributes() {
