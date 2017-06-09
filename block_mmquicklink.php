@@ -68,7 +68,7 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
             // mRapsa.
             $reports = $PAGE->navigation->find('local_reports', navigation_node::TYPE_CUSTOM);
             if ($reports) {
-                $this->content->text .= "<li class='list'><a href=" . new moodle_url($CFG->wwwroot . '/local/reports/summary.php') . ">" . get_string('pluginname', 'local_reports') . "</a></li>";
+                $this->content->text .= "<li class='list'><a class='btn btn-secondary' href=" . new moodle_url($CFG->wwwroot . '/local/reports/summary.php') . ">" . get_string('pluginname', 'local_reports') . "</a></li>";
             }
 
             // Links to show on course pages.
@@ -84,7 +84,7 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
                         $editingmode = "on";
                         $editingmodestring = get_string("turneditingon");
                     }
-                    $this->content->text .= "<li class='list'><a href='" .
+                    $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
                         new moodle_url($CFG->wwwroot . "/course/view.php?id=" . $COURSE->id . "&edit=" . $editingmode .
                         "&sesskey=" . $USER->sesskey) . "'>" . $editingmodestring . "</a></li>";
                 }
@@ -92,12 +92,12 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
                 // Show/hide course link.
                 if (has_capability('moodle/course:visibility', context_system::instance())) {
                     if ($COURSE->visible == "1") {
-                        $this->content->text .= "<li class='list'><a href='" .
+                        $this->content->text .= "<li class='list'><a  class='btn btn-secondary' href='" .
                             new moodle_url($CFG->wwwroot . "/blocks/mmquicklink/changevisibility.php?hide=1&sesskey=" .
                             $USER->sesskey . "&id=" . $COURSE->id) . "'>" . get_string('hide') . " " .
                             strtolower(get_string('course')) . "</a></li>";
                     } else {
-                        $this->content->text .= "<li class='list'><a href='" .
+                        $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
                             new moodle_url($CFG->wwwroot . "/blocks/mmquicklink/changevisibility.php?hide=0&sesskey=" .
                             $USER->sesskey . "&id=" . $COURSE->id) . "'>" . get_string('show') . " " .
                             strtolower(get_string('course')) . "</a></li>";
@@ -106,28 +106,28 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
 
                 // Add a "completion progress" block.
                 if (has_capability('block/completion_progress:addinstance', context_system::instance())) {
-                        $this->content->text .= "<li class='list'><a href='" . $CFG->wwwroot . "/course/view.php?id=" . $COURSE->id . "&sesskey=" . $USER->sesskey . "&bui_addblock=completion_progress'>" . get_string('add') . " " . strtolower(get_string('pluginname', 'block_completion_progress')) . "</a></li>";
+                        $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" . $CFG->wwwroot . "/course/view.php?id=" . $COURSE->id . "&sesskey=" . $USER->sesskey . "&bui_addblock=completion_progress'>" . get_string('add') . " " . strtolower(get_string('pluginname', 'block_completion_progress')) . "</a></li>";
                 }
 
                 // Show enrolment key add button.
                 if (has_capability('moodle/course:update', context_system::instance())) {
-                    $this->content->text .= "<li class='list mmquicklink-enrolmentkey'><a href=''>" . get_string('set', 'portfolio_flickr') . " " .
+                    $this->content->text .= "<li class='list mmquicklink-enrolmentkey'><a class='btn btn-secondary' href=''>" . get_string('set', 'portfolio_flickr') . " " .
                         strtolower(get_string('password', 'enrol_self')) . "</a></li>
                         <div class='mmquicklink-enrolmentkey-div'>
                             <form method='get' action='" . $CFG->wwwroot . "/blocks/mmquicklink/setenrolmentkey.php'>
                             <input type='hidden' name='courseid' value='" . $COURSE->id . "'>
-                            <input type='text' name='enrolmentkey'> <input type='submit' value='" . get_string('save', 'core_admin') . "'>
+                            <input class='form-control' type='text' name='enrolmentkey'> <input class='btn btn-primary' type='submit' value='" . get_string('save', 'core_admin') . "'>
                         </div>";
                 }
                 // Course participants.
                 if (has_capability('moodle/course:viewparticipants', context_system::instance())) {
-                    $this->content->text .= "<li class='list'><a href='" . new moodle_url($CFG->wwwroot .
+                    $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" . new moodle_url($CFG->wwwroot .
                     "/user/index.php?id=" . $PAGE->course->id) . "'>" .
                         get_string('show') . " " . strtolower(get_string('participants')) . "</a></li>";
                 }
                 // Course grading.
                 if (has_capability('mod/assign:grade', context_system::instance())) {
-                    $this->content->text .= "<li class='list'><a href='" . new moodle_url($CFG->wwwroot .
+                    $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" . new moodle_url($CFG->wwwroot .
                     "/grade/report/grader/index.php?id=" . $PAGE->course->id) . "'>" . get_string('coursegrades') . "</a></li>";
                 }
 
@@ -145,12 +145,12 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
                     }
 
                     if($PAGE->pagelayout == "frontpage") {
-                        $this->content->text .= "<li class='list'><a href='" .
+                        $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
                             new moodle_url($CFG->wwwroot . "/course/view.php?id=1&edit=" . $editingmode .
                             "&sesskey=" . $USER->sesskey) . "'>" . $editingmodestring . "</a></li>";
                     }
                     if($PAGE->pagelayout == "mydashboard") {
-                        $this->content->text .= "<li class='list'><a href='" .
+                        $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
                             new moodle_url($CFG->wwwroot . "/my/?edit=" . $editingmode .
                             "&sesskey=" . $USER->sesskey) . "'>" . $editingmodestring . "</a></li>";
                     }
@@ -159,21 +159,21 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
 
                 // show "add a course" button.
                 if (has_capability('moodle/course:create', context_system::instance())) {
-                    $this->content->text .= "<li class='list'><a href='" .
+                    $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
                         new moodle_url($CFG->wwwroot . "/course/edit.php?category=1") . "'>".
                         get_string('addnewcourse') . "</a></li>";
                 }
 
                 // Show course management button.
                 if (has_capability('moodle/category:manage', context_system::instance())) {
-                    $this->content->text .= "<li class='list'><a href='" .
+                    $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
                         new moodle_url($CFG->wwwroot . "/course/management.php") . "'>".
                         get_string('coursecatmanagement') . "</a></li>";
                 }
                 // Frontpage settings link.
                 if (is_siteadmin() OR user_has_role_assignment($USER->id, 1, context_system::instance()->id)) {
                     if($PAGE->pagelayout == 'frontpage') {
-                        $this->content->text .= "<li class='list'><a href='" .
+                        $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
                             new moodle_url($CFG->wwwroot . "/admin/settings.php?section=frontpagesettings") . "'>" .
                             get_string('frontpagesettings') . "</a></li>";
                     }
