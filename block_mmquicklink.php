@@ -89,7 +89,7 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
                         "&sesskey=" . $USER->sesskey) . "'>" . $editingmodestring . "</a></li>";
                 }
 
-                // Show/hide course link.
+                // Show/hide course visibility link.
                 if (has_capability('moodle/course:visibility', context_system::instance())) {
                     if ($COURSE->visible == "1") {
                         $this->content->text .= "<li class='list'><a  class='btn btn-secondary' href='" .
@@ -157,7 +157,7 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
 
                 }
 
-                // show "add a course" button.
+                // Show "add a course" button.
                 if (has_capability('moodle/course:create', context_system::instance())) {
                     $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
                         new moodle_url($CFG->wwwroot . "/course/edit.php?category=1") . "'>".
