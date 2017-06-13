@@ -46,7 +46,7 @@ class block_mmquicklink_renderer extends plugin_renderer_base {
     }
 
     protected function mmquicklink_node($items) {
-        $itemlist = "<ul id='mmquicklink-reports'>";
+        $itemlist = "<ul class='mmquicklink-reports'>";
 
         foreach($items as $item) {
             $item_text  = $item->text;

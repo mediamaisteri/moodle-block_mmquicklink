@@ -68,10 +68,10 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
             // mRapsa.
             $reports = $PAGE->navigation->find('local_reports', navigation_node::TYPE_CUSTOM);
             if ($reports) {
-                $this->content->text .= "<li class='list' id='mmquicklink-reports-button'><a class='btn btn-secondary'>" . get_string('pluginname', 'local_reports') . "</a></li>";
+                $this->content->text .= "<li class='list mmquicklink-reports-button'><a class='btn btn-secondary'>" . get_string('pluginname', 'local_reports') . "</a></li>";
+                $this->content->text .= $PAGE->get_renderer('block_mmquicklink')->mmquicklink_tree($reports);
             }
 
-            $this->content->text .= $PAGE->get_renderer('block_mmquicklink')->mmquicklink_tree($reports);
 
             // Links to show on course pages.
             if ($PAGE->pagelayout == 'course' || $PAGE->pagelayout == 'incourse' || $PAGE->pagelayout == 'report' ||
