@@ -17,21 +17,13 @@
  * This file contains classes used to manage the navigation structures in Moodle
  * and was introduced as part of the changes occuring in Moodle 2.0
  *
- * @since     Moodle 2.0
- * @package   block_navigation
- * @copyright 2009 Sam Hemelryk
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 /**
- * The global navigation tree block class
- *
- * Used to produce the global navigation block new to Moodle 2.0
- *
- * @package   block_navigation
- * @category  navigation
- * @copyright 2009 Sam Hemelryk
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+
+ * @package   block_mmquicklink
+ * @copyright 2017 Mediamaisteri Oy
  */
+ 
 class block_mmquicklink_renderer extends plugin_renderer_base {
 
     public function mmquicklink_tree($navigation) {
