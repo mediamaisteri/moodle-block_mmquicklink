@@ -20,3 +20,7 @@
     width: 100%;
     padding: 0.5rem 0rem;
 }
+
+.block_mmquicklink .mmquicklink-reports {
+    display: none;
+}

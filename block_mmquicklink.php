@@ -41,7 +41,7 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
         }
 
         public function instance_allow_multiple() {
-            return true;
+            return false;
         }
 
         public function html_attributes() {
@@ -68,8 +68,10 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
             // mRapsa.
             $reports = $PAGE->navigation->find('local_reports', navigation_node::TYPE_CUSTOM);
             if ($reports) {
-                $this->content->text .= "<li class='list'><a class='btn btn-secondary' href=" . new moodle_url($CFG->wwwroot . '/local/reports/summary.php') . ">" . get_string('pluginname', 'local_reports') . "</a></li>";
+                $this->content->text .= "<li class='list mmquicklink-reports-button'><a class='btn btn-secondary'>" . get_string('pluginname', 'local_reports') . "</a></li>";
+                $this->content->text .= $PAGE->get_renderer('block_mmquicklink')->mmquicklink_tree($reports);
             }
+
 
             // Links to show on course pages.
             if ($PAGE->pagelayout == 'course' || $PAGE->pagelayout == 'incourse' || $PAGE->pagelayout == 'report' ||
