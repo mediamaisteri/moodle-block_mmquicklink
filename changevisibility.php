@@ -30,6 +30,8 @@ require_once($CFG->libdir.'/filelib.php');
 global $DB, $USER, $COURSE;
 $courseid = strip_tags($_GET["id"]);
 
+require_login();
+
 // Check if user has permission to edit visibility.
 if (has_capability('moodle/course:visibility', context_system::instance())) {
 

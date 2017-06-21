@@ -27,6 +27,8 @@ require_once($CFG->dirroot . '/user/profile/lib.php');
 require_once($CFG->dirroot . '/user/lib.php');
 require_once($CFG->libdir.'/filelib.php');
 
+require_login();
+
 global $DB, $USER, $COURSE;
 
 // Course id & key from url variable.
