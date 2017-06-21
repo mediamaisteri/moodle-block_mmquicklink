@@ -109,11 +109,16 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
                 }
 
                 // Add a "completion progress" block.
-                if (has_capability('block/completion_progress:addinstance', context_system::instance())) {
-                        $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
-                        $CFG->wwwroot . "/course/view.php?id=" . $COURSE->id . "&sesskey=" . $USER->sesskey .
-                        "&bui_addblock=completion_progress'>" . get_string('add') . " " .
-                        strtolower(get_string('pluginname', 'block_completion_progress')) . "</a></li>";
+                $plugins = core_plugin_manager::instance()->get_plugins_of_type('block');
+                // Check if module is installed.
+                if (!empty($plugins["completion_progress"]->name)) {
+                    // Check if user has capability.
+                    if (has_capability('block/completion_progress:addinstance', context_system::instance())) {
+                            $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
+                            $CFG->wwwroot . "/course/view.php?id=" . $COURSE->id . "&sesskey=" . $USER->sesskey .
+                            "&bui_addblock=completion_progress'>" . get_string('add') . " " .
+                            strtolower(get_string('pluginname', 'block_completion_progress')) . "</a></li>";
+                    }
                 }
 
                 // Show enrolment key add button.
