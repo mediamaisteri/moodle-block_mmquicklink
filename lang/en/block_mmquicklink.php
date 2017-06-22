@@ -24,3 +24,14 @@
 
 $string['pluginname'] = 'MM Quick Link';
 $string['title'] = "Teacher's tools";
+
+$string['visibility_settings'] = 'Visibility settings';
+
+$string['setting_reports'] = "Reports";
+$string['setting_reports_desc'] = "Check to hide reports -link";
+
+$string['setting_participants'] = "Participants";
+$string['setting_participants_desc'] = "Check to hide course participants -link";
+
+$string['setting_course_grades'] = "Course grades";
+$string['setting_course_grades_desc'] = "Check to hide course grades -link";
