@@ -67,6 +67,12 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
             $this->content = new stdClass;
             $this->content->text = "";
 
+            // Theme settings -link.
+            if (is_siteadmin()) {
+                $adminurl = new moodle_url('/admin/settings.php?section=themesetting' . $PAGE->theme->name);
+                $this->content->text.= "<li class='list'><a class='btn btn-secondary' href='" . $adminurl . "'>" . get_string('themesettings', 'core_admin') . "</a></li>";
+            }
+
             // Render local_reports navigation.
             if (empty($this->config->hide_reports)) {
                 $reports = $PAGE->navigation->find('local_reports', navigation_node::TYPE_CUSTOM);
@@ -194,7 +200,7 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
                         get_string('coursecatmanagement') . "</a></li>";
                 }
 
-                // Frontpage settings link.
+                // Frontpage settings link only on frontpage.
                 if (is_siteadmin() OR user_has_role_assignment($USER->id, 1, context_system::instance()->id)) {
                     if ($PAGE->pagelayout == 'frontpage') {
                         $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
