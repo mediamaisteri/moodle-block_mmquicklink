@@ -68,7 +68,7 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
             $this->content->text = "";
 
             // Render local_reports navigation.
-            if ($this->config->hide_reports != 1) {
+            if (empty($this->config->hide_reports)) {
                 $reports = $PAGE->navigation->find('local_reports', navigation_node::TYPE_CUSTOM);
                 if ($reports) {
                     $this->content->text .= "<li class='list mmquicklink-reports-button'><a class='btn btn-secondary'>"
@@ -138,7 +138,7 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
                 }
 
                 // Course participants.
-                if ($this->config->hide_participants != 1) {
+                if (empty($this->config->hide_participants)) {
                     if (has_capability('moodle/course:viewparticipants', context_system::instance())) {
                         $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" . new moodle_url($CFG->wwwroot .
                         "/user/index.php?id=" . $PAGE->course->id) . "'>" .
@@ -147,7 +147,7 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
                 }
 
                 // Course grading.
-                if ($this->config->hide_course_grades != 1) {
+                if (empty($this->config->hide_course_grades)) {
                     if (has_capability('mod/assign:grade', context_system::instance())) {
                         $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" . new moodle_url($CFG->wwwroot .
                         "/grade/report/grader/index.php?id=" . $PAGE->course->id) . "'>" . get_string('coursegrades') . "</a></li>";
