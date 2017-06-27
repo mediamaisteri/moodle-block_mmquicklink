@@ -197,7 +197,7 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
                 if (has_capability('moodle/category:manage', context_system::instance())) {
                     $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
                         new moodle_url($CFG->wwwroot . "/course/management.php") . "'>".
-                        get_string('coursecatmanagement') . "</a></li>";
+                        get_string('coursemgmt', 'core_admin') . "</a></li>";
                 }
 
                 // Frontpage settings link only on frontpage.
