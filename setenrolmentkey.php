@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
- * Change course visibility.
- *
+ * Functionality to enable enrolment
+ * with key a.k.a. "setenrolmentkey".
  *
  * @package    block_mmquicklink
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
