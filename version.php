@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Form for editing HTML block instances.
+ * MM Quicklink block
  *
  * @package   block_mmquicklink
  * @copyright 2017 Mediamaisteri Oy

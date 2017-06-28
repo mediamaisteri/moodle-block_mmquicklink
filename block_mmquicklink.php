@@ -22,7 +22,7 @@
 
 /************************
 Quick Link -block to help admins, managers
-and teacher to navigate through Moodle.
+and teachers to navigate through Moodle.
 
 2017
 Mediamaisteri Oy
@@ -31,7 +31,7 @@ Mediamaisteri Oy
 defined('MOODLE_INTERNAL') || die();
 
 global $USER;
-// Lohkon esittäminen vain admineille, managereille ja opettajille (oletetaan, että role id:itä ei ole muutettu).
+// Only admins, managers and teachers can see the block (assuming the default role ID's).
 if (is_siteadmin() OR user_has_role_assignment($USER->id, 1, context_system::instance()->id) OR
 user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
 
@@ -40,14 +40,15 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
             $this->title = get_string('title', 'block_mmquicklink');
         }
 
+        // Don't allow multiple instances.
         public function instance_allow_multiple() {
             return false;
         }
 
+        // Dock block on default.
         public function html_attributes() {
             $attributes = parent::html_attributes();
             if ($this->instance_can_be_docked() && get_user_preferences('docked_block_instance_'.$this->instance->id, 1)) {
-                // Dock block on default.
                 $attributes['class'] .= ' dock_on_load';
             }
             return $attributes;
@@ -213,6 +214,7 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
 
             }
 
+            // Return data to block.
             return $this->content;
 
         }

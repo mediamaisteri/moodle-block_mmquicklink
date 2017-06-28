@@ -15,8 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
  * Render local_reports navigation.
- */
-/**
+ *
  * @package   block_mmquicklink
  * @copyright 2017 Mediamaisteri Oy
  */
@@ -37,6 +36,7 @@ class block_mmquicklink_renderer extends plugin_renderer_base {
     protected function mmquicklink_node($items) {
         $itemlist = "<ul class='mmquicklink-reports'>";
 
+        // Loop through navigation items.
         foreach ($items as $item) {
             $itemtext  = $item->text;
             $itemurl   = $item->action;

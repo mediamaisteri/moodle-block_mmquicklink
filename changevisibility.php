@@ -16,7 +16,6 @@
 /**
  * Change course visibility.
  *
- *
  * @package    block_mmquicklink
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  *
