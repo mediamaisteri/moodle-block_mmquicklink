@@ -68,9 +68,11 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
             $this->content->text = "";
 
             // Theme settings -link.
-            if (is_siteadmin()) {
-                $adminurl = new moodle_url('/admin/settings.php?section=themesetting' . $PAGE->theme->name);
-                $this->content->text.= "<li class='list'><a class='btn btn-secondary' href='" . $adminurl . "'>" . get_string('themesettings', 'core_admin') . "</a></li>";
+            if (empty($this->config->hide_themesettings)) {
+                if (is_siteadmin()) {
+                    $adminurl = new moodle_url('/admin/settings.php?section=themesetting' . $PAGE->theme->name);
+                    $this->content->text.= "<li class='list'><a class='btn btn-secondary' href='" . $adminurl . "'>" . get_string('themesettings', 'core_admin') . "</a></li>";
+                }
             }
 
             // Render local_reports navigation.

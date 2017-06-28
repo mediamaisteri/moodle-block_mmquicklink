@@ -28,10 +28,13 @@ $string['title'] = "Opettajan työkalut";
 $string['visibility_settings'] = "Näkyvyysasetukset";
 
 $string['setting_reports'] = "Raportit";
-$string['setting_reports_desc'] = "Valitse piilottaaksesi raportit -linkin";
+$string['setting_reports_desc'] = "Valitse piilottaaksesi raportit linkin";
 
 $string['setting_participants'] = "Osallistujat";
-$string['setting_participants_desc'] = "Valitse piilottaaksesi osallistujat -linkin";
+$string['setting_participants_desc'] = "Valitse piilottaaksesi osallistujat-linkin";
 
 $string['setting_course_grades'] = "Arvioinnit";
-$string['setting_course_grades_desc'] = "Valitse piilottaaksesi arvioinnit -linkin";
+$string['setting_course_grades_desc'] = "Valitse piilottaaksesi arvioinnit-linkin";
+
+$string['setting_themesettings'] = "Teeman asetukset";
+$string['setting_themesettings_desc'] = "Valitse piilottaaksesi teeman asetukset -linkin";
