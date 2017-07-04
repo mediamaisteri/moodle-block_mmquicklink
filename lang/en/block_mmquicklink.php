@@ -38,3 +38,5 @@ $string['setting_course_grades_desc'] = "Check to hide course grades link";
 
 $string['setting_themesettings'] = "Theme settings";
 $string['setting_themesettings_desc'] = "Check to hide theme settings link";
+
+$string['mmquicklink:myaddinstance'] = "Add a new Quicklink block";
