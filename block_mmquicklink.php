@@ -220,4 +220,13 @@ user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
         }
     }
 
+} else {
+
+    // Always define block_mmquicklink class to prevent unwanted errors during installation.
+    class block_mmquicklink extends block_base {
+        public function init() {
+            $this->title = get_string('title', 'block_mmquicklink');
+        }
+    }
+
 }
