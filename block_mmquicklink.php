@@ -279,9 +279,9 @@ class block_mmquicklink extends block_base {
                         new moodle_url($CFG->wwwroot . "/course/view.php?id=1&edit=" . $editingmode .
                         "&sesskey=" . $USER->sesskey) . "'>" . $editingmodestring . "</a></li>";
                 }
-                if ($PAGE->pagelayout == "mydashboard") {
+                if ($PAGE->pagelayout == "mydashboard" OR $PAGE->pagelayout == "admin") {
                     $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
-                        new moodle_url($CFG->wwwroot . "/my/?edit=" . $editingmode .
+                        new moodle_url($PAGE->url . "?edit=" . $editingmode .
                         "&sesskey=" . $USER->sesskey) . "'>" . $editingmodestring . "</a></li>";
                 }
 
