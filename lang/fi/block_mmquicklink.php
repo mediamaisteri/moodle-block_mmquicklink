@@ -39,4 +39,7 @@ $string['setting_course_grades_desc'] = "Valitse piilottaaksesi arvioinnit-linki
 $string['setting_themesettings'] = "Teeman asetukset";
 $string['setting_themesettings_desc'] = "Valitse piilottaaksesi teeman asetukset -linkin";
 
+$string['setting_delcourse'] = "Poista kurssi";
+$string['setting_delcourse_desc'] = "Valitse piilottaaksesi kurssinpoistolinkin.";
+
 $string['mmquicklink:addinstance'] = "Lisää Quicklink-lohko";

@@ -217,6 +217,16 @@ class block_mmquicklink extends block_base {
                 }
             }
 
+            // Check if 'hide course delete button' is checked.
+            if (empty($this->config->hide_delcourse)) {
+                // Show link if user has capability to delete course.
+                if (has_capability('moodle/course:delete', context_system::instance())) {
+                    $delurl = new moodle_url($CFG->wwwroot . "/course/delete.php?id=" . $COURSE->id);
+                    $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" . $delurl . "'>" .
+                        get_string('delete') . " " . strtolower(get_string('course')) . "</a></li>";
+                }
+            }
+
             // Add a "completion progress" block.
             $plugins = core_plugin_manager::instance()->get_plugins_of_type('block');
             // Check if module is installed.

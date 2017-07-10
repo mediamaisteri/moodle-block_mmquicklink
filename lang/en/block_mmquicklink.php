@@ -39,4 +39,7 @@ $string['setting_course_grades_desc'] = "Check to hide course grades link";
 $string['setting_themesettings'] = "Theme settings";
 $string['setting_themesettings_desc'] = "Check to hide theme settings link";
 
+$string['setting_delcourse'] = "Delete course";
+$string['setting_delcourse_desc'] = "Check to hide delete course link.";
+
 $string['mmquicklink:addinstance'] = "Add a new Quicklink block";
