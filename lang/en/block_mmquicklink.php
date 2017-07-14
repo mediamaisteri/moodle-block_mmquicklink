@@ -43,3 +43,4 @@ $string['setting_delcourse'] = "Delete course";
 $string['setting_delcourse_desc'] = "Check to hide delete course link.";
 
 $string['mmquicklink:addinstance'] = "Add a new Quicklink block";
+$string['mmquicklink:myaddinstance'] = "Add a new Quicklink block on dashboard";

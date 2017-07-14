@@ -43,3 +43,4 @@ $string['setting_delcourse'] = "Poista kurssi";
 $string['setting_delcourse_desc'] = "Valitse piilottaaksesi kurssinpoistolinkin.";
 
 $string['mmquicklink:addinstance'] = "Lisää Quicklink-lohko";
+$string['mmquicklink:myaddinstance'] = "Lisää Quicklink-lohko työpöydälle";
