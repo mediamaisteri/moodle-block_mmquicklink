@@ -280,7 +280,7 @@ class block_mmquicklink extends block_base {
             // Links on other pages.
 
             // Editing mode on/off link.
-            if ($this->hasManagerAccess() == true) {
+            if ($this->hasAccess() == true) {
                 if ($PAGE->user_is_editing()) {
                     $editingmode = "off";
                     $editingmodestring = get_string("turneditingoff");
