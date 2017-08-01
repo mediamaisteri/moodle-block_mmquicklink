@@ -45,8 +45,13 @@ class block_mmquicklink extends block_base {
                 return true;
             }
 
-            // Allow access if user has role 2 (teachers).
+            // Allow access if user has role 2 (course creators).
             if (user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
+                return true;
+            }
+
+            // Allow access if user has role 3 (teachers).
+            if (user_has_role_assignment($USER->id, 3, context_system::instance()->id)) {
                 return true;
             }
 
@@ -189,7 +194,7 @@ class block_mmquicklink extends block_base {
         $PAGE->pagetype == 'course-view-topics') {
 
             // Editing mode on/off link.
-            if (has_capability('moodle/course:update', context_system::instance())) {
+            if (has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
                 if ($PAGE->user_is_editing()) {
                     $editingmode = "off";
                     $editingmodestring = get_string("turneditingoff");
@@ -203,7 +208,7 @@ class block_mmquicklink extends block_base {
             }
 
             // Show/hide course visibility link.
-            if (has_capability('moodle/course:visibility', context_system::instance())) {
+            if (has_capability('moodle/course:visibility', context_course::instance($COURSE->id))) {
                 if ($COURSE->visible == "1") {
                     $this->content->text .= "<li class='list'><a  class='btn btn-secondary' href='" .
                         new moodle_url($CFG->wwwroot . "/blocks/mmquicklink/changevisibility.php?hide=1&sesskey=" .
@@ -220,7 +225,7 @@ class block_mmquicklink extends block_base {
             // Check if 'hide course delete button' is checked.
             if (empty($this->config->hide_delcourse)) {
                 // Show link if user has capability to delete course.
-                if (has_capability('moodle/course:delete', context_system::instance())) {
+                if (has_capability('moodle/course:delete', context_course::instance($COURSE->id))) {
                     $delurl = new moodle_url($CFG->wwwroot . "/course/delete.php?id=" . $COURSE->id);
                     $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" . $delurl . "'>" .
                         get_string('delete') . " " . strtolower(get_string('course')) . "</a></li>";
@@ -241,7 +246,7 @@ class block_mmquicklink extends block_base {
             }
 
             // Show enrolment key add button.
-            if (has_capability('moodle/course:update', context_system::instance())) {
+            if (has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
                 $this->content->text .= "
                     <li class='list mmquicklink-enrolmentkey'><a class='btn btn-secondary' href=''>"
                      . get_string('set', 'portfolio_flickr') . " " .
@@ -256,7 +261,7 @@ class block_mmquicklink extends block_base {
 
             // Course participants.
             if (empty($this->config->hide_participants)) {
-                if (has_capability('moodle/course:viewparticipants', context_system::instance())) {
+                if (has_capability('moodle/course:viewparticipants', context_course::instance($COURSE->id))) {
                     $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" . new moodle_url($CFG->wwwroot .
                     "/user/index.php?id=" . $PAGE->course->id) . "'>" .
                         get_string('show') . " " . strtolower(get_string('participants')) . "</a></li>";
@@ -298,14 +303,14 @@ class block_mmquicklink extends block_base {
             }
 
             // Show "add a course" button.
-            if (has_capability('moodle/course:create', context_system::instance())) {
+            if (has_capability('moodle/course:create', context_course::instance($COURSE->id))) {
                 $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
                     new moodle_url($CFG->wwwroot . "/course/edit.php?category=1") . "'>".
                     get_string('addnewcourse') . "</a></li>";
             }
 
             // Show course management button.
-            if (has_capability('moodle/category:manage', context_system::instance())) {
+            if (has_capability('moodle/category:manage', context_course::instance($COURSE->id))) {
                 $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
                     new moodle_url($CFG->wwwroot . "/course/management.php") . "'>".
                     get_string('coursemgmt', 'core_admin') . "</a></li>";
