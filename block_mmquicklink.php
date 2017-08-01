@@ -247,6 +247,13 @@ class block_mmquicklink extends block_base {
 
             // Show enrolment key add button.
             if (has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
+                global $DB;
+                $oldkey = $DB->get_record('enrol', array('courseid'=>$COURSE->id, 'enrol'=>'self', 'status'=>0), 'password');
+                if(!empty($oldkey->password)) {
+                    $realoldkey = $oldkey->password;
+                } else {
+                    $realoldkey = "";
+                }
                 $this->content->text .= "
                     <li class='list mmquicklink-enrolmentkey'><a class='btn btn-secondary' href=''>"
                      . get_string('set', 'portfolio_flickr') . " " .
@@ -254,7 +261,7 @@ class block_mmquicklink extends block_base {
                     <div class='mmquicklink-enrolmentkey-div'>
                         <form method='get' action='" . $CFG->wwwroot . "/blocks/mmquicklink/setenrolmentkey.php'>
                         <input type='hidden' name='courseid' value='" . $COURSE->id . "'>
-                        <input class='form-control' type='text' name='enrolmentkey'>
+                        <input class='form-control' type='text' name='enrolmentkey' value='" . $realoldkey . "'>
                         <input class='btn btn-primary' type='submit' value='" . get_string('save', 'core_admin') . "'>
                     </div>";
             }
