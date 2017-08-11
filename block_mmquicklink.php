@@ -87,7 +87,7 @@ class block_mmquicklink extends block_base {
 
     // User can edit only is the user has access.
     function user_can_edit() {
-        if ($this->hasAccess() == true) {
+        if (is_siteadmin()) {
             return true;
         }
         return false;
