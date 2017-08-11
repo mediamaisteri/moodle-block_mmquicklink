@@ -27,6 +27,8 @@ if ($ADMIN->fulltree) {
     
     $settings->add(new admin_setting_heading('block_mmquicklink_visibility_settings', get_string('visibility_settings', 'block_mmquicklink'), ''));
 
+    $settings->add(new admin_setting_configtext('mmquicklink/config_roles', get_string('setting_roles', 'block_mmquicklink'), get_string('setting_roles_desc', 'block_mmquicklink'), '1, 2, 3'));
+    
     $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_reports', get_string('setting_reports', 'block_mmquicklink'), get_string('setting_reports_desc', 'block_mmquicklink'), 0));
     $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_delcourse', get_string('setting_delcourse', 'block_mmquicklink'), get_string('setting_delcourse_desc', 'block_mmquicklink'), 0));
     $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_participants', get_string('setting_participants', 'block_mmquicklink'), get_string('setting_participants_desc', 'block_mmquicklink'), 0));

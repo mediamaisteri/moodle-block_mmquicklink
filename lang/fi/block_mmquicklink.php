@@ -44,3 +44,6 @@ $string['setting_delcourse_desc'] = "Valitse piilottaaksesi kurssinpoistolinkin.
 
 $string['mmquicklink:addinstance'] = "Lisää Quicklink-lohko";
 $string['mmquicklink:myaddinstance'] = "Lisää Quicklink-lohko työpöydälle";
+
+$string['setting_roles'] = "Sallitut roolit";
+$string['setting_roles_desc'] = "Roolien ID:t, jotka saavat nähdä lohkon.";
