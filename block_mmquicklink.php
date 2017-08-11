@@ -46,19 +46,14 @@ class block_mmquicklink extends block_base {
                 return true;
             }
             
-            // Check if access is allowed for user's role in global settings.
-            $roles = $DB->get_records('role');
+            // Load config from global settings.
+            $roles = get_config('mmquicklink', 'config_roles');
+            $roles = explode(",", $roles);
             foreach($roles as $role) {
-                // Check to config.
-                $loadrole = get_config('mmquicklink', 'config_roleid_' . $role->id);
-                if (empty($loadrole)) {
-                    continue;
-                } else {
-                    // Check user's role assignment.
-                    if (user_has_role_assignment($USER->id, $role->id, context_system::instance()->id)) {
-                        // Return true if user has role assignment and the role has access.
-                        return true;
-                    }
+                // Check user's role assignment.
+                if (user_has_role_assignment($USER->id, $role, context_system::instance()->id)) {
+                    // Return true if user has role assignment and the role has access.
+                    return true;
                 }
             }
 

@@ -26,18 +26,22 @@ defined('MOODLE_INTERNAL') || die;
 if ($ADMIN->fulltree) {
     global $DB;
     
+    $rolearray = [];
+    $default_roles = [];
     // Load existing roles from DB.
     $roles = $DB->get_records('role');
-    $settings->add(new admin_setting_heading('block_mmquicklink_role_settings', get_string('setting_roles', 'block_mmquicklink'), ''));
     foreach($roles as $role) {
-        if($role->id <= 3) {
-            $defanswer = 1;
-        } else {
-            $defanswer = 0;
+        // Add role to array.
+        $rolearray[$role->id] = $role->shortname;
+        // Default roles are manager, coursecreator and editingteacher.
+        if (in_array($role->shortname, ['manager', 'coursecreator', 'editingteacher'])) {
+            $default_roles[$role->id] = $role->shortname;
         }
-        // Add new checkbox for every role.
-        $settings->add(new admin_setting_configcheckbox('mmquicklink/config_roleid_' . $role->id, $role->shortname, '', $defanswer));
     }
+    
+    $settings->add(new admin_setting_heading('block_mmquicklink_role_settings', get_string('setting_roles', 'block_mmquicklink'), ''));
+    
+    $settings->add(new admin_setting_configmulticheckbox('mmquicklink/config_roles', get_string('setting_roles', 'block_mmquicklink'), get_string('setting_roles_desc', 'block_mmquicklink'), $default_roles, $rolearray));
     
     $settings->add(new admin_setting_heading('block_mmquicklink_visibility_settings', get_string('visibility_settings', 'block_mmquicklink'), ''));
     $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_reports', get_string('setting_reports', 'block_mmquicklink'), get_string('setting_reports_desc', 'block_mmquicklink'), 0));
