@@ -39,69 +39,32 @@ class block_mmquicklink extends block_base {
 
     // Function to check if user is admin, manager or teacher.
     private function hasAccess() {
-            global $USER;
+            global $USER, $DB;
 
+            // Admin has access always.
             if (is_siteadmin()) {
                 return true;
             }
             
-            // Use role IDs found in global config if they're set.
-            if (!empty(get_config('mmquicklink', 'config_roles'))) {
-                $loadroles = str_replace(" ", "", get_config('mmquicklink', 'config_roles'));
-                $exploderoles = explode(",", $loadroles);
-                
-                $found = 0;
-                foreach($exploderoles as $roleid) {
-                    if (user_has_role_assignment($USER->id, $roleid, context_system::instance()->id)) {
-                        $found = 1;
+            // Check if access is allowed for user's role in global settings.
+            $roles = $DB->get_records('role');
+            foreach($roles as $role) {
+                // Check to config.
+                $loadrole = get_config('mmquicklink', 'config_roleid_' . $role->id);
+                if (empty($loadrole)) {
+                    continue;
+                } else {
+                    // Check user's role assignment.
+                    if (user_has_role_assignment($USER->id, $role->id, context_system::instance()->id)) {
+                        // Return true if user has role assignment and the role has access.
                         return true;
                     }
                 }
-                
-                if ($found == 0) {
-                    return false;
-                }
-                
-            // Use default role IDs if no config set.
-            } else {
-
-                // Allow access if user has role 1 (managers).
-                if (user_has_role_assignment($USER->id, 1, context_system::instance()->id)) {
-                    return true;
-                }
-
-                // Allow access if user has role 2 (course creators).
-                if (user_has_role_assignment($USER->id, 2, context_system::instance()->id)) {
-                    return true;
-                }
-
-                // Allow access if user has role 3 (teachers).
-                if (user_has_role_assignment($USER->id, 3, context_system::instance()->id)) {
-                    return true;
-                }
-                
             }
 
-            // Return false if user has no access.
+            // Return false if user has no access granted earlier.
             return false;
             
-    }
-
-    // Function to check if user is admin or manager.
-    private function hasManagerAccess() {
-            global $USER;
-
-            if (is_siteadmin()) {
-                return true;
-            }
-
-            // Allow access if user has role 1 (managers).
-            if (user_has_role_assignment($USER->id, 1, context_system::instance()->id)) {
-                return true;
-            }
-
-            // Return false if user has no access.
-            return false;
     }
 
     public function init() {
@@ -352,7 +315,7 @@ class block_mmquicklink extends block_base {
             }
 
             // Frontpage settings link only on frontpage.
-            if ($this->hasManagerAccess() == true) {
+            if ($this->hasAccess() == true) {
                 if ($PAGE->pagelayout == 'frontpage') {
                     $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
                         new moodle_url($CFG->wwwroot . "/admin/settings.php?section=frontpagesettings") . "'>" .

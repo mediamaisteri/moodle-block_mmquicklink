@@ -24,11 +24,22 @@
 defined('MOODLE_INTERNAL') || die;
 
 if ($ADMIN->fulltree) {
+    global $DB;
+    
+    // Load existing roles from DB.
+    $roles = $DB->get_records('role');
+    $settings->add(new admin_setting_heading('block_mmquicklink_role_settings', get_string('setting_roles', 'block_mmquicklink'), ''));
+    foreach($roles as $role) {
+        if($role->id <= 3) {
+            $defanswer = 1;
+        } else {
+            $defanswer = 0;
+        }
+        // Add new checkbox for every role.
+        $settings->add(new admin_setting_configcheckbox('mmquicklink/config_roleid_' . $role->id, $role->shortname, '', $defanswer));
+    }
     
     $settings->add(new admin_setting_heading('block_mmquicklink_visibility_settings', get_string('visibility_settings', 'block_mmquicklink'), ''));
-
-    $settings->add(new admin_setting_configtext('mmquicklink/config_roles', get_string('setting_roles', 'block_mmquicklink'), get_string('setting_roles_desc', 'block_mmquicklink'), '1, 2, 3'));
-    
     $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_reports', get_string('setting_reports', 'block_mmquicklink'), get_string('setting_reports_desc', 'block_mmquicklink'), 0));
     $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_delcourse', get_string('setting_delcourse', 'block_mmquicklink'), get_string('setting_delcourse_desc', 'block_mmquicklink'), 0));
     $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_participants', get_string('setting_participants', 'block_mmquicklink'), get_string('setting_participants_desc', 'block_mmquicklink'), 0));
