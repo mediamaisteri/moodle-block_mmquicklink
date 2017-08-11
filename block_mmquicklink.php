@@ -174,6 +174,13 @@ class block_mmquicklink extends block_base {
                 $this->content->text .= $PAGE->get_renderer('block_mmquicklink')->mmquicklink_tree($reports);
             }
         }
+        
+        // Language customization link.
+        if (empty(get_config('mmquicklink', 'config_hide_langcust')) && has_capability('tool/customlang:edit', context_system::instance())) {
+            $custlangurl = new moodle_url('/admin/tool/customlang/index.php');
+            $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" . $custlangurl . "'>" . get_string('pluginname', 'tool_customlang') . "</a></li>";
+        }
+        
 
         // Links to show on course pages.
         if ($PAGE->pagelayout == 'course' || $PAGE->pagelayout == 'incourse' || $PAGE->pagelayout == 'report' ||

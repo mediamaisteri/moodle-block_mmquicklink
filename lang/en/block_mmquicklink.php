@@ -40,10 +40,13 @@ $string['setting_themesettings'] = "Theme settings";
 $string['setting_themesettings_desc'] = "Check to hide theme settings link";
 
 $string['setting_delcourse'] = "Delete course";
-$string['setting_delcourse_desc'] = "Check to hide delete course link.";
+$string['setting_delcourse_desc'] = "Check to hide delete course link";
 
 $string['mmquicklink:addinstance'] = "Add a new Quicklink block";
 $string['mmquicklink:myaddinstance'] = "Add a new Quicklink block on dashboard";
 
 $string['setting_roles'] = "Approved roles";
-$string['setting_roles_desc'] = "Type in role IDs which can see the block.";
+$string['setting_roles_desc'] = "Check roles which can see the block.";
+
+$string['setting_langcust'] = "Language customization";
+$string['setting_langcust_desc'] = "Check to hide language customization link";
