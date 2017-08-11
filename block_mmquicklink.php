@@ -31,6 +31,11 @@ Mediamaisteri Oy
 defined('MOODLE_INTERNAL') || die();
 
 class block_mmquicklink extends block_base {
+    
+    // Tell block to use global settings.
+    function has_config() {
+        return true;
+    }
 
     // Function to check if user is admin, manager or teacher.
     private function hasAccess() {
@@ -172,7 +177,7 @@ class block_mmquicklink extends block_base {
         $this->content->text = "";
 
         // Theme settings -link.
-        if (empty($this->config->hide_themesettings)) {
+        if (empty(get_config('mmquicklink', 'config_hide_themesettings'))) {
             if (is_siteadmin()) {
                 $adminurl = new moodle_url('/admin/settings.php?section=themesetting' . $PAGE->theme->name);
                 $this->content->text.= "<li class='list'><a class='btn btn-secondary' href='" . $adminurl . "'>" . get_string('themesettings', 'core_admin') . "</a></li>";
@@ -180,7 +185,7 @@ class block_mmquicklink extends block_base {
         }
 
         // Render local_reports navigation.
-        if (empty($this->config->hide_reports)) {
+        if (empty(get_config('mmquicklink', 'config_hide_reports'))) {
             $reports = $PAGE->navigation->find('local_reports', navigation_node::TYPE_CUSTOM);
             if ($reports) {
                 $this->content->text .= "<li class='list mmquicklink-reports-button'><a class='btn btn-secondary'>"
@@ -223,7 +228,7 @@ class block_mmquicklink extends block_base {
             }
 
             // Check if 'hide course delete button' is checked.
-            if (empty($this->config->hide_delcourse)) {
+            if (empty(get_config('mmquicklink', 'config_hide_delcourse'))) {
                 // Show link if user has capability to delete course.
                 if (has_capability('moodle/course:delete', context_course::instance($COURSE->id))) {
                     $delurl = new moodle_url($CFG->wwwroot . "/course/delete.php?id=" . $COURSE->id);
@@ -267,7 +272,7 @@ class block_mmquicklink extends block_base {
             }
 
             // Course participants.
-            if (empty($this->config->hide_participants)) {
+            if (empty(get_config('mmquicklink', 'config_hide_participants'))) {
                 if (has_capability('moodle/course:viewparticipants', context_course::instance($COURSE->id))) {
                     $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" . new moodle_url($CFG->wwwroot .
                     "/user/index.php?id=" . $PAGE->course->id) . "'>" .
@@ -276,7 +281,7 @@ class block_mmquicklink extends block_base {
             }
 
             // Course grading.
-            if (empty($this->config->hide_course_grades)) {
+            if (empty(get_config('mmquicklink', 'config_hide_course_grades'))) {
                 if (has_capability('mod/assign:grade', context_system::instance())) {
                     $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" . new moodle_url($CFG->wwwroot .
                     "/grade/report/grader/index.php?id=" . $PAGE->course->id) . "'>" . get_string('coursegrades') . "</a></li>";
