@@ -282,11 +282,13 @@ class block_mmquicklink extends block_base {
                     $editingmodestring = get_string("turneditingon");
                 }
 
-                if ($PAGE->pagelayout == "frontpage") {
+                // Check if user has capability to edit frontpage.
+                if ($PAGE->pagelayout == "frontpage" && has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
                     $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
                         new moodle_url($CFG->wwwroot . "/course/view.php?id=1&edit=" . $editingmode .
                         "&sesskey=" . $USER->sesskey) . "'>" . $editingmodestring . "</a></li>";
                 }
+                
                 if ($PAGE->pagelayout == "mydashboard" OR $PAGE->pagelayout == "admin") {
                     $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
                         new moodle_url($PAGE->url . "?edit=" . $editingmode .
@@ -310,7 +312,7 @@ class block_mmquicklink extends block_base {
             }
 
             // Frontpage settings link only on frontpage.
-            if ($this->hasAccess() == true) {
+            if ($this->hasAccess() == true && has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
                 if ($PAGE->pagelayout == 'frontpage') {
                     $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
                         new moodle_url($CFG->wwwroot . "/admin/settings.php?section=frontpagesettings") . "'>" .
