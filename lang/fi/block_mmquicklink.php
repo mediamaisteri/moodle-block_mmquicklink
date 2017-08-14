@@ -50,3 +50,5 @@ $string['setting_roles_desc'] = "Roolit, jotka saavat nähdä lohkon.";
 
 $string['setting_langcust'] = "Kielen muokkaus";
 $string['setting_langcust_desc'] = "Valitse piilottaaksesi kielenmuokkauslinkin";
+
+$string['emptyblock'] = "Tällä sivulla roolisi oikeudet eivät ole riittävät.";
