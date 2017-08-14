@@ -52,3 +52,8 @@ $string['setting_langcust'] = "Language customization";
 $string['setting_langcust_desc'] = "Check to hide language customization link";
 
 $string['emptyblock'] = "On this page your role's permissions are not sufficient.";
+
+$string['coursegrades'] = "Course grading";
+$string['hide_course'] = "Hide course";
+$string['show_course'] = "Show course";
+$string['delete_course'] = "Delete course";

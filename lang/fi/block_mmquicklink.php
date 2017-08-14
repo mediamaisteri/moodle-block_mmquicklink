@@ -52,3 +52,8 @@ $string['setting_langcust'] = "Kielen muokkaus";
 $string['setting_langcust_desc'] = "Valitse piilottaaksesi kielenmuokkauslinkin";
 
 $string['emptyblock'] = "Tällä sivulla roolisi oikeudet eivät ole riittävät.";
+
+$string['coursegrades'] = "Kurssin arvioinnit";
+$string['hide_course'] = "Piilota kurssi";
+$string['show_course'] = "Näytä kurssi";
+$string['delete_course'] = "Poista kurssi";

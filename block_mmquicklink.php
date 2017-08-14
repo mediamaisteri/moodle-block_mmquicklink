@@ -187,8 +187,7 @@ class block_mmquicklink extends block_base {
         
 
         // Links to show on course pages.
-        if ($PAGE->pagelayout == 'course' || $PAGE->pagelayout == 'incourse' || $PAGE->pagelayout == 'report' ||
-        $PAGE->pagetype == 'course-view-topics') {
+        if ($PAGE->pagelayout == 'course' || $PAGE->pagelayout == 'incourse' || $PAGE->pagetype == 'course-view-topics') {
 
             // Editing mode on/off link.
             if (has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
@@ -209,13 +208,11 @@ class block_mmquicklink extends block_base {
                 if ($COURSE->visible == "1") {
                     $this->content->text .= "<li class='list'><a  class='btn btn-secondary' href='" .
                         new moodle_url($CFG->wwwroot . "/blocks/mmquicklink/changevisibility.php?hide=1&sesskey=" .
-                        $USER->sesskey . "&id=" . $COURSE->id) . "'>" . get_string('hide') . " " .
-                        strtolower(get_string('course')) . "</a></li>";
+                        $USER->sesskey . "&id=" . $COURSE->id) . "'>" . get_string('hide_course', 'block_mmquicklink') . "</a></li>";
                 } else {
                     $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
                         new moodle_url($CFG->wwwroot . "/blocks/mmquicklink/changevisibility.php?hide=0&sesskey=" .
-                        $USER->sesskey . "&id=" . $COURSE->id) . "'>" . get_string('show') . " " .
-                        strtolower(get_string('course')) . "</a></li>";
+                        $USER->sesskey . "&id=" . $COURSE->id) . "'>" . get_string('show_course', 'block_mmquicklink') . "</a></li>";
                 }
             }
 
@@ -225,7 +222,7 @@ class block_mmquicklink extends block_base {
                 if (has_capability('moodle/course:delete', context_course::instance($COURSE->id))) {
                     $delurl = new moodle_url($CFG->wwwroot . "/course/delete.php?id=" . $COURSE->id);
                     $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" . $delurl . "'>" .
-                        get_string('delete') . " " . strtolower(get_string('course')) . "</a></li>";
+                        get_string('delete_course', 'block_mmquicklink') . "</a></li>";
                 }
             }
 
@@ -268,7 +265,7 @@ class block_mmquicklink extends block_base {
                 if (has_capability('moodle/course:viewparticipants', context_course::instance($COURSE->id))) {
                     $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" . new moodle_url($CFG->wwwroot .
                     "/user/index.php?id=" . $PAGE->course->id) . "'>" .
-                        get_string('show') . " " . strtolower(get_string('participants')) . "</a></li>";
+                        get_string('participants') . "</a></li>";
                 }
             }
 
@@ -276,7 +273,7 @@ class block_mmquicklink extends block_base {
             if (empty(get_config('mmquicklink', 'config_hide_course_grades'))) {
                 if (has_capability('mod/assign:grade', context_system::instance())) {
                     $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" . new moodle_url($CFG->wwwroot .
-                    "/grade/report/grader/index.php?id=" . $PAGE->course->id) . "'>" . get_string('coursegrades') . "</a></li>";
+                    "/grade/report/grader/index.php?id=" . $PAGE->course->id) . "'>" . get_string('coursegrades', 'block_mmquicklink') . "</a></li>";
                 }
             }
 
