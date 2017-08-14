@@ -231,12 +231,14 @@ class block_mmquicklink extends block_base {
             // Check if module is installed.
             if (!empty($plugins["completion_progress"]->name)) {
                 if ($PAGE->blocks->is_block_present('completion_progress') == false) {
-                    // Check if user has capability.
-                    if (has_capability('block/completion_progress:addinstance', context_course::instance($COURSE->id))) {
-                            $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
-                            $CFG->wwwroot . "/course/view.php?id=" . $COURSE->id . "&sesskey=" . $USER->sesskey .
-                            "&bui_addblock=completion_progress'>" . get_string('add') . " " .
-                            strtolower(get_string('pluginname', 'block_completion_progress')) . "</a></li>";
+                    if ($PAGE->user_is_editing()) {
+                        // Check if user has capability.
+                        if (has_capability('block/completion_progress:addinstance', context_course::instance($COURSE->id))) {
+                                $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
+                                $CFG->wwwroot . "/course/view.php?id=" . $COURSE->id . "&sesskey=" . $USER->sesskey .
+                                "&bui_addblock=completion_progress'>" . get_string('add') . " " .
+                                strtolower(get_string('pluginname', 'block_completion_progress')) . "</a></li>";
+                        }
                     }
                 }
             }
