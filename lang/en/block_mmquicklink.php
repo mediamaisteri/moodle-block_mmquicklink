@@ -50,3 +50,5 @@ $string['setting_roles_desc'] = "Check roles which can see the block.";
 
 $string['setting_langcust'] = "Language customization";
 $string['setting_langcust_desc'] = "Check to hide language customization link";
+
+$string['emptyblock'] = "On this page your role's permissions are not sufficient.";

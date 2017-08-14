@@ -39,7 +39,7 @@ class block_mmquicklink extends block_base {
 
     // Function to check if user is admin, manager or teacher.
     private function hasAccess() {
-            global $USER, $DB;
+            global $USER, $DB, $COURSE;
 
             // Admin has access always.
             if (is_siteadmin()) {
@@ -53,6 +53,10 @@ class block_mmquicklink extends block_base {
                 // Check user's role assignment.
                 if (user_has_role_assignment($USER->id, $role, context_system::instance()->id)) {
                     // Return true if user has role assignment and the role has access.
+                    return true;
+                }
+                
+                if (user_has_role_assignment($USER->id, $role)) {
                     return true;
                 }
             }
@@ -327,6 +331,10 @@ class block_mmquicklink extends block_base {
                 }
             }
 
+        }
+
+        if (strlen($this->content->text) < 10) {
+            $this->content->text .= get_string('emptyblock', 'block_mmquicklink');
         }
 
         // Return data to block.
