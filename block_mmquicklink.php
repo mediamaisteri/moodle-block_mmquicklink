@@ -306,10 +306,18 @@ class block_mmquicklink extends block_base {
             }
 
             // Show "add a course" button.
-            if (has_capability('moodle/course:create', context_course::instance($COURSE->id))) {
-                $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
-                    new moodle_url($CFG->wwwroot . "/course/edit.php?category=1") . "'>".
-                    get_string('addnewcourse') . "</a></li>";
+            if (isset($_GET["categoryid"])) {
+                if (has_capability('moodle/course:create', context_coursecat::instance($_GET["categoryid"]))) {
+                    $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
+                        new moodle_url($CFG->wwwroot . "/course/edit.php?category=1") . "'>".
+                        get_string('addnewcourse') . "</a></li>";                    
+                }
+            } else {
+                if (has_capability('moodle/course:create', context_course::instance($COURSE->id))) {
+                    $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
+                        new moodle_url($CFG->wwwroot . "/course/edit.php?category=1") . "'>".
+                        get_string('addnewcourse') . "</a></li>";
+                }
             }
 
             // Show course management button.
