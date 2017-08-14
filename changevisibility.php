@@ -31,8 +31,8 @@ $courseid = strip_tags($_GET["id"]);
 
 require_login();
 
-// Check if user has permission to edit visibility.
-if (has_capability('moodle/course:visibility', context_system::instance())) {
+// Check if user has permission to edit visibility in current course context.
+if (has_capability('moodle/course:visibility', context_course::instance($courseid))) {
 
     if (strip_tags($_GET["hide"]) == 1) {
         // Update DB to hide course.
