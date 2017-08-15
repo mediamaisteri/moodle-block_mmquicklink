@@ -366,7 +366,7 @@ class block_mmquicklink extends block_base {
                     foreach ($categories as $category) {
                         if (has_capability('moodle/course:create', context_coursecat::instance($category->id))) {
                             $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
-                                new moodle_url($CFG->wwwroot . "/course/edit.php?category=1") . "'>".
+                                new moodle_url($CFG->wwwroot . "/course/edit.php?category=" . $category->id) . "'>".
                                 get_string('addnewcourse') . "</a></li>";   
                             break;                        
                         }
