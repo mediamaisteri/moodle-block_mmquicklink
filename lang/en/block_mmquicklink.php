@@ -46,7 +46,7 @@ $string['mmquicklink:addinstance'] = "Add a new Quicklink block";
 $string['mmquicklink:myaddinstance'] = "Add a new Quicklink block on dashboard";
 
 $string['setting_roles'] = "Approved roles";
-$string['setting_roles_desc'] = "Check roles which can see the block.";
+$string['setting_roles_desc'] = "Check the roles which can see the block.";
 
 $string['setting_langcust'] = "Language customization";
 $string['setting_langcust_desc'] = "Check to hide language customization link";
@@ -57,3 +57,6 @@ $string['coursegrades'] = "Course grading";
 $string['hide_course'] = "Hide course";
 $string['show_course'] = "Show course";
 $string['delete_course'] = "Delete course";
+
+$string['setting_pagelayouts'] = "Pagelayouts";
+$string['setting_pagelayouts_desc'] = "Check the pagelayouts which can show the block.";
