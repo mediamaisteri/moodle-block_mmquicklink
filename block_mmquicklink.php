@@ -222,7 +222,7 @@ class block_mmquicklink extends block_base {
         
 
         // Links to show on course pages.
-        if ($PAGE->pagelayout == 'course' || $PAGE->pagetype == 'course-view-topics') {
+        if ($PAGE->pagelayout == 'course' || $PAGE->pagelayout == "incourse" || $PAGE->pagetype == 'course-view-topics') {
 
             // Editing mode on/off link.
             if (has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
