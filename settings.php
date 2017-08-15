@@ -39,10 +39,32 @@ if ($ADMIN->fulltree) {
         }
     }
     
-    $settings->add(new admin_setting_heading('block_mmquicklink_role_settings', get_string('setting_roles', 'block_mmquicklink'), ''));
+    $pagelayouts = ['base',
+    'standard',
+    'course',
+    'coursecategory',
+    'incourse',
+    'frontpage',
+    'admin',
+    'mydashboard',
+    'mypublic',
+    'login',
+    'popup',
+    'frametop',
+    'embedded',
+    'maintenance',
+    'print',
+    'redirect',
+    'report'];
+
+    $default_pagelayouts = ['course','coursecategory','incourse','frontpage','admin','report','mydashboard'];
     
+    $settings->add(new admin_setting_heading('block_mmquicklink_role_settings', get_string('setting_roles', 'block_mmquicklink'), ''));
     $settings->add(new admin_setting_configmulticheckbox('mmquicklink/config_roles', get_string('setting_roles', 'block_mmquicklink'), get_string('setting_roles_desc', 'block_mmquicklink'), $default_roles, $rolearray));
     
+    $settings->add(new admin_setting_heading('block_mmquicklink_pagelayout_settings', get_string('setting_pagelayouts', 'block_mmquicklink'), ''));
+    $settings->add(new admin_setting_configmulticheckbox('mmquicklink/config_pagelayouts', get_string('setting_pagelayouts', 'block_mmquicklink'), get_string('setting_pagelayouts_desc', 'block_mmquicklink'), $default_pagelayouts, $pagelayouts));
+        
     $settings->add(new admin_setting_heading('block_mmquicklink_visibility_settings', get_string('visibility_settings', 'block_mmquicklink'), ''));
     $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_reports', get_string('setting_reports', 'block_mmquicklink'), get_string('setting_reports_desc', 'block_mmquicklink'), 0));
     $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_delcourse', get_string('setting_delcourse', 'block_mmquicklink'), get_string('setting_delcourse_desc', 'block_mmquicklink'), 0));

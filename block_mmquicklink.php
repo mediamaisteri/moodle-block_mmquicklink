@@ -69,12 +69,25 @@ class block_mmquicklink extends block_base {
     // Function to hide the block on specific pagetypes.
     private function hideTypes() {
         global $PAGE;
+
+        $pagelayouts = get_config('mmquicklink', 'config_pagelayouts');
+        $pagelayouts = explode(",", $pagelayouts);
+    
+        $pagelayoutlist = ['base','standard','course','coursecategory','incourse','frontpage','admin','mydashboard','mypublic','login','popup','frametop','embedded','maintenance','print','redirect','report'];
         
-        // Hide the block on these page layout types-
-        if ($PAGE->pagelayout == 'incourse') {
-            return true;
+        $found = 0;
+        foreach ($pagelayouts as $pagelayout) {
+            if ($PAGE->pagelayout == $pagelayoutlist[$pagelayout]) {
+                $found = 1;
+                return false;
+            }
         }
         
+        // If current pagelayout is not found in approved layoutlist, hide the block.
+        if ($found == 0) {
+            return true;
+        }
+
         return false;
     }
 

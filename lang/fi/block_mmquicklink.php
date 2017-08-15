@@ -57,3 +57,6 @@ $string['coursegrades'] = "Kurssin arvioinnit";
 $string['hide_course'] = "Piilota kurssi";
 $string['show_course'] = "Näytä kurssi";
 $string['delete_course'] = "Poista kurssi";
+
+$string['setting_pagelayouts'] = "Sallitut sivutyypit";
+$string['setting_pagelayouts_desc'] = "Valitse sivutyypit, joilla lohko on mahdollista näyttää.";
