@@ -261,6 +261,7 @@ class block_mmquicklink extends block_base {
                         <input type='hidden' name='courseid' value='" . $COURSE->id . "'>
                         <input class='form-control' type='text' name='enrolmentkey' value='" . $realoldkey . "'>
                         <input class='btn btn-primary' type='submit' value='" . get_string('save', 'core_admin') . "'>
+                        </form>
                     </div>";
             }
 
