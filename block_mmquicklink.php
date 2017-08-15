@@ -65,6 +65,18 @@ class block_mmquicklink extends block_base {
             return false;
             
     }
+    
+    // Function to hide the block on specific pagetypes.
+    private function hideTypes() {
+        global $PAGE;
+        
+        // Hide the block on these page layout types-
+        if ($PAGE->pagelayout == 'incourse') {
+            return true;
+        }
+        
+        return false;
+    }
 
     public function init() {
             $this->title = get_string('title', 'block_mmquicklink');
@@ -94,9 +106,19 @@ class block_mmquicklink extends block_base {
 
     // Show empty content if user has no access.
     function is_empty() {
+        global $PAGE;
+
+        // Check if block is wanted on this pagetype.
+        if ($this->hideTypes() == true) {
+            return true;
+        }
+        
+        // Check if user has access.
         if ($this->hasAccess() == true) {
             return false;
         }
+        
+        // Return empty if not otherwise stated.
         return true;
     }
 
@@ -187,7 +209,7 @@ class block_mmquicklink extends block_base {
         
 
         // Links to show on course pages.
-        if ($PAGE->pagelayout == 'course' || $PAGE->pagelayout == 'incourse' || $PAGE->pagetype == 'course-view-topics') {
+        if ($PAGE->pagelayout == 'course' || $PAGE->pagetype == 'course-view-topics') {
 
             // Editing mode on/off link.
             if (has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
