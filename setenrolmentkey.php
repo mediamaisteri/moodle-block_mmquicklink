@@ -36,7 +36,7 @@ $courseid = strip_tags($_GET["courseid"]);
 $enrolmentkey = strip_tags($_GET["enrolmentkey"]);
 
 // Check if user has permission to edit course enrolment methods.
-if (has_capability('moodle/course:enrolconfig', context_system::instance())) {
+if (has_capability('moodle/course:enrolconfig', context_course::instance($courseid))) {
 
     // Update field to either set or disable enrolment key.
     if ($enrolmentkey) {
