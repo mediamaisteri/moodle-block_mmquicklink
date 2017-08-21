@@ -311,7 +311,7 @@ class block_mmquicklink extends block_base {
 
             // Course grading.
             if (empty(get_config('mmquicklink', 'config_hide_course_grades'))) {
-                if (has_capability('mod/assign:grade', context_system::instance())) {
+                if (has_capability('mod/assign:grade', context_course::instance($COURSE->id))) {
                     $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" . new moodle_url($CFG->wwwroot .
                     "/grade/report/grader/index.php?id=" . $PAGE->course->id) . "'>" . get_string('coursegrades', 'block_mmquicklink') . "</a></li>";
                 }
