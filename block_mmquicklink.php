@@ -281,10 +281,12 @@ class block_mmquicklink extends block_base {
             // Show enrolment key add button.
             if (has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
                 global $DB;
-                $oldkey = $DB->get_record('enrol', array('courseid'=>$COURSE->id, 'enrol'=>'self', 'status'=>0), 'password');
-                if(!empty($oldkey->password)) {
-                    $realoldkey = $oldkey->password;
-                } else {
+                $oldkey = $DB->get_records('enrol', array('courseid'=>$COURSE->id, 'enrol'=>'self', 'status'=>0), 'password');
+                foreach ($oldkey as $oneoldkey) {
+                    $realoldkey = $oneoldkey->password;
+                    break;
+                }
+                if(empty($realoldkey)) {
                     $realoldkey = "";
                 }
                 $this->content->text .= "
