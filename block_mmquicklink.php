@@ -76,10 +76,12 @@ class block_mmquicklink extends block_base {
         $pagelayoutlist = ['base','standard','course','coursecategory','incourse','frontpage','admin','mydashboard','mypublic','login','popup','frametop','embedded','maintenance','print','redirect','report'];
         
         $found = 0;
-        foreach ($pagelayouts as $pagelayout) {
-            if ($PAGE->pagelayout == $pagelayoutlist[$pagelayout]) {
-                $found = 1;
-                return false;
+        if (count($pagelayouts)>0 && strlen($pagelayouts[0])>0) {
+            foreach ($pagelayouts as $pagelayout) {
+                if ($PAGE->pagelayout == $pagelayoutlist[$pagelayout]) {
+                    $found = 1;
+                    return false;
+                }
             }
         }
         
