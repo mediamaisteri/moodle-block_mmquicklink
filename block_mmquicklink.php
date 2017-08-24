@@ -214,6 +214,11 @@ class block_mmquicklink extends block_base {
                     new moodle_url($CFG->wwwroot . "/course/view.php?id=" . $COURSE->id . "&edit=" . $editingmode .
                     "&sesskey=" . $USER->sesskey) . "'>" . $editingmodestring . "</a></li>";
             }
+            
+            if (empty(get_config('mmquicklink', 'config_hide_editsettings') && has_capability('moodle/course:update', context_course::instance($COURSE->id)))) {
+                $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
+                    new moodle_url($CFG->wwwroot . "/course/edit.php?id=" . $COURSE->id) . "'>" . get_string('editsettings', 'core') . "</a></li>";
+            }
 
             // Show/hide course visibility link.
             if (has_capability('moodle/course:visibility', context_course::instance($COURSE->id))) {

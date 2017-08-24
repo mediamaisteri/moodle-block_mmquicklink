@@ -60,3 +60,6 @@ $string['delete_course'] = "Delete course";
 
 $string['setting_pagelayouts'] = "Pagelayouts";
 $string['setting_pagelayouts_desc'] = "Check the pagelayouts which can show the block.";
+
+$string['setting_editsettings'] = "Edit course settings";
+$string['setting_editsettings_desc'] = "Check to hide 'edit course settings' link";

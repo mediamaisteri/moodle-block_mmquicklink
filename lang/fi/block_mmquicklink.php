@@ -60,3 +60,6 @@ $string['delete_course'] = "Poista kurssi";
 
 $string['setting_pagelayouts'] = "Sallitut sivutyypit";
 $string['setting_pagelayouts_desc'] = "Valitse sivutyypit, joilla lohko on mahdollista näyttää.";
+
+$string['setting_editsettings'] = "Muokkaa kurssin asetuksia";
+$string['setting_editsettings_desc'] = "Valitse piilottaaksesi 'muokkaa kurssin asetuksia' -linkin";
