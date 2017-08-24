@@ -5,10 +5,11 @@
 .mmquicklink-enrolmentkey-div .btn {
     display: inline;
     float: right;
+    max-width: 40%;
 }
 
 .mmquicklink-enrolmentkey-div .form-control {
-    width: 70%;
+    width: 60%;
     display: inline;
     margin-bottom: 5px;
 }
