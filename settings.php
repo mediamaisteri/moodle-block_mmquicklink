@@ -25,20 +25,20 @@ defined('MOODLE_INTERNAL') || die;
 
 if ($ADMIN->fulltree) {
     global $DB;
-    
+
     $rolearray = [];
-    $default_roles = [];
+    $defaultroles = [];
     // Load existing roles from DB.
     $roles = $DB->get_records('role');
-    foreach($roles as $role) {
+    foreach ($roles as $role) {
         // Add role to array.
         $rolearray[$role->id] = $role->shortname;
         // Default roles are manager, coursecreator and editingteacher.
         if (in_array($role->shortname, ['manager', 'coursecreator', 'editingteacher'])) {
-            $default_roles[$role->id] = $role->shortname;
+            $defaultroles[$role->id] = $role->shortname;
         }
     }
-    
+
     $pagelayouts = ['base',
     'standard',
     'course',
@@ -57,24 +57,43 @@ if ($ADMIN->fulltree) {
     'redirect',
     'report'];
 
-    $default_pagelayouts = ['course','coursecategory','incourse','frontpage','admin','report','mydashboard'];
+    $defaultpagelayouts = ['course', 'coursecategory', 'incourse', 'frontpage', 'admin', 'report', 'mydashboard'];
 
-    $settings->add(new admin_setting_heading('block_mmquicklink_general_settings', get_string('setting_general', 'block_mmquicklink'), ''));
-    $settings->add(new admin_setting_configtext('mmquicklink/config_blocktitle', get_string('setting_blocktitle', 'block_mmquicklink'), get_string('setting_blocktitle_desc', 'block_mmquicklink'), get_string('title', 'block_mmquicklink')));
-    
-    $settings->add(new admin_setting_heading('block_mmquicklink_role_settings', get_string('setting_roles', 'block_mmquicklink'), ''));
-    $settings->add(new admin_setting_configmulticheckbox('mmquicklink/config_roles', get_string('setting_roles', 'block_mmquicklink'), get_string('setting_roles_desc', 'block_mmquicklink'), $default_roles, $rolearray));
-    
-    $settings->add(new admin_setting_heading('block_mmquicklink_pagelayout_settings', get_string('setting_pagelayouts', 'block_mmquicklink'), ''));
-    $settings->add(new admin_setting_configmulticheckbox('mmquicklink/config_pagelayouts', get_string('setting_pagelayouts', 'block_mmquicklink'), get_string('setting_pagelayouts_desc', 'block_mmquicklink'), $default_pagelayouts, $pagelayouts));
-        
-    $settings->add(new admin_setting_heading('block_mmquicklink_visibility_settings', get_string('visibility_settings', 'block_mmquicklink'), ''));
-    $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_reports', get_string('setting_reports', 'block_mmquicklink'), get_string('setting_reports_desc', 'block_mmquicklink'), 0));
-    $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_delcourse', get_string('setting_delcourse', 'block_mmquicklink'), get_string('setting_delcourse_desc', 'block_mmquicklink'), 0));
-    $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_editsettings', get_string('setting_editsettings', 'block_mmquicklink'), get_string('setting_editsettings_desc', 'block_mmquicklink'), 0));
-    $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_participants', get_string('setting_participants', 'block_mmquicklink'), get_string('setting_participants_desc', 'block_mmquicklink'), 0));
-    $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_course_grades', get_string('setting_course_grades', 'block_mmquicklink'), get_string('setting_course_grades_desc', 'block_mmquicklink'), 0));
-    $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_themesettings', get_string('setting_themesettings', 'block_mmquicklink'), get_string('setting_themesettings_desc', 'block_mmquicklink'), 0));
-    $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_langcust', get_string('setting_langcust', 'block_mmquicklink'), get_string('setting_langcust_desc', 'block_mmquicklink'), 0));
+    // General settings.
+    $settings->add(new admin_setting_heading('block_mmquicklink_general_settings',
+    get_string('setting_general', 'block_mmquicklink'), ''));
+    $settings->add(new admin_setting_configtext('mmquicklink/config_blocktitle', get_string('setting_blocktitle',
+    'block_mmquicklink'), get_string('setting_blocktitle_desc', 'block_mmquicklink'), get_string('title', 'block_mmquicklink')));
+
+    // Role settings.
+    $settings->add(new admin_setting_heading('block_mmquicklink_role_settings',
+    get_string('setting_roles', 'block_mmquicklink'), ''));
+    $settings->add(new admin_setting_configmulticheckbox('mmquicklink/config_roles', get_string('setting_roles',
+    'block_mmquicklink'), get_string('setting_roles_desc', 'block_mmquicklink'), $defaultroles, $rolearray));
+
+    // Pagelayout settings.
+    $settings->add(new admin_setting_heading('block_mmquicklink_pagelayout_settings',
+    get_string('setting_pagelayouts', 'block_mmquicklink'), ''));
+    $settings->add(new admin_setting_configmulticheckbox('mmquicklink/config_pagelayouts',
+    get_string('setting_pagelayouts', 'block_mmquicklink'), get_string('setting_pagelayouts_desc',
+    'block_mmquicklink'), $defaultpagelayouts, $pagelayouts));
+
+    // Visibility settings.
+    $settings->add(new admin_setting_heading('block_mmquicklink_visibility_settings',
+    get_string('visibility_settings', 'block_mmquicklink'), ''));
+    $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_reports',
+    get_string('setting_reports', 'block_mmquicklink'), get_string('setting_reports_desc', 'block_mmquicklink'), 0));
+    $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_delcourse',
+    get_string('setting_delcourse', 'block_mmquicklink'), get_string('setting_delcourse_desc', 'block_mmquicklink'), 0));
+    $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_editsettings',
+    get_string('setting_editsettings', 'block_mmquicklink'), get_string('setting_editsettings_desc', 'block_mmquicklink'), 0));
+    $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_participants',
+    get_string('setting_participants', 'block_mmquicklink'), get_string('setting_participants_desc', 'block_mmquicklink'), 0));
+    $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_course_grades',
+    get_string('setting_course_grades', 'block_mmquicklink'), get_string('setting_course_grades_desc', 'block_mmquicklink'), 0));
+    $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_themesettings',
+    get_string('setting_themesettings', 'block_mmquicklink'), get_string('setting_themesettings_desc', 'block_mmquicklink'), 0));
+    $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_langcust',
+    get_string('setting_langcust', 'block_mmquicklink'), get_string('setting_langcust_desc', 'block_mmquicklink'), 0));
 
 }

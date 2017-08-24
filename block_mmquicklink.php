@@ -31,52 +31,67 @@ Mediamaisteri Oy
 defined('MOODLE_INTERNAL') || die();
 
 class block_mmquicklink extends block_base {
-    
+
     // Tell block to use global settings.
-    function has_config() {
+    public function has_config() {
         return true;
     }
 
     // Function to check if user is admin, manager or teacher.
-    private function hasAccess() {
-            global $USER, $DB, $COURSE;
+    private function hasaccess() {
+        global $USER, $DB, $COURSE;
 
-            // Admin has access always.
-            if (is_siteadmin()) {
+        // Admin has access always.
+        if (is_siteadmin()) {
+            return true;
+        }
+
+        // Load config from global settings.
+        $roles = get_config('mmquicklink', 'config_roles');
+        $roles = explode(",", $roles);
+        foreach ($roles as $role) {
+            // Check user's role assignment.
+            if (user_has_role_assignment($USER->id, $role, context_system::instance()->id)) {
+                // Return true if user has role assignment and the role has access.
                 return true;
             }
-            
-            // Load config from global settings.
-            $roles = get_config('mmquicklink', 'config_roles');
-            $roles = explode(",", $roles);
-            foreach($roles as $role) {
-                // Check user's role assignment.
-                if (user_has_role_assignment($USER->id, $role, context_system::instance()->id)) {
-                    // Return true if user has role assignment and the role has access.
-                    return true;
-                }
-                
-                if (user_has_role_assignment($USER->id, $role)) {
-                    return true;
-                }
-            }
 
-            // Return false if user has no access granted earlier.
-            return false;
-            
+            if (user_has_role_assignment($USER->id, $role)) {
+                return true;
+            }
+        }
+
+        // Return false if user has no access granted earlier.
+        return false;
     }
-    
+
     // Function to hide the block on specific pagetypes.
-    private function hideTypes() {
+    private function hidetypes() {
         global $PAGE;
 
         $pagelayouts = get_config('mmquicklink', 'config_pagelayouts');
         $pagelayouts = explode(",", $pagelayouts);
-    
-        $pagelayoutlist = ['base','standard','course','coursecategory','incourse','frontpage','admin','mydashboard','mypublic','login','popup','frametop','embedded','maintenance','print','redirect','report'];
-        
+
+        $pagelayoutlist = ['base',
+        'standard',
+        'course',
+        'coursecategory',
+        'incourse',
+        'frontpage',
+        'admin',
+        'mydashboard',
+        'mypublic',
+        'login',
+        'popup',
+        'frametop',
+        'embedded',
+        'maintenance',
+        'print',
+        'redirect',
+        'report'];
+
         $found = 0;
-        if (count($pagelayouts)>0 && strlen($pagelayouts[0])>0) {
+        if (count($pagelayouts) > 0 && strlen($pagelayouts[0]) > 0) {
             foreach ($pagelayouts as $pagelayout) {
                 if ($PAGE->pagelayout == $pagelayoutlist[$pagelayout]) {
                     $found = 1;
@@ -84,7 +99,7 @@ class block_mmquicklink extends block_base {
                 }
             }
         }
-        
+
         // If current pagelayout is not found in approved layoutlist, hide the block.
         if ($found == 0) {
             return true;
@@ -116,7 +131,7 @@ class block_mmquicklink extends block_base {
     }
 
     // User can edit only is the user has access.
-    function user_can_edit() {
+    public function user_can_edit() {
         if (is_siteadmin()) {
             return true;
         }
@@ -124,67 +139,67 @@ class block_mmquicklink extends block_base {
     }
 
     // Show empty content if user has no access.
-    function is_empty() {
+    public function is_empty() {
         global $PAGE;
 
         // Check if block is wanted on this pagetype.
-        if ($this->hideTypes() == true) {
+        if ($this->hidetypes() == true) {
             return true;
         }
-        
+
         // Check if user has access.
-        if ($this->hasAccess() == true) {
+        if ($this->hasaccess() == true) {
             return false;
         }
-        
+
         // Return empty if not otherwise stated.
         return true;
     }
 
     public function get_content_for_output($output) {
-       global $CFG;
-       $bc = new block_contents($this->html_attributes());
-       $bc->attributes['data-block'] = $this->name();
-       $bc->blockinstanceid = $this->instance->id;
-       $bc->blockpositionid = $this->instance->blockpositionid;
-       if ($this->instance->visible) {
-           $bc->content = $this->formatted_contents($output);
-           if (!empty($this->content->footer)) {
-               $bc->footer = $this->content->footer;
-           }
-       } else {
-           $bc->add_class('invisible');
-       }
-       if (!$this->hide_header()) {
-           $bc->title = $this->title;
-       }
-       if (empty($bc->title)) {
-           $bc->arialabel = new lang_string('pluginname', get_class($this));
-           $this->arialabel = $bc->arialabel;
-       }
-       // Show controls if user has access and is editing.
-       if ($this->page->user_is_editing() && $this->hasAccess() == true) {
-           $bc->controls = $this->page->blocks->edit_controls($this);
-       } else {
-           // we must not use is_empty on hidden blocks
-           if ($this->is_empty() && !$bc->controls) {
-               return null;
-           }
-       }
-       if (empty($CFG->allowuserblockhiding)
+        global $CFG;
+        $bc = new block_contents($this->html_attributes());
+        $bc->attributes['data-block'] = $this->name();
+        $bc->blockinstanceid = $this->instance->id;
+        $bc->blockpositionid = $this->instance->blockpositionid;
+        if ($this->instance->visible) {
+            $bc->content = $this->formatted_contents($output);
+            if (!empty($this->content->footer)) {
+                $bc->footer = $this->content->footer;
+            }
+        } else {
+            $bc->add_class('invisible');
+        }
+        if (!$this->hide_header()) {
+            $bc->title = $this->title;
+        }
+        if (empty($bc->title)) {
+            $bc->arialabel = new lang_string('pluginname', get_class($this));
+            $this->arialabel = $bc->arialabel;
+        }
+        // Show controls if user has access and is editing.
+        if ($this->page->user_is_editing() && $this->hasaccess() == true) {
+            $bc->controls = $this->page->blocks->edit_controls($this);
+        } else {
+            // We must not use is_empty on hidden blocks.
+            if ($this->is_empty() && !$bc->controls) {
+                return null;
+            }
+        }
+        if (empty($CFG->allowuserblockhiding)
                || (empty($bc->content) && empty($bc->footer))
                || !$this->instance_can_be_collapsed()) {
-           $bc->collapsible = block_contents::NOT_HIDEABLE;
-       } else if (get_user_preferences('block' . $bc->blockinstanceid . 'hidden', false)) {
-           $bc->collapsible = block_contents::HIDDEN;
-       } else {
-           $bc->collapsible = block_contents::VISIBLE;
-       }
-       if ($this->instance_can_be_docked() && !$this->hide_header()) {
-           $bc->dockable = true;
-       }
-       $bc->annotation = '';
-       return $bc;
+            $bc->collapsible = block_contents::NOT_HIDEABLE;
+        } else if (get_user_preferences('block' . $bc->blockinstanceid . 'hidden', false)) {
+            $bc->collapsible = block_contents::HIDDEN;
+        } else {
+            $bc->collapsible = block_contents::VISIBLE;
+        }
+        if ($this->instance_can_be_docked() && !$this->hide_header()) {
+            $bc->dockable = true;
+        }
+        $bc->annotation = '';
+        return $bc;
     }
 
     public function get_content() {
@@ -201,7 +216,7 @@ class block_mmquicklink extends block_base {
         // Set variable.
         $this->content = new stdClass;
         $this->content->text = "";
-        
+
         // Links to show on course pages.
         if ($PAGE->pagelayout == 'course' || $PAGE->pagelayout == "incourse" || $PAGE->pagetype == 'course-view-topics') {
 
@@ -218,10 +233,12 @@ class block_mmquicklink extends block_base {
                     new moodle_url($CFG->wwwroot . "/course/view.php?id=" . $COURSE->id . "&edit=" . $editingmode .
                     "&sesskey=" . $USER->sesskey) . "'>" . $editingmodestring . "</a></li>";
             }
-            
-            if (empty(get_config('mmquicklink', 'config_hide_editsettings') && has_capability('moodle/course:update', context_course::instance($COURSE->id)))) {
+
+            if (empty(get_config('mmquicklink', 'config_hide_editsettings') &&
+            has_capability('moodle/course:update', context_course::instance($COURSE->id)))) {
                 $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
-                    new moodle_url($CFG->wwwroot . "/course/edit.php?id=" . $COURSE->id) . "'>" . get_string('editsettings', 'core') . "</a></li>";
+                    new moodle_url($CFG->wwwroot . "/course/edit.php?id=" . $COURSE->id) . "'>" .
+                     get_string('editsettings', 'core') . "</a></li>";
             }
 
             // Show/hide course visibility link.
@@ -229,11 +246,13 @@ class block_mmquicklink extends block_base {
                 if ($COURSE->visible == "1") {
                     $this->content->text .= "<li class='list'><a  class='btn btn-secondary' href='" .
                         new moodle_url($CFG->wwwroot . "/blocks/mmquicklink/changevisibility.php?hide=1&sesskey=" .
-                        $USER->sesskey . "&id=" . $COURSE->id) . "'>" . get_string('hide_course', 'block_mmquicklink') . "</a></li>";
+                        $USER->sesskey . "&id=" . $COURSE->id) . "'>" . get_string('hide_course', 'block_mmquicklink') .
+                         "</a></li>";
                 } else {
                     $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
                         new moodle_url($CFG->wwwroot . "/blocks/mmquicklink/changevisibility.php?hide=0&sesskey=" .
-                        $USER->sesskey . "&id=" . $COURSE->id) . "'>" . get_string('show_course', 'block_mmquicklink') . "</a></li>";
+                        $USER->sesskey . "&id=" . $COURSE->id) . "'>" . get_string('show_course', 'block_mmquicklink') .
+                        "</a></li>";
                 }
             }
 
@@ -267,12 +286,12 @@ class block_mmquicklink extends block_base {
             // Show enrolment key add button.
             if (has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
                 global $DB;
-                $oldkey = $DB->get_records('enrol', array('courseid'=>$COURSE->id, 'enrol'=>'self', 'status'=>0), 'password');
+                $oldkey = $DB->get_records('enrol', array('courseid' => $COURSE->id, 'enrol' => 'self', 'status' => 0), 'password');
                 foreach ($oldkey as $oneoldkey) {
                     $realoldkey = $oneoldkey->password;
                     break;
                 }
-                if(empty($realoldkey)) {
+                if (empty($realoldkey)) {
                     $realoldkey = "";
                 }
                 $this->content->text .= "
@@ -301,7 +320,8 @@ class block_mmquicklink extends block_base {
             if (empty(get_config('mmquicklink', 'config_hide_course_grades'))) {
                 if (has_capability('mod/assign:grade', context_course::instance($COURSE->id))) {
                     $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" . new moodle_url($CFG->wwwroot .
-                    "/grade/report/grader/index.php?id=" . $PAGE->course->id) . "'>" . get_string('coursegrades', 'block_mmquicklink') . "</a></li>";
+                    "/grade/report/grader/index.php?id=" . $PAGE->course->id) . "'>" .
+                    get_string('coursegrades', 'block_mmquicklink') . "</a></li>";
                 }
             }
 
@@ -309,7 +329,7 @@ class block_mmquicklink extends block_base {
             // Links on other pages.
 
             // Editing mode on/off link.
-            if ($this->hasAccess() == true) {
+            if ($this->hasaccess() == true) {
                 if ($PAGE->user_is_editing()) {
                     $editingmode = "off";
                     $editingmodestring = get_string("turneditingoff");
@@ -319,12 +339,13 @@ class block_mmquicklink extends block_base {
                 }
 
                 // Check if user has capability to edit frontpage.
-                if ($PAGE->pagelayout == "frontpage" && has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
+                if ($PAGE->pagelayout == "frontpage" &&
+                has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
                     $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
                         new moodle_url($CFG->wwwroot . "/course/view.php?id=1&edit=" . $editingmode .
                         "&sesskey=" . $USER->sesskey) . "'>" . $editingmodestring . "</a></li>";
                 }
-                
+
                 if ($PAGE->pagelayout == "mydashboard" OR $PAGE->pagelayout == "admin") {
                     $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
                         new moodle_url($PAGE->url . "?edit=" . $editingmode .
@@ -339,7 +360,7 @@ class block_mmquicklink extends block_base {
                 if (has_capability('moodle/course:create', context_coursecat::instance($_GET["categoryid"]))) {
                     $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
                         new moodle_url($CFG->wwwroot . "/course/edit.php?category=1") . "'>".
-                        get_string('addnewcourse') . "</a></li>";                    
+                        get_string('addnewcourse') . "</a></li>";
                 }
             } else {
                 // Check if user can add a course to current course.
@@ -355,10 +376,10 @@ class block_mmquicklink extends block_base {
                         if (has_capability('moodle/course:create', context_coursecat::instance($category->id))) {
                             $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
                                 new moodle_url($CFG->wwwroot . "/course/edit.php?category=" . $category->id) . "'>".
-                                get_string('addnewcourse') . "</a></li>";   
-                            break;                        
+                                get_string('addnewcourse') . "</a></li>";
+                            break;
                         }
-                    }                
+                    }
                 }
             }
 
@@ -373,7 +394,8 @@ class block_mmquicklink extends block_base {
             if (empty(get_config('mmquicklink', 'config_hide_themesettings'))) {
                 if (is_siteadmin()) {
                     $adminurl = new moodle_url('/admin/settings.php?section=themesetting' . $PAGE->theme->name);
-                    $this->content->text.= "<li class='list'><a class='btn btn-secondary' href='" . $adminurl . "'>" . get_string('themesettings', 'core_admin') . "</a></li>";
+                    $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" . $adminurl . "'>" .
+                    get_string('themesettings', 'core_admin') . "</a></li>";
                 }
             }
 
@@ -388,13 +410,16 @@ class block_mmquicklink extends block_base {
             }
 
             // Language customization link.
-            if (empty(get_config('mmquicklink', 'config_hide_langcust')) && has_capability('tool/customlang:edit', context_system::instance())) {
+            if (empty(get_config('mmquicklink', 'config_hide_langcust')) &&
+            has_capability('tool/customlang:edit', context_system::instance())) {
                 $custlangurl = new moodle_url('/admin/tool/customlang/index.php');
-                $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" . $custlangurl . "'>" . get_string('pluginname', 'tool_customlang') . "</a></li>";
+                $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
+                $custlangurl . "'>" . get_string('pluginname', 'tool_customlang') . "</a></li>";
             }
 
             // Frontpage settings link only on frontpage.
-            if ($this->hasAccess() == true && has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
+            if ($this->hasaccess() == true &&
+            has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
                 if ($PAGE->pagelayout == 'frontpage') {
                     $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
                         new moodle_url($CFG->wwwroot . "/admin/settings.php?section=frontpagesettings") . "'>" .
@@ -412,5 +437,4 @@ class block_mmquicklink extends block_base {
         return $this->content;
 
     }
-
 }
