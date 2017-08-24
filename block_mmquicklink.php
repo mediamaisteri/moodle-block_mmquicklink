@@ -94,7 +94,11 @@ class block_mmquicklink extends block_base {
     }
 
     public function init() {
+        if (empty(get_config('mmquicklink', 'config_blocktitle'))) {
             $this->title = get_string('title', 'block_mmquicklink');
+        } else {
+            $this->title = get_config('mmquicklink', 'config_blocktitle');
+        }
     }
 
     // Don't allow multiple instances.

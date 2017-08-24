@@ -63,3 +63,7 @@ $string['setting_pagelayouts_desc'] = "Valitse sivutyypit, joilla lohko on mahdo
 
 $string['setting_editsettings'] = "Muokkaa kurssin asetuksia";
 $string['setting_editsettings_desc'] = "Valitse piilottaaksesi 'muokkaa kurssin asetuksia' -linkin";
+
+$string['setting_general'] = "Yleiset asetukset";
+$string['setting_blocktitle'] = "Lohkon otsikko";
+$string['setting_blocktitle_desc'] = "Jos otsikko on tyhjä, käytetään oletusotsikkoa.";
