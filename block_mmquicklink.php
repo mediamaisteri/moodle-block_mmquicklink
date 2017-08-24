@@ -197,32 +197,7 @@ class block_mmquicklink extends block_base {
         // Set variable.
         $this->content = new stdClass;
         $this->content->text = "";
-
-        // Theme settings -link.
-        if (empty(get_config('mmquicklink', 'config_hide_themesettings'))) {
-            if (is_siteadmin()) {
-                $adminurl = new moodle_url('/admin/settings.php?section=themesetting' . $PAGE->theme->name);
-                $this->content->text.= "<li class='list'><a class='btn btn-secondary' href='" . $adminurl . "'>" . get_string('themesettings', 'core_admin') . "</a></li>";
-            }
-        }
-
-        // Render local_reports navigation.
-        if (empty(get_config('mmquicklink', 'config_hide_reports'))) {
-            $reports = $PAGE->navigation->find('local_reports', navigation_node::TYPE_CUSTOM);
-            if ($reports) {
-                $this->content->text .= "<li class='list mmquicklink-reports-button'><a class='btn btn-secondary'>"
-                 . get_string('pluginname', 'local_reports') . "</a></li>";
-                $this->content->text .= $PAGE->get_renderer('block_mmquicklink')->mmquicklink_tree($reports);
-            }
-        }
         
-        // Language customization link.
-        if (empty(get_config('mmquicklink', 'config_hide_langcust')) && has_capability('tool/customlang:edit', context_system::instance())) {
-            $custlangurl = new moodle_url('/admin/tool/customlang/index.php');
-            $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" . $custlangurl . "'>" . get_string('pluginname', 'tool_customlang') . "</a></li>";
-        }
-        
-
         // Links to show on course pages.
         if ($PAGE->pagelayout == 'course' || $PAGE->pagelayout == "incourse" || $PAGE->pagetype == 'course-view-topics') {
 
@@ -383,6 +358,30 @@ class block_mmquicklink extends block_base {
                 $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
                     new moodle_url($CFG->wwwroot . "/course/management.php") . "'>".
                     get_string('coursemgmt', 'core_admin') . "</a></li>";
+            }
+
+            // Theme settings -link.
+            if (empty(get_config('mmquicklink', 'config_hide_themesettings'))) {
+                if (is_siteadmin()) {
+                    $adminurl = new moodle_url('/admin/settings.php?section=themesetting' . $PAGE->theme->name);
+                    $this->content->text.= "<li class='list'><a class='btn btn-secondary' href='" . $adminurl . "'>" . get_string('themesettings', 'core_admin') . "</a></li>";
+                }
+            }
+
+            // Render local_reports navigation.
+            if (empty(get_config('mmquicklink', 'config_hide_reports'))) {
+                $reports = $PAGE->navigation->find('local_reports', navigation_node::TYPE_CUSTOM);
+                if ($reports) {
+                    $this->content->text .= "<li class='list mmquicklink-reports-button'><a class='btn btn-secondary'>"
+                     . get_string('pluginname', 'local_reports') . "</a></li>";
+                    $this->content->text .= $PAGE->get_renderer('block_mmquicklink')->mmquicklink_tree($reports);
+                }
+            }
+
+            // Language customization link.
+            if (empty(get_config('mmquicklink', 'config_hide_langcust')) && has_capability('tool/customlang:edit', context_system::instance())) {
+                $custlangurl = new moodle_url('/admin/tool/customlang/index.php');
+                $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" . $custlangurl . "'>" . get_string('pluginname', 'tool_customlang') . "</a></li>";
             }
 
             // Frontpage settings link only on frontpage.
