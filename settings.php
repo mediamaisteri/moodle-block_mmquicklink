@@ -57,7 +57,7 @@ if ($ADMIN->fulltree) {
     'redirect',
     'report'];
 
-    $defaultpagelayouts = ['course', 'coursecategory', 'incourse', 'frontpage', 'admin', 'report', 'mydashboard'];
+    $defaultpagelayouts = ['course', 'coursecategory', 'incourse', 'frontpage', 'admin', 'report', 'mydashboard', 'base'];
 
     // General settings.
     $settings->add(new admin_setting_heading('block_mmquicklink_general_settings',
