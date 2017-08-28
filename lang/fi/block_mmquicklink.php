@@ -23,7 +23,7 @@
  */
 
 $string['pluginname'] = 'MM Quick Link';
-$string['title'] = "Opettajan työkalut";
+$string['title'] = "Hallintatyökalut";
 
 $string['visibility_settings'] = "Näkyvyysasetukset";
 

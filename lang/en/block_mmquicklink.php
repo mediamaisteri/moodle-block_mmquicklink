@@ -23,7 +23,7 @@
  */
 
 $string['pluginname'] = 'MM Quick Link';
-$string['title'] = "Teacher's tools";
+$string['title'] = "Managing tools";
 
 $string['visibility_settings'] = 'Visibility settings';
 
