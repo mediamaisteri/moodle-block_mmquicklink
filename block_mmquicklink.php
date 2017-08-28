@@ -411,7 +411,7 @@ class block_mmquicklink extends block_base {
 
             // Language customization link.
             if (empty(get_config('mmquicklink', 'config_hide_langcust')) &&
-            has_capability('tool/customlang:edit', context_system::instance())) {
+            is_siteadmin()) {
                 $custlangurl = new moodle_url('/admin/tool/customlang/index.php');
                 $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
                 $custlangurl . "'>" . get_string('pluginname', 'tool_customlang') . "</a></li>";
