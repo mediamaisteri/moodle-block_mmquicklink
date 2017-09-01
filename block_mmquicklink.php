@@ -242,9 +242,11 @@ class block_mmquicklink extends block_base {
                     new moodle_url($CFG->wwwroot . "/course/edit.php?id=" . $COURSE->id) . "'>" .
                      get_string('editsettings', 'core') . "</a></li>";
                 } else {
-                    $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
-                        new moodle_url($CFG->wwwroot . "/course/modedit.php?update=" . $PAGE->cm->id) . "'>" .
-                         get_string('editsettings', 'core') . "</a></li>";                     
+                    if (!empty($PAGE->cm->id)) {
+                        $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
+                            new moodle_url($CFG->wwwroot . "/course/modedit.php?update=" . $PAGE->cm->id) . "'>" .
+                             get_string('editsettings', 'core') . "</a></li>";   
+                     }                  
                 }
             }
 
