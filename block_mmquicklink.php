@@ -364,11 +364,11 @@ class block_mmquicklink extends block_base {
             }
 
             // Show "add a course" button.
-            if (isset($_GET["categoryid"])) {
+            if (optional_param('categoryid', '', PARAM_INT)) {
                 // Check if user can add course to current category.
-                if (has_capability('moodle/course:create', context_coursecat::instance($_GET["categoryid"]))) {
+                if (has_capability('moodle/course:create', context_coursecat::instance(optional_param('categoryid', '', PARAM_INT)))) {
                     $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
-                        new moodle_url($CFG->wwwroot . "/course/edit.php?category=1") . "'>".
+                        new moodle_url($CFG->wwwroot . "/course/edit.php?category=" . optional_param('categoryid', '', PARAM_INT)) . "'>".
                         get_string('addnewcourse') . "</a></li>";
                 }
             } else {

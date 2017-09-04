@@ -27,14 +27,14 @@ require_once($CFG->dirroot . '/user/lib.php');
 require_once($CFG->libdir.'/filelib.php');
 
 global $DB, $USER, $COURSE;
-$courseid = strip_tags($_GET["id"]);
+$courseid = optional_param('id', '', PARAM_INT);
 
 require_login();
 
 // Check if user has permission to edit visibility in current course context.
 if (has_capability('moodle/course:visibility', context_course::instance($courseid))) {
 
-    if (strip_tags($_GET["hide"]) == 1) {
+    if (optional_param('hide', '', PARAM_INT) == 1) {
         // Update DB to hide course.
         $DB->set_field('course', 'visible', '0', array('id' => $courseid));
 
@@ -43,7 +43,7 @@ if (has_capability('moodle/course:visibility', context_course::instance($coursei
         redirect("$urltogo", get_string('course') . " " . strtolower(get_string('hidden', 'core_grades')), 5);
     }
 
-    if (strip_tags($_GET["hide"]) == 0) {
+    if (optional_param('hide', '', PARAM_INT) == 0) {
         // Update DB to show course..
         $DB->set_field('course', 'visible', '1', array('id' => $courseid));
 

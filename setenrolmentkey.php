@@ -32,8 +32,8 @@ require_login();
 global $DB, $USER, $COURSE;
 
 // Course id & key from url variable.
-$courseid = strip_tags($_GET["courseid"]);
-$enrolmentkey = strip_tags($_GET["enrolmentkey"]);
+$courseid = optional_param('courseid', '', PARAM_TEXT);
+$enrolmentkey = optional_param('enrolmentkey', '', PARAM_TEXT);
 
 // Check if user has permission to edit course enrolment methods.
 if (has_capability('moodle/course:enrolconfig', context_course::instance($courseid))) {
