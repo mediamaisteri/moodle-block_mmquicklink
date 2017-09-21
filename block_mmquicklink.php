@@ -213,6 +213,16 @@ class block_mmquicklink extends block_base {
         // Load custom JS.
         $this->page->requires->js_call_amd('block_mmquicklink/enrolmentdiv', 'init', []);
 
+        // Check if visibility if wanted, because is_empty is not checked when user is in editing mode.
+        if ($PAGE->user_is_editing()) {
+            if ($this->hidetypes() == true) {
+                // Force hide with JS
+                $this->page->requires->js_call_amd('block_mmquicklink/blockhider', 'init', []);
+                // Stop executing the script.
+                return $this->content;
+            }
+        }
+
         // Set variable.
         $this->content = new stdClass;
         $this->content->text = "";
