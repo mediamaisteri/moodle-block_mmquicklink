@@ -382,12 +382,7 @@ class block_mmquicklink extends block_base {
                         get_string('addnewcourse') . "</a></li>";
                 }
             } else {
-                // Check if user can add a course to current course.
-                if (has_capability('moodle/course:create', context_course::instance($COURSE->id))) {
-                    $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
-                        new moodle_url($CFG->wwwroot . "/course/edit.php?category=1") . "'>".
-                        get_string('addnewcourse') . "</a></li>";
-                } else if ($USER->id) {
+                if ($USER->id) {
                     // Check if user has capability to add a course to at least one category.
                     global $DB;
                     $categories = $DB->get_records('course_categories');
