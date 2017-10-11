@@ -67,3 +67,9 @@ $string['setting_editsettings_desc'] = "Check to hide 'edit course settings' lin
 $string['setting_general'] = "General settings";
 $string['setting_blocktitle'] = "Block title";
 $string['setting_blocktitle_desc'] = "If title is unset, the block uses default title.";
+
+$string['advanced_options'] = "Advanced options";
+$string['setting_participants_select'] = "Participants link";
+$string['setting_participants_select_desc'] = "Choose where the participants link should redirect.";
+$string['setting_participants_users'] = "General participants page";
+$string['setting_participants_enrol'] = "User enrolment page";

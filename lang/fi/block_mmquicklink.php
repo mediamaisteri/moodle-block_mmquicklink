@@ -67,3 +67,9 @@ $string['setting_editsettings_desc'] = "Valitse piilottaaksesi 'muokkaa kurssin 
 $string['setting_general'] = "Yleiset asetukset";
 $string['setting_blocktitle'] = "Lohkon otsikko";
 $string['setting_blocktitle_desc'] = "Jos otsikko on tyhjä, käytetään oletusotsikkoa.";
+
+$string['advanced_options'] = "Lisäasetukset";
+$string['setting_participants_select'] = "Osallistujat-linkki";
+$string['setting_participants_select_desc'] = "Valitse, minne osallistujat-linkki johtaa.";
+$string['setting_participants_users'] = "Yleinen osallistujat-sivu";
+$string['setting_participants_enrol'] = "Osallistujien lisääminen";

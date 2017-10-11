@@ -329,9 +329,13 @@ class block_mmquicklink extends block_base {
             // Course participants.
             if (empty(get_config('mmquicklink', 'config_hide_participants'))) {
                 if (has_capability('moodle/course:viewparticipants', context_course::instance($COURSE->id))) {
-                    $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" . new moodle_url($CFG->wwwroot .
-                    "/user/index.php?id=" . $PAGE->course->id) . "'>" .
-                        get_string('participants') . "</a></li>";
+                    if (get_config('mmquicklink', 'config_participants_select') == 0) {
+                        $participanturl = "/user/index.php?id=" . $PAGE->course->id;
+                    } else {
+                        $participanturl = "/enrol/users.php?id=" . $PAGE->course->id;
+                    }
+                    $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" . 
+                    new moodle_url($CFG->wwwroot . $participanturl) . "'>" . get_string('participants') . "</a></li>";
                 }
             }
 
