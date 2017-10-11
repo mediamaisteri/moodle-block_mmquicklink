@@ -63,7 +63,7 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_heading('block_mmquicklink_general_settings',
     get_string('setting_general', 'block_mmquicklink'), ''));
     $settings->add(new admin_setting_configtext('mmquicklink/config_blocktitle', get_string('setting_blocktitle',
-    'block_mmquicklink'), get_string('setting_blocktitle_desc', 'block_mmquicklink'), get_string('title', 'block_mmquicklink')));
+    'block_mmquicklink'), get_string('setting_blocktitle_desc', 'block_mmquicklink'), ''));
 
     // Role settings.
     $settings->add(new admin_setting_heading('block_mmquicklink_role_settings',
