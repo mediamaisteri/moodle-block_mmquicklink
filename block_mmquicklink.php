@@ -29,6 +29,7 @@ Mediamaisteri Oy
 ************************/
 
 defined('MOODLE_INTERNAL') || die();
+require_once($CFG->dirroot.'/blocks/mmquicklink/lib.php');
 
 class block_mmquicklink extends block_base {
 
@@ -39,30 +40,58 @@ class block_mmquicklink extends block_base {
 
     // Function to check if user is admin, manager or teacher.
     private function hasaccess() {
-        global $USER, $DB, $COURSE;
+        global $USER, $DB, $COURSE, $PAGE;
 
-        // Admin has access always.
-        if (is_siteadmin()) {
-            return true;
-        }
+        //  If user has switched role, check access against that role.
+        if (is_role_switched($COURSE->id)) {
+            
+              // Get switched role's role id.
+              $opts = mmquicklink_get_switched_role($USER, $PAGE);
+              if (!empty($opts->metadata['asotherrole'])) {
+                  $roleid = $opts->metadata['roleid'];
+                  
+                  // Get role config from block.
+                  $roles = get_config('mmquicklink', 'config_roles');
+                  $roles = explode(",", $roles);
 
-        // Load config from global settings.
-        $roles = get_config('mmquicklink', 'config_roles');
-        $roles = explode(",", $roles);
-        foreach ($roles as $role) {
-            // Check user's role assignment.
-            if (user_has_role_assignment($USER->id, $role, context_system::instance()->id)) {
-                // Return true if user has role assignment and the role has access.
+                  // Check if the switched role has access.
+                  if (in_array($roleid, $roles)) {
+                      return true;
+                  } else {
+                      return false;
+                  }
+
+              }
+              
+              // Return false is access hasn't been granted before.
+              return false;
+              
+          } else {
+
+            // Admin has access always.
+            if (is_siteadmin()) {
                 return true;
             }
 
-            if (user_has_role_assignment($USER->id, $role)) {
-                return true;
-            }
-        }
+            // Load config from global settings.
+            $roles = get_config('mmquicklink', 'config_roles');
+            $roles = explode(",", $roles);
+            foreach ($roles as $role) {
+                // Check user's role assignment.
+                if (user_has_role_assignment($USER->id, $role, context_system::instance()->id)) {
+                    // Return true if user has role assignment and the role has access.
+                    return true;
+                }
 
-        // Return false if user has no access granted earlier.
-        return false;
+                if (user_has_role_assignment($USER->id, $role)) {
+                    return true;
+                }
+            }
+
+            // Return false if user has no access granted earlier.
+            return false;    
+        }
+        
     }
 
     // Function to hide the block on specific pagetypes.
