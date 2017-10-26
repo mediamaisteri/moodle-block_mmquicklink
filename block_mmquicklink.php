@@ -42,31 +42,31 @@ class block_mmquicklink extends block_base {
     private function hasaccess() {
         global $USER, $DB, $COURSE, $PAGE;
 
-        //  If user has switched role, check access against that role.
+        // If user has switched role, check access against that role.
         if (is_role_switched($COURSE->id)) {
-            
-              // Get switched role's role id.
-              $opts = mmquicklink_get_switched_role($USER, $PAGE);
-              if (!empty($opts->metadata['asotherrole'])) {
-                  $roleid = $opts->metadata['roleid'];
-                  
-                  // Get role config from block.
-                  $roles = get_config('mmquicklink', 'config_roles');
-                  $roles = explode(",", $roles);
 
-                  // Check if the switched role has access.
-                  if (in_array($roleid, $roles)) {
-                      return true;
-                  } else {
-                      return false;
-                  }
+            // Get switched role's role id.
+            $opts = mmquicklink_get_switched_role($USER, $PAGE);
+            if (!empty($opts->metadata['asotherrole'])) {
+                $roleid = $opts->metadata['roleid'];
 
-              }
-              
-              // Return false is access hasn't been granted before.
-              return false;
-              
-          } else {
+                // Get role config from block.
+                $roles = get_config('mmquicklink', 'config_roles');
+                $roles = explode(",", $roles);
+
+                // Check if the switched role has access.
+                if (in_array($roleid, $roles)) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+            }
+
+            // Return false is access hasn't been granted before.
+            return false;
+
+        } else {
 
             // Admin has access always.
             if (is_siteadmin()) {
@@ -89,9 +89,9 @@ class block_mmquicklink extends block_base {
             }
 
             // Return false if user has no access granted earlier.
-            return false;    
+            return false;
         }
-        
+
     }
 
     // Function to hide the block on specific pagetypes.
@@ -245,7 +245,7 @@ class block_mmquicklink extends block_base {
         // Check if visibility if wanted, because is_empty is not checked when user is in editing mode.
         if ($PAGE->user_is_editing()) {
             if ($this->hidetypes() == true) {
-                // Force hide with JS
+                // Force hiding with JS.
                 $this->page->requires->js_call_amd('block_mmquicklink/blockhider', 'init', []);
                 // Stop executing the script.
                 return $this->content;
@@ -277,15 +277,15 @@ class block_mmquicklink extends block_base {
             if (empty(get_config('mmquicklink', 'config_hide_editsettings') &&
             has_capability('moodle/course:update', context_course::instance($COURSE->id)))) {
                 if ($PAGE->pagelayout == "course") {
-                $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
+                    $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
                     new moodle_url($CFG->wwwroot . "/course/edit.php?id=" . $COURSE->id) . "'>" .
-                     get_string('editsettings', 'core') . "</a></li>";
+                    get_string('editsettings', 'core') . "</a></li>";
                 } else {
                     if (!empty($PAGE->cm->id)) {
                         $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
-                            new moodle_url($CFG->wwwroot . "/course/modedit.php?update=" . $PAGE->cm->id) . "'>" .
-                             get_string('editsettings', 'core') . "</a></li>";   
-                     }                  
+                        new moodle_url($CFG->wwwroot . "/course/modedit.php?update=" . $PAGE->cm->id) . "'>" .
+                        get_string('editsettings', 'core') . "</a></li>";
+                    }
                 }
             }
 
@@ -363,7 +363,7 @@ class block_mmquicklink extends block_base {
                     } else {
                         $participanturl = "/enrol/users.php?id=" . $PAGE->course->id;
                     }
-                    $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" . 
+                    $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
                     new moodle_url($CFG->wwwroot . $participanturl) . "'>" . get_string('participants') . "</a></li>";
                 }
             }
@@ -409,9 +409,11 @@ class block_mmquicklink extends block_base {
             // Show "add a course" button.
             if (optional_param('categoryid', '', PARAM_INT)) {
                 // Check if user can add course to current category.
-                if (has_capability('moodle/course:create', context_coursecat::instance(optional_param('categoryid', '', PARAM_INT)))) {
+                if (has_capability('moodle/course:create', context_coursecat::instance(optional_param('categoryid', '',
+                PARAM_INT)))) {
                     $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
-                        new moodle_url($CFG->wwwroot . "/course/edit.php?category=" . optional_param('categoryid', '', PARAM_INT)) . "'>".
+                        new moodle_url($CFG->wwwroot . "/course/edit.php?category=" . optional_param('categoryid', '', PARAM_INT)) .
+                        "'>".
                         get_string('addnewcourse') . "</a></li>";
                 }
             } else {

@@ -14,8 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 /**
+ * mmquicklink lib
+ *
+ * @package   block_mmquicklink
+ * @copyright 2017 Mediamaisteri Oy
+ */
 
-*/
+defined('MOODLE_INTERNAL') || die();
 
 function mmquicklink_get_switched_role($user, $page, $options = array()) {
     global $OUTPUT, $DB, $SESSION, $CFG, $COURSE;
@@ -25,14 +30,14 @@ function mmquicklink_get_switched_role($user, $page, $options = array()) {
     $context = context_course::instance($COURSE->id);
 
     if (is_role_switched($COURSE->id)) {
-        
+
         if ($role = $DB->get_record('role', array('id' => $user->access['rsw'][$context->path]))) {
             $returnobject->metadata['asotherrole'] = true;
             $returnobject->metadata['roleid'] = $role->id;
             $returnobject->metadata['rolename'] = role_get_name($role, $context);
         }
     }
-    
+
     return $returnobject;
-    
+
 }
