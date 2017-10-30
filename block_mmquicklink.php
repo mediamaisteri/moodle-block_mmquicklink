@@ -259,18 +259,20 @@ class block_mmquicklink extends block_base {
         // Links to show on course pages.
         if ($PAGE->pagelayout == 'course' || $PAGE->pagelayout == "incourse" || $PAGE->pagetype == 'course-view-topics') {
 
-            // Editing mode on/off link.
-            if (has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
-                if ($PAGE->user_is_editing()) {
-                    $editingmode = "off";
-                    $editingmodestring = get_string("turneditingoff");
-                } else {
-                    $editingmode = "on";
-                    $editingmodestring = get_string("turneditingon");
+            if ($PAGE->user_allowed_editing()) {
+                // Editing mode on/off link.
+                if (has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
+                    if ($PAGE->user_is_editing()) {
+                        $editingmode = "off";
+                        $editingmodestring = get_string("turneditingoff");
+                    } else {
+                        $editingmode = "on";
+                        $editingmodestring = get_string("turneditingon");
+                    }
+                    $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
+                        new moodle_url($CFG->wwwroot . "/course/view.php?id=" . $COURSE->id . "&edit=" . $editingmode .
+                        "&sesskey=" . $USER->sesskey) . "'>" . $editingmodestring . "</a></li>";
                 }
-                $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
-                    new moodle_url($CFG->wwwroot . "/course/view.php?id=" . $COURSE->id . "&edit=" . $editingmode .
-                    "&sesskey=" . $USER->sesskey) . "'>" . $editingmodestring . "</a></li>";
             }
 
             // Edit course or mod settings.
