@@ -380,28 +380,47 @@ class block_mmquicklink extends block_base {
         } else {
             // Links on other pages.
 
-            // Editing mode on/off link.
-            if ($this->hasaccess() == true) {
-                if ($PAGE->user_is_editing()) {
-                    $editingmode = "off";
-                    $editingmodestring = get_string("turneditingoff");
-                } else {
-                    $editingmode = "on";
-                    $editingmodestring = get_string("turneditingon");
-                }
+            if ($PAGE->user_allowed_editing()) {
+                
+                // Editing mode on/off link.
+                if ($this->hasaccess() == true) {
+                    if ($PAGE->user_is_editing()) {
+                        $editingmode = "off";
+                        $editingmodestring = get_string("turneditingoff");
+                    } else {
+                        $editingmode = "on";
+                        $editingmodestring = get_string("turneditingon");
+                    }
 
-                // Check if user has capability to edit frontpage.
-                if ($PAGE->pagelayout == "frontpage" &&
-                has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
-                    $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
-                        new moodle_url($CFG->wwwroot . "/course/view.php?id=1&edit=" . $editingmode .
-                        "&sesskey=" . $USER->sesskey) . "'>" . $editingmodestring . "</a></li>";
-                }
+                    // Check if user has capability to edit frontpage.
+                    if ($PAGE->pagelayout == "frontpage" &&
+                    has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
+                        $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
+                            new moodle_url($CFG->wwwroot . "/course/view.php?id=1&edit=" . $editingmode .
+                            "&sesskey=" . $USER->sesskey) . "'>" . $editingmodestring . "</a></li>";
+                    }
 
-                if ($PAGE->pagelayout == "mydashboard" OR $PAGE->pagelayout == "admin") {
-                    $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
-                        new moodle_url($PAGE->url . "?edit=" . $editingmode .
-                        "&sesskey=" . $USER->sesskey) . "'>" . $editingmodestring . "</a></li>";
+                    // Dashboard editing mode.
+                    if ($PAGE->pagelayout == "mydashboard") {
+                        $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
+                            new moodle_url($PAGE->url . "?edit=" . $editingmode .
+                            "&sesskey=" . $USER->sesskey) . "'>" . $editingmodestring . "</a></li>";
+                    }
+                    
+                    // Admin page editing mode.
+                    if ($PAGE->pagelayout == "admin") {
+                        $adminurl = str_replace("query", "", $PAGE->url);
+                        var_dump($adminurl);
+                        if (stripos($adminurl, "?") === false) {
+                            $adminurl .= "?";
+                        } else {
+                            $adminurl .= "&";
+                        }
+                        $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
+                            new moodle_url($adminurl . "adminedit=" . $editingmode .
+                            "&sesskey=" . $USER->sesskey) . "'>" . $editingmodestring . "</a></li>";
+                    }
+
                 }
 
             }
