@@ -233,7 +233,7 @@ class block_mmquicklink extends block_base {
 
     public function get_content() {
         // Load required globals.
-        global $PAGE, $CFG, $USER, $COURSE;
+        global $PAGE, $CFG, $USER, $COURSE, $DB;
 
         if ($this->content !== null) {
             return $this->content;
