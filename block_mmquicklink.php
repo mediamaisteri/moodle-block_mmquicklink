@@ -392,7 +392,7 @@ class block_mmquicklink extends block_base {
                             <input type='hidden' name='switchrole' value='" . $otherrole ."'>
                             <input type='hidden' name='sesskey' value='" . $USER->sesskey . "'>
                             <input type='hidden' name='returnurl' value='" . $CFG->wwwroot . "/course/view.php?id=" . $COURSE->id . "'>
-                            <input class='mmquicklink-btn btn btn-secondary' type='submit' value='" . get_string('switchrole', 'block_mmquicklink') . " " . $otherrole_name->name . "'>
+                            <input class='mmquicklink-btn btn btn-secondary' type='submit' value='" . get_string('switchrole', 'block_mmquicklink') . " " . $otherrole_name->shortname . "'>
                             </form>
                         </div>
                         </li>";
