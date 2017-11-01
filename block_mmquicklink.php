@@ -381,20 +381,29 @@ class block_mmquicklink extends block_base {
 
             // View as other role.
             if (empty(get_config('mmquicklink', 'config_hide_otherrole'))) {
-                $otherrole = get_config('mmquicklink', 'config_otherrole_select');
-                $otherrole_name = $DB->get_record('role', array('id'=>$otherrole));
-                $this->content->text .= "
-                    <li class='list mmquicklink-otherrole'>
-                    <div class='mmquicklink-otherrole-div'>
-                        <form method='get' action='" . $CFG->wwwroot . "/course/switchrole.php'>
-                        <input type='hidden' name='id' value='" . $COURSE->id . "'>
-                        <input type='hidden' name='switchrole' value='" . $otherrole ."'>
-                        <input type='hidden' name='sesskey' value='" . $USER->sesskey . "'>
-                        <input type='hidden' name='returnurl' value='" . $CFG->wwwroot . "/course/view.php?id=" . $COURSE->id . "'>
-                        <input class='mmquicklink-btn btn btn-secondary' type='submit' value='" . get_string('switchrole', 'block_mmquicklink') . " " . $otherrole_name->name . "'>
-                        </form>
-                    </div>
-                    </li>";                
+                if (!is_role_switched($COURSE->id)) {
+                    $otherrole = get_config('mmquicklink', 'config_otherrole_select');
+                    $otherrole_name = $DB->get_record('role', array('id'=>$otherrole));
+                    $this->content->text .= "
+                        <li class='list mmquicklink-otherrole'>
+                        <div class='mmquicklink-otherrole-div'>
+                            <form method='get' action='" . $CFG->wwwroot . "/course/switchrole.php'>
+                            <input type='hidden' name='id' value='" . $COURSE->id . "'>
+                            <input type='hidden' name='switchrole' value='" . $otherrole ."'>
+                            <input type='hidden' name='sesskey' value='" . $USER->sesskey . "'>
+                            <input type='hidden' name='returnurl' value='" . $CFG->wwwroot . "/course/view.php?id=" . $COURSE->id . "'>
+                            <input class='mmquicklink-btn btn btn-secondary' type='submit' value='" . get_string('switchrole', 'block_mmquicklink') . " " . $otherrole_name->name . "'>
+                            </form>
+                        </div>
+                        </li>";
+                } else {
+                    $this->content->text .= "
+                        <li class='list'><a class='btn btn-secondary' href='" . $CFG->wwwroot . 
+                        "/course/switchrole.php?switchrole=0&id=" . $COURSE->id . "&sesskey=" . $USER->sesskey . "&returnurl=" . "/course/view.php?id=" . $COURSE->id . "'>
+                        " . get_string('switchrolereturn', 'core') . "
+                        </a></li>
+                    ";
+                }
             }
 
         } else {
