@@ -73,3 +73,9 @@ $string['setting_participants_select'] = "Participants link";
 $string['setting_participants_select_desc'] = "Choose where the participants link should redirect.";
 $string['setting_participants_users'] = "General participants page";
 $string['setting_participants_enrol'] = "User enrolment page";
+
+$string['switchrole'] = "View as";
+$string['setting_otherrole_select'] = "View as role";
+$string['setting_otherrole_select_desc'] = "Select a role used with 'View as' link.";
+$string['setting_otherrole'] = "Switch roles";
+$string['setting_otherrole_desc'] = "Check to hide switch roles link.";

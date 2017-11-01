@@ -73,3 +73,9 @@ $string['setting_participants_select'] = "Osallistujat-linkki";
 $string['setting_participants_select_desc'] = "Valitse, minne osallistujat-linkki johtaa.";
 $string['setting_participants_users'] = "Yleinen osallistujat-sivu";
 $string['setting_participants_enrol'] = "Osallistujien lisääminen";
+
+$string['switchrole'] = "Vaihda rooliin";
+$string['setting_otherrole_select'] = "Vaihda roolia";
+$string['setting_otherrole_select_desc'] = "Valitse rooli, jota käytetään 'vaihda roolia' -linkin kanssa.";
+$string['setting_otherrole'] = "Vaihda roolia";
+$string['setting_otherrole_desc'] = "Valitse piilottaaksesi 'vaihda roolia' -linkin.";

@@ -26,3 +26,7 @@
 .block_mmquicklink .mmquicklink-reports {
     display: none;
 }
+
+.block_mmquicklink .mmquicklink-btn {
+    width: 100%;
+}

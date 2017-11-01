@@ -95,14 +95,21 @@ if ($ADMIN->fulltree) {
     get_string('setting_themesettings', 'block_mmquicklink'), get_string('setting_themesettings_desc', 'block_mmquicklink'), 0));
     $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_langcust',
     get_string('setting_langcust', 'block_mmquicklink'), get_string('setting_langcust_desc', 'block_mmquicklink'), 0));
+    $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_otherrole',
+    get_string('setting_otherrole', 'block_mmquicklink'), get_string('setting_otherrole_desc', 'block_mmquicklink'), 0));
 
     // Advanced options.
     $settings->add(new admin_setting_heading('block_mmquicklink_advanced_options',
     get_string('advanced_options', 'block_mmquicklink'), ''));
+
     $settings->add(new admin_setting_configselect('mmquicklink/config_participants_select',
     get_string('setting_participants_select', 'block_mmquicklink'),
     get_string('setting_participants_select_desc', 'block_mmquicklink'), '0',
     array(0 => get_string('setting_participants_users', 'block_mmquicklink'),
     1 => get_string('setting_participants_enrol', 'block_mmquicklink'))));
 
+    $settings->add(new admin_setting_configselect('mmquicklink/config_otherrole_select',
+    get_string('setting_otherrole_select', 'block_mmquicklink'),
+    get_string('setting_otherrole_select_desc', 'block_mmquicklink'), '5',
+    $rolearray));
 }
