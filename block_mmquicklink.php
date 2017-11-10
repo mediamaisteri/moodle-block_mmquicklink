@@ -439,7 +439,6 @@ class block_mmquicklink extends block_base {
                     // Admin page editing mode.
                     if ($PAGE->pagelayout == "admin") {
                         $adminurl = str_replace("query", "", $PAGE->url);
-                        var_dump($adminurl);
                         if (stripos($adminurl, "?") === false) {
                             $adminurl .= "?";
                         } else {
