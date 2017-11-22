@@ -184,6 +184,12 @@ class block_mmquicklink extends block_base {
         // Return empty if not otherwise stated.
         return true;
     }
+    
+    private function default_element($url, $str) {
+        $link = "<li class='list'><a class='btn btn-secondary' href='" .
+            new moodle_url($url) . "'>" . $str . "</a></li>";
+        return $link;
+    }
 
     public function get_content_for_output($output) {
         global $CFG;
@@ -269,9 +275,8 @@ class block_mmquicklink extends block_base {
                         $editingmode = "on";
                         $editingmodestring = get_string("turneditingon");
                     }
-                    $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
-                        new moodle_url($CFG->wwwroot . "/course/view.php?id=" . $COURSE->id . "&edit=" . $editingmode .
-                        "&sesskey=" . $USER->sesskey) . "'>" . $editingmodestring . "</a></li>";
+                    $this->content->text .= $this->default_element($CFG->wwwroot . "/course/view.php?id=" . $COURSE->id . "&edit=" . $editingmode .
+                    "&sesskey=" . $USER->sesskey, $editingmodestring);
                 }
             }
 
@@ -279,14 +284,10 @@ class block_mmquicklink extends block_base {
             if (empty(get_config('mmquicklink', 'config_hide_editsettings') &&
             has_capability('moodle/course:update', context_course::instance($COURSE->id)))) {
                 if ($PAGE->pagelayout == "course") {
-                    $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
-                    new moodle_url($CFG->wwwroot . "/course/edit.php?id=" . $COURSE->id) . "'>" .
-                    get_string('editsettings', 'core') . "</a></li>";
+                    $this->content->text .= $this->default_element($CFG->wwwroot . "/course/edit.php?id=" . $COURSE->id, get_string('editsettings', 'core'));
                 } else {
                     if (!empty($PAGE->cm->id)) {
-                        $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
-                        new moodle_url($CFG->wwwroot . "/course/modedit.php?update=" . $PAGE->cm->id) . "'>" .
-                        get_string('editsettings', 'core') . "</a></li>";
+                        $this->content->text .= $this->default_element($CFG->wwwroot . "/course/modedit.php?update=" . $PAGE->cm->id, get_string('editsettings', 'core'));
                     }
                 }
             }
@@ -294,15 +295,11 @@ class block_mmquicklink extends block_base {
             // Show/hide course visibility link.
             if (has_capability('moodle/course:visibility', context_course::instance($COURSE->id))) {
                 if ($COURSE->visible == "1") {
-                    $this->content->text .= "<li class='list'><a  class='btn btn-secondary' href='" .
-                        new moodle_url($CFG->wwwroot . "/blocks/mmquicklink/changevisibility.php?hide=1&sesskey=" .
-                        $USER->sesskey . "&id=" . $COURSE->id) . "'>" . get_string('hide_course', 'block_mmquicklink') .
-                         "</a></li>";
+                    $this->content->text .= $this->default_element($CFG->wwwroot . "/blocks/mmquicklink/changevisibility.php?hide=1&sesskey=" .
+                    $USER->sesskey . "&id=" . $COURSE->id, get_string('hide_course', 'block_mmquicklink'));
                 } else {
-                    $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
-                        new moodle_url($CFG->wwwroot . "/blocks/mmquicklink/changevisibility.php?hide=0&sesskey=" .
-                        $USER->sesskey . "&id=" . $COURSE->id) . "'>" . get_string('show_course', 'block_mmquicklink') .
-                        "</a></li>";
+                    $this->content->text .= $this->default_element($CFG->wwwroot . "/blocks/mmquicklink/changevisibility.php?hide=0&sesskey=" .
+                    $USER->sesskey . "&id=" . $COURSE->id, get_string('show_course', 'block_mmquicklink'));
                 }
             }
 
@@ -311,8 +308,7 @@ class block_mmquicklink extends block_base {
                 // Show link if user has capability to delete course.
                 if (has_capability('moodle/course:delete', context_course::instance($COURSE->id))) {
                     $delurl = new moodle_url($CFG->wwwroot . "/course/delete.php?id=" . $COURSE->id);
-                    $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" . $delurl . "'>" .
-                        get_string('delete_course', 'block_mmquicklink') . "</a></li>";
+                    $this->content->text .= $this->default_element($CFG->wwwroot . "/course/delete.php?id=" . $COURSE->id, get_string('delete_course', 'block_mmquicklink'));
                 }
             }
 
@@ -324,10 +320,7 @@ class block_mmquicklink extends block_base {
                     if ($PAGE->user_is_editing()) {
                         // Check if user has capability.
                         if (has_capability('block/completion_progress:addinstance', context_course::instance($COURSE->id))) {
-                                $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
-                                $CFG->wwwroot . "/course/view.php?id=" . $COURSE->id . "&sesskey=" . $USER->sesskey .
-                                "&bui_addblock=completion_progress'>" . get_string('add') . " " .
-                                strtolower(get_string('pluginname', 'block_completion_progress')) . "</a></li>";
+                                $this->content->text .= $this->default_element($CFG->wwwroot . "/course/view.php?id=" . $COURSE->id . "&sesskey=" . $USER->sesskey . "&bui_addblock=completion_progress", get_string('add') . " " . strtolower(get_string('pluginname', 'block_completion_progress')));
                         }
                     }
                 }
@@ -365,17 +358,15 @@ class block_mmquicklink extends block_base {
                     } else {
                         $participanturl = "/enrol/users.php?id=" . $PAGE->course->id;
                     }
-                    $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
-                    new moodle_url($CFG->wwwroot . $participanturl) . "'>" . get_string('participants') . "</a></li>";
+                    $this->content->text .= $this->default_element($CFG->wwwroot . $participanturl, get_string('participants'));
                 }
             }
 
             // Course grading.
             if (empty(get_config('mmquicklink', 'config_hide_course_grades'))) {
                 if (has_capability('mod/assign:grade', context_course::instance($COURSE->id))) {
-                    $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" . new moodle_url($CFG->wwwroot .
-                    "/grade/report/grader/index.php?id=" . $PAGE->course->id) . "'>" .
-                    get_string('coursegrades', 'block_mmquicklink') . "</a></li>";
+                    $this->content->text .= $this->default_element($CFG->wwwroot .
+                    "/grade/report/grader/index.php?id=" . $PAGE->course->id, get_string('coursegrades', 'block_mmquicklink'));
                 }
             }
 
@@ -397,12 +388,8 @@ class block_mmquicklink extends block_base {
                         </div>
                         </li>";
                 } else {
-                    $this->content->text .= "
-                        <li class='list'><a class='btn btn-secondary' href='" . $CFG->wwwroot . 
-                        "/course/switchrole.php?switchrole=0&id=" . $COURSE->id . "&sesskey=" . $USER->sesskey . "&returnurl=" . "/course/view.php?id=" . $COURSE->id . "'>
-                        " . get_string('switchrolereturn', 'core') . "
-                        </a></li>
-                    ";
+                    $this->content->text .= $this->default_element($CFG->wwwroot . 
+                    "/course/switchrole.php?switchrole=0&id=" . $COURSE->id . "&sesskey=" . $USER->sesskey . "&returnurl=" . "/course/view.php?id=" . $COURSE->id, get_string('switchrolereturn', 'core'));
                 }
             }
 
@@ -424,16 +411,14 @@ class block_mmquicklink extends block_base {
                     // Check if user has capability to edit frontpage.
                     if ($PAGE->pagelayout == "frontpage" &&
                     has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
-                        $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
-                            new moodle_url($CFG->wwwroot . "/course/view.php?id=1&edit=" . $editingmode .
-                            "&sesskey=" . $USER->sesskey) . "'>" . $editingmodestring . "</a></li>";
+                        $this->content->text .= $this->default_element($CFG->wwwroot . "/course/view.php?id=1&edit=" . $editingmode .
+                        "&sesskey=" . $USER->sesskey, $editingmodestring);
                     }
 
                     // Dashboard editing mode.
                     if ($PAGE->pagelayout == "mydashboard") {
-                        $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
-                            new moodle_url($PAGE->url . "?edit=" . $editingmode .
-                            "&sesskey=" . $USER->sesskey) . "'>" . $editingmodestring . "</a></li>";
+                        $this->content->text .= $this->default_element($PAGE->url . "?edit=" . $editingmode .
+                        "&sesskey=" . $USER->sesskey, $editingmodestring);
                     }
                     
                     // Admin page editing mode.
@@ -444,9 +429,8 @@ class block_mmquicklink extends block_base {
                         } else {
                             $adminurl .= "&";
                         }
-                        $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
-                            new moodle_url($adminurl . "adminedit=" . $editingmode .
-                            "&sesskey=" . $USER->sesskey) . "'>" . $editingmodestring . "</a></li>";
+                        $this->content->text .= $this->default_element($adminurl . "adminedit=" . $editingmode .
+                        "&sesskey=" . $USER->sesskey, $editingmodestring);
                     }
 
                 }
@@ -458,10 +442,7 @@ class block_mmquicklink extends block_base {
                 // Check if user can add course to current category.
                 if (has_capability('moodle/course:create', context_coursecat::instance(optional_param('categoryid', '',
                 PARAM_INT)))) {
-                    $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
-                        new moodle_url($CFG->wwwroot . "/course/edit.php?category=" . optional_param('categoryid', '', PARAM_INT)) .
-                        "'>".
-                        get_string('addnewcourse') . "</a></li>";
+                    $this->content->text .= $this->default_element($CFG->wwwroot . "/course/edit.php?category=" . optional_param('categoryid', '', PARAM_INT), get_string('addnewcourse'));
                 }
             } else {
                 if ($USER->id) {
@@ -470,9 +451,7 @@ class block_mmquicklink extends block_base {
                     $categories = $DB->get_records('course_categories');
                     foreach ($categories as $category) {
                         if (has_capability('moodle/course:create', context_coursecat::instance($category->id))) {
-                            $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
-                                new moodle_url($CFG->wwwroot . "/course/edit.php?category=" . $category->id) . "'>".
-                                get_string('addnewcourse') . "</a></li>";
+                            $this->content->text .= $this->default_element($CFG->wwwroot . "/course/edit.php?category=" . $category->id, get_string('addnewcourse'));
                             break;
                         }
                     }
@@ -481,17 +460,14 @@ class block_mmquicklink extends block_base {
 
             // Show course management button.
             if (has_capability('moodle/category:manage', context_course::instance($COURSE->id))) {
-                $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
-                    new moodle_url($CFG->wwwroot . "/course/management.php") . "'>".
-                    get_string('coursemgmt', 'core_admin') . "</a></li>";
+                $this->content->text .= $this->default_element($CFG->wwwroot . "/course/management.php", get_string('coursemgmt', 'core_admin'));
             }
 
             // Theme settings -link.
             if (empty(get_config('mmquicklink', 'config_hide_themesettings'))) {
                 if (is_siteadmin()) {
-                    $adminurl = new moodle_url('/admin/settings.php?section=themesetting' . $PAGE->theme->name);
-                    $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" . $adminurl . "'>" .
-                    get_string('themesettings', 'core_admin') . "</a></li>";
+                    $adminurl = ($CFG->wwwroot . '/admin/settings.php?section=themesetting' . $PAGE->theme->name);
+                    $this->content->text .= $this->default_element($adminurl, get_string('themesettings', 'core_admin'));
                 }
             }
 
@@ -508,18 +484,15 @@ class block_mmquicklink extends block_base {
             // Language customization link.
             if (empty(get_config('mmquicklink', 'config_hide_langcust')) &&
             is_siteadmin()) {
-                $custlangurl = new moodle_url('/admin/tool/customlang/index.php');
-                $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
-                $custlangurl . "'>" . get_string('pluginname', 'tool_customlang') . "</a></li>";
+                $custlangurl = $CFG->wwwroot . '/admin/tool/customlang/index.php';
+                $this->content->text .= $this->default_element($custlangurl, get_string('pluginname', 'tool_customlang'));
             }
 
             // Frontpage settings link only on frontpage.
             if ($this->hasaccess() == true &&
             has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
                 if ($PAGE->pagelayout == 'frontpage') {
-                    $this->content->text .= "<li class='list'><a class='btn btn-secondary' href='" .
-                        new moodle_url($CFG->wwwroot . "/admin/settings.php?section=frontpagesettings") . "'>" .
-                        get_string('frontpagesettings') . "</a></li>";
+                    $this->content->text .= $this->default_element($CFG->wwwroot . "/admin/settings.php?section=frontpagesettings", get_string('frontpagesettings'));
                 }
             }
 
