@@ -437,6 +437,17 @@ class block_mmquicklink extends block_base {
                         "&sesskey=" . $USER->sesskey, $editingmodestring, $editmodebuttonid);
                     }
 
+                    if ($PAGE->pagetype == "grade-report-grader-index") {
+                        if ($USER->gradeediting[$COURSE->id]) {
+                            $editingmode = 0;
+                            $editingmodestring = get_string('turneditingoff');
+                        } else {
+                            $editingmode = 1;
+                            $editingmodestring = get_string('turneditingon');
+                        }
+                        $this->content->text .= $this->default_element($this->page->url . "&sesskey=" . $USER->sesskey . "&edit=" . $editingmode, $editingmodestring, $editmodebuttonid);
+                    }
+
                 }
 
             }
