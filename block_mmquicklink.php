@@ -380,12 +380,12 @@ class block_mmquicklink extends block_base {
                     $this->content->text .= "
                         <li class='list mmquicklink-otherrole'>
                         <div class='mmquicklink-otherrole-div'>
-                            <form method='get' action='" . $CFG->wwwroot . "/course/switchrole.php'>
+                            <form method='get' id='form-otherrole' action='" . $CFG->wwwroot . "/course/switchrole.php'>
                             <input type='hidden' name='id' value='" . $COURSE->id . "'>
                             <input type='hidden' name='switchrole' value='" . $otherrole ."'>
                             <input type='hidden' name='sesskey' value='" . $USER->sesskey . "'>
                             <input type='hidden' name='returnurl' value='" . $CFG->wwwroot . "/course/view.php?id=" . $COURSE->id . "'>
-                            <input class='mmquicklink-btn btn btn-secondary btn-otherrole' type='submit' value='" . get_string('switchrole', 'block_mmquicklink') . " " . $otherrole_name->shortname . "'>
+                            <a onclick='document.getElementById(\"form-otherrole\").submit()' class='mmquicklink-btn btn btn-secondary btn-otherrole' value='" . get_string('switchrole', 'block_mmquicklink') . " " . $otherrole_name->shortname . "'>" . get_string('switchrole', 'block_mmquicklink') . " " . $otherrole_name->shortname . "</a>
                             </form>
                         </div>
                         </li>";
