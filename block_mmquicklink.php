@@ -137,6 +137,7 @@ class block_mmquicklink extends block_base {
         return false;
     }
 
+    // Block initialization and title setting.
     public function init() {
         if (empty(get_config('mmquicklink', 'config_blocktitle'))) {
             $this->title = get_string('title', 'block_mmquicklink');
@@ -413,7 +414,7 @@ class block_mmquicklink extends block_base {
             }
 
         } else {
-            // Links on other pages.
+            // Links shown on other pagelayouts and types.
 
             if ($PAGE->user_allowed_editing()) {
 
@@ -454,6 +455,7 @@ class block_mmquicklink extends block_base {
                         "&sesskey=" . $USER->sesskey, $editingmodestring, $editmodebuttonid);
                     }
 
+                    // Grader requires a specialized editmode link.
                     if ($PAGE->pagetype == "grade-report-grader-index") {
                         if ($USER->gradeediting[$COURSE->id]) {
                             $editingmode = 0;
@@ -488,6 +490,7 @@ class block_mmquicklink extends block_base {
                         if (has_capability('moodle/course:create', context_coursecat::instance($category->id))) {
                             $this->content->text .= $this->default_element($CFG->wwwroot .
                             "/course/edit.php?category=" . $category->id, get_string('addnewcourse'), 'addnewcourse');
+                            // Use the first found category with permissions.
                             break;
                         }
                     }
@@ -538,6 +541,7 @@ class block_mmquicklink extends block_base {
 
         }
 
+        // Show placeholder text if block has no content.
         if (strlen($this->content->text) < 10) {
             $this->content->text .= get_string('emptyblock', 'block_mmquicklink');
         }
