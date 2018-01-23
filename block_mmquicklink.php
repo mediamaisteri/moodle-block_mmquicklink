@@ -344,14 +344,18 @@ class block_mmquicklink extends block_base {
                 $oldkey = $DB->get_records('enrol', array('courseid' => $COURSE->id, 'enrol' => 'self', 'status' => 0), 'password');
                 foreach ($oldkey as $oneoldkey) {
                     $realoldkey = $oneoldkey->password;
+                    $setstring = get_string('check', 'core');
+                    $keyclass = "mmcuiklink-enrolmentkey-set";
                     break;
                 }
                 if (empty($realoldkey)) {
                     $realoldkey = "";
+                    $setstring = get_string('set', 'portfolio_flickr');
+                    $keyclass = "mmquicklink-enrolmentkey-unset";
                 }
                 $this->content->text .= "
-                    <li class='list mmquicklink-enrolmentkey'><a class='btn btn-secondary btn-enrolmentkey' href=''>"
-                     . get_string('set', 'portfolio_flickr') . " " .
+                    <li class='list mmquicklink-enrolmentkey $keyclass'><a class='btn btn-secondary btn-enrolmentkey' href=''>"
+                     . $setstring . " " .
                     strtolower(get_string('password', 'enrol_self')) . "</a></li>
                     <div class='mmquicklink-enrolmentkey-div'>
                         <form method='get' action='" . $CFG->wwwroot . "/blocks/mmquicklink/setenrolmentkey.php'>
