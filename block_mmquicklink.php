@@ -483,15 +483,31 @@ class block_mmquicklink extends block_base {
                 }
             } else {
                 if ($USER->id) {
-                    // Check if user has capability to add a course to at least one category.
-                    global $DB;
-                    $categories = $DB->get_records('course_categories');
-                    foreach ($categories as $category) {
-                        if (has_capability('moodle/course:create', context_coursecat::instance($category->id))) {
-                            $this->content->text .= $this->default_element($CFG->wwwroot .
-                            "/course/edit.php?category=" . $category->id, get_string('addnewcourse'), 'addnewcourse');
-                            // Use the first found category with permissions.
-                            break;
+                    
+                    // Check capability to add a new course to default category first.
+                    $defok = 0;
+                    $defaultcategory = get_config('mmquicklink', 'config_defaultcategory');
+                    if (!empty($defaultcategory)) {
+                        if ($defaultcategory > 0) {
+                            if (has_capability('moodle/course:create', context_coursecat::instance($defaultcategory))) {
+                                $this->content->text .= $this->default_element($CFG->wwwroot .
+                                "/course/edit.php?category=" . $defaultcategory, get_string('addnewcourse'), 'addnewcourse');
+                                $defok = 1;
+                            }
+                        }
+                    }
+                    
+                    // Check if user has capability to add a course to at least one category & default category didn't work.
+                    if ($defok == 0) {
+                        global $DB;
+                        $categories = $DB->get_records('course_categories');
+                        foreach ($categories as $category) {
+                            if (has_capability('moodle/course:create', context_coursecat::instance($category->id))) {
+                                $this->content->text .= $this->default_element($CFG->wwwroot .
+                                "/course/edit.php?category=" . $category->id, get_string('addnewcourse'), 'addnewcourse');
+                                // Use the first found category with permissions.
+                                break;
+                            }
                         }
                     }
                 }

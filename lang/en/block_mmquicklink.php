@@ -79,3 +79,5 @@ $string['setting_otherrole_select'] = "View as role";
 $string['setting_otherrole_select_desc'] = "Select a role used with 'View as' link.";
 $string['setting_otherrole'] = "Switch roles";
 $string['setting_otherrole_desc'] = "Check to hide switch roles link.";
+$string['setting_defaultcategory'] = "Default category for new courses";
+$string['setting_defaultcategory_desc'] = "Please select the default category for new courses.";

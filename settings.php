@@ -26,6 +26,17 @@ defined('MOODLE_INTERNAL') || die;
 if ($ADMIN->fulltree) {
     global $DB;
 
+    // Load course categories from DB.
+    $categoryarray[0] = get_string('choose');
+    $categories = $DB->get_records('course_categories', array(), $sort='path');
+    foreach ($categories as $category) {
+        if ($category->parent > 0) {
+            $category->name = " - " . $category->name;
+        }
+        $categoryarray[$category->id] = $category->name;
+    }
+
+
     $rolearray = [];
     $defaultroles = [];
     // Load existing roles from DB.
@@ -58,6 +69,8 @@ if ($ADMIN->fulltree) {
     'report'];
 
     $defaultpagelayouts = ['course', 'coursecategory', 'incourse', 'frontpage', 'admin', 'report', 'mydashboard', 'base'];
+
+    
 
     // General settings.
     $settings->add(new admin_setting_heading('block_mmquicklink_general_settings',
@@ -107,6 +120,11 @@ if ($ADMIN->fulltree) {
     get_string('setting_participants_select_desc', 'block_mmquicklink'), '0',
     array(0 => get_string('setting_participants_users', 'block_mmquicklink'),
     1 => get_string('setting_participants_enrol', 'block_mmquicklink'))));
+
+    $settings->add(new admin_setting_configselect('mmquicklink/config_defaultcategory',
+    get_string('setting_defaultcategory', 'block_mmquicklink'),
+    get_string('setting_defaultcategory_desc', 'block_mmquicklink'), '0',
+    $categoryarray));
 
     $settings->add(new admin_setting_configselect('mmquicklink/config_otherrole_select',
     get_string('setting_otherrole_select', 'block_mmquicklink'),
