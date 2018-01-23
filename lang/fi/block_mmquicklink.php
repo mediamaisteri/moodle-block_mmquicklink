@@ -79,3 +79,5 @@ $string['setting_otherrole_select'] = "Vaihda roolia";
 $string['setting_otherrole_select_desc'] = "Valitse rooli, jota käytetään 'vaihda roolia' -linkin kanssa.";
 $string['setting_otherrole'] = "Vaihda roolia";
 $string['setting_otherrole_desc'] = "Valitse piilottaaksesi 'vaihda roolia' -linkin.";
+$string['setting_defaultcategory'] = "Uuden kurssin oletuskategoria.";
+$string['setting_defaultcategory_desc'] = "Voit valita uuden kurssin oletuskategorian.";
