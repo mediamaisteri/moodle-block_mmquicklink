@@ -34,9 +34,16 @@ global $DB, $USER, $COURSE;
 // Course id & key from url variable.
 $courseid = optional_param('courseid', '', PARAM_TEXT);
 $enrolmentkey = optional_param('enrolmentkey', '', PARAM_TEXT);
+$urltogo = $_SERVER['HTTP_REFERER'];
 
 // Check if user has permission to edit course enrolment methods.
 if (has_capability('moodle/course:enrolconfig', context_course::instance($courseid))) {
+
+    // Check how many self-enrolment instances are in use in the course.
+    $self = $DB->get_records('enrol', array('courseid' => $courseid, 'enrol' => 'self', 'status' => 0), 'password');
+    if (count($self) > 1) {
+        redirect($urltogo, get_string('toomanyselfenrolments', 'block_mmquicklink') . $CFG->wwwroot . "/enrol/instances.php?id=" . $courseid . ".", null, 'error');
+    }
 
     // Update field to either set or disable enrolment key.
     if ($enrolmentkey) {
@@ -45,7 +52,6 @@ if (has_capability('moodle/course:enrolconfig', context_course::instance($course
         $DB->set_field('enrol', 'password', $enrolmentkey, array('courseid' => $courseid, 'enrol' => 'self'));
 
         // Redirect user back to course page with proper string.
-        $urltogo = $_SERVER['HTTP_REFERER'];
         redirect("$urltogo", get_string('password', 'enrol_self') . " " . strtolower(get_string('saved', 'core_completion')), 5);
 
     } else {
@@ -54,7 +60,6 @@ if (has_capability('moodle/course:enrolconfig', context_course::instance($course
         $DB->set_field('enrol', 'password', '', array('courseid' => $courseid, 'enrol' => 'self'));
 
         // Redirect user back to course page with proper string.
-        $urltogo = $_SERVER['HTTP_REFERER'];
         redirect("$urltogo", get_string('password', 'enrol_self') . " " . strtolower(get_string('deleted', 'core')), 5);
 
     }
