@@ -42,7 +42,7 @@ if (has_capability('moodle/course:enrolconfig', context_course::instance($course
     // Check how many self-enrolment instances are in use in the course.
     $self = $DB->get_records('enrol', array('courseid' => $courseid, 'enrol' => 'self', 'status' => 0), 'password');
     if (count($self) > 1) {
-        redirect($urltogo, get_string('toomanyselfenrolments', 'block_mmquicklink') . $CFG->wwwroot . "/enrol/instances.php?id=" . $courseid . ".", null, 'error');
+        redirect($urltogo, get_string('toomanyselfenrolments', 'block_mmquicklink') . "<a href='" . $CFG->wwwroot . "/enrol/instances.php?id=" . $courseid . "'>" . $CFG->wwwroot . "/enrol/instances.php?id=" . $courseid . "</a>.", null, 'error');
     }
 
     // Update field to either set or disable enrolment key.
