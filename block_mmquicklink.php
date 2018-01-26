@@ -299,15 +299,17 @@ class block_mmquicklink extends block_base {
             }
 
             // Show/hide course visibility link.
-            if (has_capability('moodle/course:visibility', context_course::instance($COURSE->id))) {
-                if ($COURSE->visible == "1") {
-                    $this->content->text .= $this->default_element($CFG->wwwroot .
-                    "/blocks/mmquicklink/changevisibility.php?hide=1&sesskey=" .
-                    $USER->sesskey . "&id=" . $COURSE->id, get_string('hide_course', 'block_mmquicklink'), 'hidecourse');
-                } else {
-                    $this->content->text .= $this->default_element($CFG->wwwroot .
-                    "/blocks/mmquicklink/changevisibility.php?hide=0&sesskey=" .
-                    $USER->sesskey . "&id=" . $COURSE->id, get_string('show_course', 'block_mmquicklink'), 'showcourse');
+            if (empty(get_config('mmquicklink', 'config_hide_hidecourse'))) {
+                if (has_capability('moodle/course:visibility', context_course::instance($COURSE->id))) {
+                    if ($COURSE->visible == "1") {
+                        $this->content->text .= $this->default_element($CFG->wwwroot .
+                        "/blocks/mmquicklink/changevisibility.php?hide=1&sesskey=" .
+                        $USER->sesskey . "&id=" . $COURSE->id, get_string('hide_course', 'block_mmquicklink'), 'hidecourse');
+                    } else {
+                        $this->content->text .= $this->default_element($CFG->wwwroot .
+                        "/blocks/mmquicklink/changevisibility.php?hide=0&sesskey=" .
+                        $USER->sesskey . "&id=" . $COURSE->id, get_string('show_course', 'block_mmquicklink'), 'showcourse');
+                    }
                 }
             }
 

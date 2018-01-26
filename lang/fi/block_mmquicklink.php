@@ -41,6 +41,8 @@ $string['setting_themesettings_desc'] = "Valitse piilottaaksesi teeman asetukset
 
 $string['setting_delcourse'] = "Poista kurssi";
 $string['setting_delcourse_desc'] = "Valitse piilottaaksesi kurssinpoistolinkin";
+$string['setting_hidecourse'] = "Piilota/näytä kurssi";
+$string['setting_hidecourse_desc'] = "Valitse piilottaaksesi piilota/näytä kurssi -linkki.";
 
 $string['mmquicklink:addinstance'] = "Lisää Quicklink-lohko";
 $string['mmquicklink:myaddinstance'] = "Lisää Quicklink-lohko työpöydälle";

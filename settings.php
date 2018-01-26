@@ -96,6 +96,8 @@ if ($ADMIN->fulltree) {
     get_string('visibility_settings', 'block_mmquicklink'), ''));
     $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_reports',
     get_string('setting_reports', 'block_mmquicklink'), get_string('setting_reports_desc', 'block_mmquicklink'), 0));
+    $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_hidecourse',
+    get_string('setting_hidecourse', 'block_mmquicklink'), get_string('setting_hidecourse_desc', 'block_mmquicklink'), 0));
     $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_delcourse',
     get_string('setting_delcourse', 'block_mmquicklink'), get_string('setting_delcourse_desc', 'block_mmquicklink'), 0));
     $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_editsettings',

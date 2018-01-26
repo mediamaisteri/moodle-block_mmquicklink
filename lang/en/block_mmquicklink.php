@@ -41,6 +41,9 @@ $string['setting_themesettings_desc'] = "Check to hide theme settings link";
 
 $string['setting_delcourse'] = "Delete course";
 $string['setting_delcourse_desc'] = "Check to hide delete course link";
+$string['setting_hidecourse'] = "Show/hide course";
+$string['setting_hidecourse_desc'] = "Check to hide show/hide course link";
+
 
 $string['mmquicklink:addinstance'] = "Add a new Quicklink block";
 $string['mmquicklink:myaddinstance'] = "Add a new Quicklink block on dashboard";
