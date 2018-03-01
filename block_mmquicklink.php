@@ -76,11 +76,20 @@ class block_mmquicklink extends block_base {
             // Load config from global settings.
             $roles = get_config('mmquicklink', 'config_roles');
             $roles = explode(",", $roles);
+            // Loop through allowed roles.
             foreach ($roles as $role) {
+
                 // Check user's role assignment.
                 if (user_has_role_assignment($USER->id, $role, context_system::instance()->id)) {
-                    // Return true if user has role assignment and the role has access.
+                    // Return true if user has role assignment.
                     return true;
+                }
+
+                // Check role assignment in course context.
+                if ($COURSE->id > 1) {
+                    if (user_has_role_assignment($USER->id, $role, context_course::instance($COURSE->id))) {
+                        return true;
+                    }
                 }
 
                 if (user_has_role_assignment($USER->id, $role)) {
