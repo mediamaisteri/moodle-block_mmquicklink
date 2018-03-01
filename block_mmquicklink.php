@@ -87,13 +87,13 @@ class block_mmquicklink extends block_base {
 
                 // Check role assignment in course context.
                 if ($COURSE->id > 1) {
-                    if (user_has_role_assignment($USER->id, $role, context_course::instance($COURSE->id))) {
-                        return true;
+                    $cContext = context_course::instance($COURSE->id);
+                    if (isset(current(get_user_roles($cContext, $USER->id))->roleid)) {
+                        $iswithRole = current(get_user_roles($cContext, $USER->id))->roleid==$role ? true : false; 
+                        if ($iswithRole == true) {
+                            return true;
+                        }
                     }
-                }
-
-                if (user_has_role_assignment($USER->id, $role)) {
-                    return true;
                 }
             }
 
