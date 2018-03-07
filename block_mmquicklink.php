@@ -405,12 +405,12 @@ class block_mmquicklink extends block_base {
                     $otherrole = get_config('mmquicklink', 'config_otherrole_select');
                     $otherrolename = $DB->get_record('role', array('id' => $otherrole));
                     
-                    
+                    // Prioritize custom full name, if set in role configuration.
                     if (strlen($otherrolename->name) > 0) {
                         $otherroleshowname = $otherrolename->name;
                     } else {
+                        // Use Moodle's core function to retrieve localized role name.
                         $otherroleshowname = role_get_name($otherrolename, context_system::instance(), ROLENAME_ALIAS);
-                        var_dump($otherroleshowname);
                     }
                     
                     $this->content->text .= "
