@@ -404,6 +404,15 @@ class block_mmquicklink extends block_base {
                 if (!is_role_switched($COURSE->id)) {
                     $otherrole = get_config('mmquicklink', 'config_otherrole_select');
                     $otherrolename = $DB->get_record('role', array('id' => $otherrole));
+                    
+                    
+                    if (strlen($otherrolename->name) > 0) {
+                        $otherroleshowname = $otherrolename->name;
+                    } else {
+                        $otherroleshowname = role_get_name($otherrolename, context_system::instance(), ROLENAME_ALIAS);
+                        var_dump($otherroleshowname);
+                    }
+                    
                     $this->content->text .= "
                         <li class='list mmquicklink-otherrole'>
                         <div class='mmquicklink-otherrole-div'>
@@ -416,7 +425,7 @@ class block_mmquicklink extends block_base {
                             class='mmquicklink-btn btn btn-secondary btn-otherrole' value='" .
                             get_string('switchrole', 'block_mmquicklink') .
                             " " . $otherrolename->shortname . "'>" . get_string('switchrole', 'block_mmquicklink') . " "
-                            . $otherrolename->shortname . "</a>
+                            . $otherroleshowname . "</a>
                             </form>
                         </div>
                         </li>";
