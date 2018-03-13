@@ -356,7 +356,7 @@ class block_mmquicklink extends block_base {
                 foreach ($oldkey as $oneoldkey) {
                     $realoldkey = $oneoldkey->password;
                     $setstring = get_string('check', 'core');
-                    $keyclass = "mmcuiklink-enrolmentkey-set";
+                    $keyclass = "mmcuicklink-enrolmentkey-set";
                     break;
                 }
                 if (empty($realoldkey)) {
