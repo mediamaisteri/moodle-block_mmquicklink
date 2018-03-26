@@ -85,6 +85,15 @@ class block_mmquicklink extends block_base {
                     return true;
                 }
 
+                $categories = $DB->get_records('course_categories');
+                foreach ($categories as $category) {
+                    $catContext = context_coursecat::instance($category->id);
+                    if (user_has_role_assignment($USER->id, $role, $catContext->id) == true) {
+                        return true;
+                    }
+                }                
+                
+
                 // Check role assignment in course context.
                 if ($COURSE->id > 1) {
                     $cContext = context_course::instance($COURSE->id);
