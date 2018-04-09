@@ -28,7 +28,7 @@ if ($ADMIN->fulltree) {
 
     // Load course categories from DB.
     $categoryarray[0] = get_string('choose');
-    $categories = $DB->get_records('course_categories', array(), $sort='path');
+    $categories = $DB->get_records('course_categories', array(), $sort = 'path');
     foreach ($categories as $category) {
         if ($category->parent > 0) {
             $category->name = " - " . $category->name;
@@ -69,8 +69,6 @@ if ($ADMIN->fulltree) {
     'report'];
 
     $defaultpagelayouts = ['course', 'coursecategory', 'incourse', 'frontpage', 'admin', 'report', 'mydashboard', 'base'];
-
-    
 
     // General settings.
     $settings->add(new admin_setting_heading('block_mmquicklink_general_settings',

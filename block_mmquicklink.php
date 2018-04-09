@@ -87,19 +87,18 @@ class block_mmquicklink extends block_base {
 
                 $categories = $DB->get_records('course_categories');
                 foreach ($categories as $category) {
-                    $catContext = context_coursecat::instance($category->id);
-                    if (user_has_role_assignment($USER->id, $role, $catContext->id) == true) {
+                    $catcontext = context_coursecat::instance($category->id);
+                    if (user_has_role_assignment($USER->id, $role, $catcontext->id) == true) {
                         return true;
                     }
-                }                
-                
+                }
 
                 // Check role assignment in course context.
                 if ($COURSE->id > 1) {
-                    $cContext = context_course::instance($COURSE->id);
-                    if (isset(current(get_user_roles($cContext, $USER->id))->roleid)) {
-                        $iswithRole = current(get_user_roles($cContext, $USER->id))->roleid==$role ? true : false; 
-                        if ($iswithRole == true) {
+                    $ccontext = context_course::instance($COURSE->id);
+                    if (isset(current(get_user_roles($ccontext, $USER->id))->roleid)) {
+                        $iswithrole = current(get_user_roles($ccontext, $USER->id))->roleid == $role ? true : false;
+                        if ($iswithrole == true) {
                             return true;
                         }
                     }
@@ -413,7 +412,7 @@ class block_mmquicklink extends block_base {
                 if (!is_role_switched($COURSE->id)) {
                     $otherrole = get_config('mmquicklink', 'config_otherrole_select');
                     $otherrolename = $DB->get_record('role', array('id' => $otherrole));
-                    
+
                     // Prioritize custom full name, if set in role configuration.
                     if (strlen($otherrolename->name) > 0) {
                         $otherroleshowname = $otherrolename->name;
@@ -421,7 +420,7 @@ class block_mmquicklink extends block_base {
                         // Use Moodle's core function to retrieve localized role name.
                         $otherroleshowname = role_get_name($otherrolename, context_system::instance(), ROLENAME_ALIAS);
                     }
-                    
+
                     $this->content->text .= "
                         <li class='list mmquicklink-otherrole'>
                         <div class='mmquicklink-otherrole-div'>
@@ -516,7 +515,7 @@ class block_mmquicklink extends block_base {
                 }
             } else {
                 if ($USER->id) {
-                    
+
                     // Check capability to add a new course to default category first.
                     $defok = 0;
                     $defaultcategory = get_config('mmquicklink', 'config_defaultcategory');
@@ -529,7 +528,7 @@ class block_mmquicklink extends block_base {
                             }
                         }
                     }
-                    
+
                     // Check if user has capability to add a course to at least one category & default category didn't work.
                     if ($defok == 0) {
                         global $DB;
