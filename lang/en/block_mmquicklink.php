@@ -86,3 +86,5 @@ $string['setting_defaultcategory'] = "Default category for new courses";
 $string['setting_defaultcategory_desc'] = "Please select the default category for new courses.";
 
 $string['toomanyselfenrolments'] = "This course has multiple self enrolment methods enabled. To use this functionality, remove extra self enrolment methods at ";
+
+$string['privacy:null_reason'] = "This plugin does not handle or store user data.";

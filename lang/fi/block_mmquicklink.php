@@ -85,3 +85,5 @@ $string['setting_defaultcategory'] = "Uuden kurssin oletuskategoria.";
 $string['setting_defaultcategory_desc'] = "Voit valita uuden kurssin oletuskategorian.";
 
 $string['toomanyselfenrolments'] = "Kurssilla on usea itserekisteröitymistapa käytössä. Jotta tämän lohkon kautta voitaisiin asettaa kurssiavain, sinun tulee poistaa ylimääräiset itserekisteröitymiset käytöstä osoitteessa ";
+
+$string['privacy:null_reason'] = "Tämä lisäosa ei käsittele henkilötietoja.";
