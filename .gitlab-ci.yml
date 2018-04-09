@@ -33,4 +33,4 @@ phpcs for complete project:
     untracked: true
   allow_failure: true
   script:
-    - phpcs .
+    - phpcs --ignore=amd/build/* .
