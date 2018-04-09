@@ -24,7 +24,7 @@ phpcs for changed files:
 
 # Check code standard for repository.
 phpcs for complete project:
-  image: willhallonline/drupal-phpcs
+  image: samihellsten/moodlecs
   tags:
     - d8test
   stage: prebuild
