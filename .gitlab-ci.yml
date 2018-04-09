@@ -1,0 +1,36 @@
+stages:
+  - prebuild
+  - build
+  - test
+  - deploy
+
+# Check code standard.
+phpcs for changed files:
+  image: samihellsten/moodlecs
+  tags:
+    - d8test
+  stage: prebuild
+  cache:
+    key: "$CI_PIPELINE_ID"
+    untracked: true
+  only:
+    - branches
+  except:
+    - master
+    - production
+  script:
+    - CHANGED_FILES=$(git diff --name-only --diff-filter=d origin/master... .  |tr '\n' ' ')
+    - if [ -n "$CHANGED_FILES" ]; then phpcs $CHANGED_FILES; else echo "No changed custom files"; fi
+
+# Check code standard for repository.
+phpcs for complete project:
+  image: willhallonline/drupal-phpcs
+  tags:
+    - d8test
+  stage: prebuild
+  cache:
+    key: "$CI_PIPELINE_ID"
+    untracked: true
+  allow_failure: true
+  script:
+    - phpcs .
