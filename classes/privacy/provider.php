@@ -20,9 +20,8 @@
  * @copyright 2017 Mediamaisteri Oy
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 namespace block_mmquicklink\privacy;
+defined('MOODLE_INTERNAL') || die();
 
 class provider implements \core_privacy\local\metadata\null_provider {
 
