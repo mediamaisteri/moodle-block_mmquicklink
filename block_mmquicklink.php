@@ -407,6 +407,18 @@ class block_mmquicklink extends block_base {
                 }
             }
 
+            // mRaportointi summary report.
+            if (empty(get_config('mmquicklink', 'config_hide_local_reports_summary'))) {
+                if (has_capability('local/reports:viewall', context_system::instance()) && $COURSE->enablecompletion = 1) {
+                    $getcriteria = $DB->get_records_sql("SELECT * FROM {course_completion_criteria} WHERE course=$COURSE->id");
+                    if (!empty($getcriteria)) {
+                        $this->content->text .= $this->default_element($CFG->wwwroot .
+                        "/local/reports/summary.php?id=" . $COURSE->id . "&groupby=0&includesuspended=0&submitbutton=View+summary&sesskey=" .
+                        $USER->sesskey, get_string('local_reports_summary', 'block_mmquicklink', 'localreportssummary'));
+                    }
+                }
+            }
+
             // View as other role.
             if (empty(get_config('mmquicklink', 'config_hide_otherrole'))) {
                 if (!is_role_switched($COURSE->id)) {

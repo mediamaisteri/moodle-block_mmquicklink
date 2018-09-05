@@ -84,6 +84,9 @@ $string['setting_otherrole'] = "Switch roles";
 $string['setting_otherrole_desc'] = "Check to hide switch roles link.";
 $string['setting_defaultcategory'] = "Default category for new courses";
 $string['setting_defaultcategory_desc'] = "Please select the default category for new courses.";
+$string['setting_localreportssummary'] = "mReports on course page";
+$string['setting_localreportssummary_desc'] = "Check to hide mRaportointi link on course page";
+$string['local_reports_summary'] = "Summary report";
 
 $string['toomanyselfenrolments'] = "This course has multiple self enrolment methods enabled. To use this functionality, remove extra self enrolment methods at ";
 
