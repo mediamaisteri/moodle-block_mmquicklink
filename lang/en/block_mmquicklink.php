@@ -77,6 +77,8 @@ $string['setting_participants_select_desc'] = "Choose where the participants lin
 $string['setting_participants_users'] = "General participants page";
 $string['setting_participants_enrol'] = "User enrolment page";
 
+$string["trainingmanagement"] = "Training management";
+
 $string['switchrole'] = "View as";
 $string['setting_otherrole_select'] = "View as role";
 $string['setting_otherrole_select_desc'] = "Select a role used with 'View as' link.";

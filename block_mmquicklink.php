@@ -457,6 +457,11 @@ class block_mmquicklink extends block_base {
                 }
             }
 
+            if (isset($CFG->drupal_url) && $this->hasaccess() == true) {
+                $hrdurl = "{$CFG->drupal_url}/training_by_moodle_id/{$this->page->course->id}";
+                $this->content->text .= $this->default_element($hrdurl, get_string('trainingmanagement', 'block_mmquicklink', 'hrd'));
+            }
+
         } else {
             // Links shown on other pagelayouts and types.
 
