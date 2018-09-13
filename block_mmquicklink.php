@@ -457,7 +457,7 @@ class block_mmquicklink extends block_base {
                 }
             }
 
-            if (isset($CFG->drupal_url) && $this->hasaccess() == true) {
+            if (isset($CFG->drupal_url) && has_capability('moodle/user:create', context_system::instance())) {
                 $hrdurl = "{$CFG->drupal_url}/training_by_moodle_id/{$this->page->course->id}";
                 $this->content->text .= $this->default_element($hrdurl, get_string('trainingmanagement', 'block_mmquicklink', 'hrd'));
             }
