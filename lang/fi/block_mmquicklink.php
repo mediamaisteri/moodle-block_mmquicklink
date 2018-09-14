@@ -26,6 +26,7 @@ $string['pluginname'] = 'MM Quick Link';
 $string['title'] = "Hallintatyökalut";
 
 $string['visibility_settings'] = "Näkyvyysasetukset";
+$string['coursemgmt'] = "Lisää/muokkaa kursseja";
 
 $string['setting_reports'] = "Raportit";
 $string['setting_reports_desc'] = "Valitse piilottaaksesi raportit linkin";

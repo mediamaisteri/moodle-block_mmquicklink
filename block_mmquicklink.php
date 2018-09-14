@@ -565,7 +565,7 @@ class block_mmquicklink extends block_base {
             // Show course management button.
             if (has_capability('moodle/category:manage', context_course::instance($COURSE->id))) {
                 $this->content->text .= $this->default_element($CFG->wwwroot .
-                "/course/management.php", get_string('coursemgmt', 'core_admin'), 'coursemgmt');
+                "/course/management.php", get_string('coursemgmt', 'block_mmquicklink'), 'coursemgmt');
             }
 
             // Theme settings -link.

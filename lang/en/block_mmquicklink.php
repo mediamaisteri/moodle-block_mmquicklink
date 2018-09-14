@@ -24,7 +24,7 @@
 
 $string['pluginname'] = 'MM Quick Link';
 $string['title'] = "Managing tools";
-
+$string['coursemgmt'] = "Manage courses/categories";
 $string['visibility_settings'] = 'Visibility settings';
 
 $string['setting_reports'] = "Reports";
