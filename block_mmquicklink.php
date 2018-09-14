@@ -414,7 +414,7 @@ class block_mmquicklink extends block_base {
                     if (!empty($getcriteria)) {
                         $this->content->text .= $this->default_element($CFG->wwwroot .
                         "/local/reports/summary.php?id=" . $COURSE->id . "&groupby=0&includesuspended=0&submitbutton=View+summary&sesskey=" .
-                        $USER->sesskey, get_string('local_reports_summary', 'block_mmquicklink', 'localreportssummary'));
+                        $USER->sesskey . "&_qf__local_reports_summary_form=1", get_string('local_reports_summary', 'block_mmquicklink', 'localreportssummary'));
                     }
                 }
             }
