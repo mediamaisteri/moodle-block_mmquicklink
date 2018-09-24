@@ -111,7 +111,8 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_otherrole',
     get_string('setting_otherrole', 'block_mmquicklink'), get_string('setting_otherrole_desc', 'block_mmquicklink'), 0));
     $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_local_reports_summary',
-    get_string('setting_localreportssummary', 'block_mmquicklink'), get_string('setting_localreportssummary_desc', 'block_mmquicklink'), 0));
+    get_string('setting_localreportssummary', 'block_mmquicklink'),
+    get_string('setting_localreportssummary_desc', 'block_mmquicklink'), 0));
 
     // Advanced options.
     $settings->add(new admin_setting_heading('block_mmquicklink_advanced_options',

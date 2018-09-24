@@ -564,18 +564,16 @@ class block_mmquicklink extends block_base {
 
             // Show course management button.
             global $PAGE;
-            if($PAGE->bodyid == 'page-course-index-category'){
+            if ($PAGE->bodyid == 'page-course-index-category'){
                 if (can_edit_in_category(optional_param('categoryid', '', PARAM_INT))) {
                     $this->content->text .= $this->default_element($CFG->wwwroot .
                     "/course/management.php", get_string('coursemgmt', 'core_admin'), 'coursemgmt');
                 }
-            }
-            else {
+            } else {
                 if (has_capability('moodle/category:manage', context_course::instance($COURSE->id))) {
                     $this->content->text .= $this->default_element($CFG->wwwroot .
                     "/course/management.php", get_string('coursemgmt', 'block_mmquicklink'), 'coursemgmt');
                 }
-
             }
 
             // Theme settings -link.
