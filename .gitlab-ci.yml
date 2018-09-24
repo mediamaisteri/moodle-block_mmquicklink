@@ -8,7 +8,7 @@ stages:
 phpcs for changed files:
   image: samihellsten/moodlecs
   tags:
-    - moodle-runner
+    - 17dbc115
   stage: prebuild
   cache:
     key: "$CI_PIPELINE_ID"
@@ -26,7 +26,7 @@ phpcs for changed files:
 phpcs for complete project:
   image: samihellsten/moodlecs
   tags:
-    - moodle-runner
+    - 17dbc115
   stage: prebuild
   cache:
     key: "$CI_PIPELINE_ID"
