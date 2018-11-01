@@ -600,7 +600,7 @@ class block_mmquicklink extends block_base {
 
             // Language customization link.
             if (empty(get_config('mmquicklink', 'config_hide_langcust')) &&
-            is_siteadmin()) {
+            has_capability('tool/customlang:view', context_system::instance())) {
                 $custlangurl = $CFG->wwwroot . '/admin/tool/customlang/index.php';
                 $this->content->text .= $this->default_element($custlangurl, get_string('pluginname', 'tool_customlang'),
                 'customlang');
