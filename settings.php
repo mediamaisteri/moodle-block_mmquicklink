@@ -18,6 +18,7 @@
  * Settings for the teachers' toolbox.
  *
  * @package   block_mmquicklink
+ * @author    Mikko Haikonen <mikko.haikonen@mediamaisteri.com>
  *
  */
 
@@ -112,17 +113,20 @@ if ($ADMIN->fulltree) {
     get_string('setting_otherrole', 'block_mmquicklink'), get_string('setting_otherrole_desc', 'block_mmquicklink'), 0));
     $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_local_reports_summary',
     get_string('setting_localreportssummary', 'block_mmquicklink'),
-    get_string('setting_localreportssummary_desc', 'block_mmquicklink'), 0));
+    get_string('setting_localreportssummary_desc', 'block_mmquicklink'), 1));
 
     // Advanced options.
     $settings->add(new admin_setting_heading('block_mmquicklink_advanced_options',
     get_string('advanced_options', 'block_mmquicklink'), ''));
 
-    $settings->add(new admin_setting_configselect('mmquicklink/config_participants_select',
-    get_string('setting_participants_select', 'block_mmquicklink'),
-    get_string('setting_participants_select_desc', 'block_mmquicklink'), '0',
-    array(0 => get_string('setting_participants_users', 'block_mmquicklink'),
-    1 => get_string('setting_participants_enrol', 'block_mmquicklink'))));
+    // Show participation select only on pre 3.5 versions.
+    if ($CFG->version < 2018051700.00) {
+        $settings->add(new admin_setting_configselect('mmquicklink/config_participants_select',
+        get_string('setting_participants_select', 'block_mmquicklink'),
+        get_string('setting_participants_select_desc', 'block_mmquicklink'), '0',
+        array(0 => get_string('setting_participants_users', 'block_mmquicklink'),
+        1 => get_string('setting_participants_enrol', 'block_mmquicklink'))));
+    }
 
     $settings->add(new admin_setting_configselect('mmquicklink/config_defaultcategory',
     get_string('setting_defaultcategory', 'block_mmquicklink'),

@@ -15,18 +15,14 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Quick Link -block to help admins, managers
+ * and teachers to navigate through Moodle.
+ *
  * @package   block_mmquicklink
- * @copyright 2017 Mediamaisteri Oy
+ * @copyright 2018 Mediamaisteri Oy
+ * @author    Mikko Haikonen <mikko.haikonen@mediamaisteri.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-/************************
-Quick Link -block to help admins, managers
-and teachers to navigate through Moodle.
-
-2017
-Mediamaisteri Oy
-************************/
 
 defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot.'/blocks/mmquicklink/lib.php');
@@ -388,7 +384,7 @@ class block_mmquicklink extends block_base {
             // Course participants.
             if (empty(get_config('mmquicklink', 'config_hide_participants'))) {
                 if (has_capability('moodle/course:viewparticipants', context_course::instance($COURSE->id))) {
-                    if (get_config('mmquicklink', 'config_participants_select') == 0) {
+                    if (get_config('mmquicklink', 'config_participants_select') == 0 OR $CFG->version >= 2018051700.00) {
                         $participanturl = "/user/index.php?id=" . $PAGE->course->id;
                     } else {
                         $participanturl = "/enrol/users.php?id=" . $PAGE->course->id;
