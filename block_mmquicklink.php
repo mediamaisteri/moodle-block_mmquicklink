@@ -576,11 +576,18 @@ class block_mmquicklink extends block_base {
             }
 
             // Theme settings -link.
+            // If local_extrasettings is installed & user has proper capability, show link to it.
             if (empty(get_config('mmquicklink', 'config_hide_themesettings'))) {
                 if (is_siteadmin()) {
                     $adminurl = ($CFG->wwwroot . '/admin/settings.php?section=themesetting' . $PAGE->theme->name);
                     $this->content->text .= $this->default_element($adminurl, get_string('themesettings', 'core_admin'),
                     'themesettings');
+                } else if (!empty(core_plugin_manager::instance()->get_plugins_of_type('local')["extrasettings"]->name)) {
+                    if (has_capability('local/extrasettings:accesssettings', context_system::instance())) {
+                        $extrasettingsurl = $CFG->wwwroot . "/local/extrasettings/";
+                        $this->content->text .= $this->default_element($extrasettingsurl, get_string('themesettings', 'core_admin'),
+                        'themesettings');
+                    }
                 }
             }
 
