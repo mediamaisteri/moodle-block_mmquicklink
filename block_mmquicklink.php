@@ -624,7 +624,11 @@ class block_mmquicklink extends block_base {
 
         // Show placeholder text if block has no content.
         if (strlen($this->content->text) < 10) {
-            $this->content->text .= get_string('emptyblock', 'block_mmquicklink');
+            $this->content->text .= "<div id='empty'>" . get_string('emptyblock', 'block_mmquicklink') . "</div>";
+            // Force hiding with JS.
+            $this->page->requires->js_call_amd('block_mmquicklink/blockhider', 'init', []);
+            // Stop executing the script.
+            return $this->content;
         }
 
         // Return data to block.
