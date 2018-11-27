@@ -298,15 +298,16 @@ class block_mmquicklink extends block_base {
             }
 
             // Edit course or mod settings.
-            if (empty(get_config('mmquicklink', 'config_hide_editsettings') &&
-            has_capability('moodle/course:update', context_course::instance($COURSE->id)))) {
-                if ($PAGE->pagelayout == "course") {
-                    $this->content->text .= $this->default_element($CFG->wwwroot . "/course/edit.php?id=" .
-                    $COURSE->id, get_string('editsettings', 'core'), 'editsettings');
-                } else {
-                    if (!empty($PAGE->cm->id)) {
-                        $this->content->text .= $this->default_element($CFG->wwwroot . "/course/modedit.php?update=" .
-                        $PAGE->cm->id, get_string('editsettings', 'core'), 'editsettings');
+            if (empty(get_config('mmquicklink', 'config_hide_editsettings'))) {
+                if (has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
+                    if ($PAGE->pagelayout == "course") {
+                        $this->content->text .= $this->default_element($CFG->wwwroot . "/course/edit.php?id=" .
+                        $COURSE->id, get_string('editsettings', 'core'), 'editsettings');
+                    } else {
+                        if (!empty($PAGE->cm->id)) {
+                            $this->content->text .= $this->default_element($CFG->wwwroot . "/course/modedit.php?update=" .
+                            $PAGE->cm->id, get_string('editsettings', 'core'), 'editsettings');
+                        }
                     }
                 }
             }
@@ -418,7 +419,8 @@ class block_mmquicklink extends block_base {
             }
 
             // View as other role.
-            if (empty(get_config('mmquicklink', 'config_hide_otherrole'))) {
+            if (!is_role_switched($COURSE->id) &&
+            has_capability('moodle/role:switchroles', context_course::instance($COURSE->id))) {
                 if (!is_role_switched($COURSE->id)) {
                     $otherrole = get_config('mmquicklink', 'config_otherrole_select');
                     $otherrolename = $DB->get_record('role', array('id' => $otherrole));
