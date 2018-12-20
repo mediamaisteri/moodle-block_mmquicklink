@@ -595,11 +595,26 @@ class block_mmquicklink extends block_base {
 
             // Render local_reports navigation.
             if (empty(get_config('mmquicklink', 'config_hide_reports'))) {
+                $categorymanager = 0;
+                if (!has_capability('local/reports:viewall', context_system::instance())) {
+                    if (isset($CFG->local_reports_allowcategorymanagers)) {
+                        if ($CFG->local_reports_allowcategorymanagers == 1) {
+                            // Check if user has manager's right somewhere.
+                            $role = $DB->get_records_sql("SELECT * FROM {role_assignments} WHERE roleid='1' && userid='$USER->id'");
+                            if (count($role) > 0) {
+                                $categorymanager = 1;
+                            }
+                        }
+                    }
+                }
+
                 $reports = $PAGE->navigation->find('local_reports', navigation_node::TYPE_CUSTOM);
-                if ($reports) {
-                    $this->content->text .= "<li class='list mmquicklink-reports-button'><a class='btn btn-secondary btn-reports'>"
-                     . get_string('pluginname', 'local_reports') . "</a></li>";
-                    $this->content->text .= $PAGE->get_renderer('block_mmquicklink')->mmquicklink_tree($reports);
+                if (has_capability('local/reports:viewall', context_system::instance()) OR $categorymanager == 1) {
+                    if ($reports) {
+                        $this->content->text .= "<li class='list mmquicklink-reports-button'>
+                        <a class='btn btn-secondary btn-reports'>" . get_string('pluginname', 'local_reports') . "</a></li>";
+                        $this->content->text .= $PAGE->get_renderer('block_mmquicklink')->mmquicklink_tree($reports);
+                    }
                 }
             }
 
