@@ -44,6 +44,10 @@ $string['setting_delcourse_desc'] = "Check to hide delete course link";
 $string['setting_hidecourse'] = "Show/hide course";
 $string['setting_hidecourse_desc'] = "Check to hide show/hide course link";
 
+$string['setting_archive'] = "Archive course";
+$string['setting_archive_desc'] = "Check to hide 'archive course' button. This functionality required local_course_archive -plugin to be installed.";
+$string['archive_course'] = "Archive course";
+$string['archived'] = "The course has been successfully archived.";
 
 $string['mmquicklink:addinstance'] = "Add a new Quicklink block";
 $string['mmquicklink:myaddinstance'] = "Add a new Quicklink block on dashboard";
