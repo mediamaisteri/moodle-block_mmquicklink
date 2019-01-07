@@ -380,7 +380,15 @@ class block_mmquicklink extends block_base {
                     $setstring = get_string('set', 'portfolio_flickr');
                     $keyclass = "mmquicklink-enrolmentkey-unset";
                 }
-                $this->content->text .= "
+                if (count($oldkey) > 1) {
+                    $this->content->text .= "
+                    <li class='list mmquicklink-enrolmentkey $keyclass'><a class='btn btn-secondary btn-enrolmentkey' href=''>"
+                     . $setstring . " " .
+                    strtolower(get_string('password', 'enrol_self')) . "</a></li>
+                    <div class='mmquicklink-enrolmentkey-div'> " . get_string('multiplepasswords', 'block_mmquicklink') . "</div>
+                    ";
+                } else {
+                    $this->content->text .= "
                     <li class='list mmquicklink-enrolmentkey $keyclass'><a class='btn btn-secondary btn-enrolmentkey' href=''>"
                      . $setstring . " " .
                     strtolower(get_string('password', 'enrol_self')) . "</a></li>
@@ -391,6 +399,7 @@ class block_mmquicklink extends block_base {
                         <input class='btn btn-primary' type='submit' value='" . get_string('save', 'core_admin') . "'>
                         </form>
                     </div>";
+                }
             }
 
             // Course participants.
@@ -656,6 +665,9 @@ class block_mmquicklink extends block_base {
             // Stop executing the script.
             return $this->content;
         }
+
+        // Add button adder js.
+        $this->page->requires->js_call_amd('block_mmquicklink/addblock', 'init', []);
 
         // Return data to block.
         return $this->content;

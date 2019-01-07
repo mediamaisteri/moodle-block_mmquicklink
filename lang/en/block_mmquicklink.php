@@ -95,5 +95,5 @@ $string['setting_localreportssummary_desc'] = "Check to hide mRaportointi link o
 $string['local_reports_summary'] = "Summary report";
 
 $string['toomanyselfenrolments'] = "This course has multiple self enrolment methods enabled. To use this functionality, remove extra self enrolment methods at ";
-
+$string['multiplepasswords'] = "This course has multiple self enrolments enabled. Check them on 'enrolment methods' page.";
 $string['privacy:null_reason'] = "This plugin does not handle or store user data.";
