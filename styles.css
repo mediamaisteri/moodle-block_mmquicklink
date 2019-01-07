@@ -30,3 +30,13 @@
 .block_mmquicklink .mmquicklink-btn {
     width: 100%;
 }
+
+#quicklink-sort {
+    padding-left: 20px;
+    list-style-type: none;
+}
+
+.mmquicklink-list {
+    display: flex;
+    flex-direction: column;
+}
