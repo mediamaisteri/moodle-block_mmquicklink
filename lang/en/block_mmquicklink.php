@@ -38,7 +38,7 @@ $string['setting_course_grades_desc'] = "Check to hide course grades link";
 
 $string['setting_themesettings'] = "Theme settings";
 $string['setting_themesettings_desc'] = "Check to hide theme settings link";
-
+$string['addcourse'] = "Add course";
 $string['setting_delcourse'] = "Delete course";
 $string['setting_delcourse_desc'] = "Check to hide delete course link";
 $string['setting_hidecourse'] = "Show/hide course";
@@ -80,7 +80,7 @@ $string['setting_participants_select'] = "Participants link";
 $string['setting_participants_select_desc'] = "Choose where the participants link should redirect.";
 $string['setting_participants_users'] = "General participants page";
 $string['setting_participants_enrol'] = "User enrolment page";
-
+$string['enrolmentkey'] = "Enrolment key";
 $string["trainingmanagement"] = "Training management";
 $string['sorting_options'] = "Button sorting";
 $string['switchrole'] = "View as";

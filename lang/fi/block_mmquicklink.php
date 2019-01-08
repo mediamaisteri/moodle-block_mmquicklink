@@ -39,7 +39,7 @@ $string['setting_course_grades_desc'] = "Valitse piilottaaksesi arvioinnit-linki
 
 $string['setting_themesettings'] = "Teeman asetukset";
 $string['setting_themesettings_desc'] = "Valitse piilottaaksesi teeman asetukset -linkin";
-
+$string['addcourse'] = "Luo kurssi";
 $string['setting_delcourse'] = "Poista kurssi";
 $string['setting_delcourse_desc'] = "Valitse piilottaaksesi kurssinpoistolinkin";
 $string['setting_hidecourse'] = "Piilota/näytä kurssi";
@@ -94,6 +94,7 @@ $string['setting_defaultcategory_desc'] = "Voit valita uuden kurssin oletuskateg
 $string['setting_localreportssummary'] = "mReports kurssisivulla";
 $string['setting_localreportssummary_desc'] = "Valitse piilottaaksesi mRaportointilinkki kurssisivulla";
 $string['local_reports_summary'] = "Yhteenvetoraportti";
+$string['enrolmentkey'] = "Kurssiavain";
 
 $string['toomanyselfenrolments'] = "Kurssilla on usea itserekisteröitymistapa käytössä. Jotta tämän lohkon kautta voitaisiin asettaa kurssiavain, sinun tulee poistaa ylimääräiset itserekisteröitymiset käytöstä osoitteessa ";
 $string['multiplepasswords'] = "Kurssilla on useampi itserekisteröitymistapa käytössä. Tarkista ne osallistujien lisäämistavoista.";
