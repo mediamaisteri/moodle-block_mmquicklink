@@ -98,5 +98,5 @@ $string['toomanyselfenrolments'] = "This course has multiple self enrolment meth
 $string['multiplepasswords'] = "This course has multiple self enrolments enabled. Check them on 'enrolment methods' page.";
 $string['privacy:null_reason'] = "This plugin does not handle or store user data.";
 
-$string['buttonsorting'] = "Drag and drop button to sort them.";
+$string['buttonsorting'] = "Drag and drop buttons to sort them.";
 $string['saved'] = "Changes have been succesfully saved!";
