@@ -33,7 +33,9 @@ define(['jquery'], function($) {
                 var orderid = 1;
                 $.each(e.detail.destination.items, function(index, value) {
                     $("#quicklink-sort").css({display: "block"});
-                    $.get("../blocks/mmquicklink/setorder.php", { button: value.dataset.button, order: orderid } );
+                    $.get("../blocks/mmquicklink/setorder.php", { button: value.dataset.button, order: orderid } ).done(function(data) {
+                        $("#quicklink-sort-alert").attr("style", "display: block !important;");
+                    });
                     orderid = orderid + 1;
                 });
             });

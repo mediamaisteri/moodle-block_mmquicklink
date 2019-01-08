@@ -101,3 +101,4 @@ $string['multiplepasswords'] = "Kurssilla on useampi itserekisteröitymistapa k�
 $string['privacy:null_reason'] = "Tämä lisäosa ei käsittele henkilötietoja.";
 
 $string['buttonsorting'] = "Raahaa & pudota siirrelläksesi nappien paikkoja.";
+$string['saved'] = "Muutokset tallennettiin onnistuneesti!";
