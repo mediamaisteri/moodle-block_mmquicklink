@@ -32,7 +32,7 @@
 }
 
 #quicklink-sort {
-    padding-left: 20px;
+    padding-left: 0px;
     list-style-type: none;
     display: flex;
     flex-direction: column;
