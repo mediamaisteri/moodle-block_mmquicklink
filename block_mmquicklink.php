@@ -71,33 +71,23 @@ class block_mmquicklink extends block_base {
 
             // Load config from global settings.
             $roles = get_config('mmquicklink', 'config_roles');
-            $roles = explode(",", $roles);
-            // Loop through allowed roles.
-            foreach ($roles as $role) {
+            $rolesarray = explode(",", $roles);
 
-                // Check user's role assignment.
-                if (user_has_role_assignment($USER->id, $role, context_system::instance()->id)) {
-                    // Return true if user has role assignment.
-                    return true;
-                }
-
-                $categories = $DB->get_records('course_categories');
-                foreach ($categories as $category) {
-                    $catcontext = context_coursecat::instance($category->id);
-                    if (user_has_role_assignment($USER->id, $role, $catcontext->id) == true) {
+            // Check role assignment in course context.
+            if ($COURSE->id > 1) {
+                $ccontext = context_course::instance($COURSE->id);
+                $userroles = get_user_roles($ccontext, $USER->id);
+                foreach ($userroles as $ur) {
+                    if (in_array($ur->roleid, $rolesarray)) {
                         return true;
                     }
                 }
-
-                // Check role assignment in course context.
-                if ($COURSE->id > 1) {
-                    $ccontext = context_course::instance($COURSE->id);
-                    if (isset(current(get_user_roles($ccontext, $USER->id))->roleid)) {
-                        $iswithrole = current(get_user_roles($ccontext, $USER->id))->roleid == $role ? true : false;
-                        if ($iswithrole == true) {
-                            return true;
-                        }
-                    }
+            } else {
+                // Check if user has an appropriate role anywhere in the system. If not, we don't have to do anything else.
+                $getroleoverview = $DB->get_record_sql("SELECT id,contextid FROM {role_assignments}
+                WHERE roleid IN ($roles) AND userid=$USER->id LIMIT 1");
+                if (count($getroleoverview) > 0) {
+                    return true;
                 }
             }
 
