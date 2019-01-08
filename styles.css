@@ -34,6 +34,8 @@
 #quicklink-sort {
     padding-left: 20px;
     list-style-type: none;
+    display: flex;
+    flex-direction: column;
 }
 
 .mmquicklink-list {

@@ -32,6 +32,7 @@ define(['jquery'], function($) {
             sortable("#quicklink-sort")[0].addEventListener('sortupdate', function(e) {
                 var orderid = 1;
                 $.each(e.detail.destination.items, function(index, value) {
+                    $("#quicklink-sort").css({display: "block"});
                     $.get("../blocks/mmquicklink/setorder.php", { button: value.dataset.button, order: orderid } );
                     orderid = orderid + 1;
                 });
