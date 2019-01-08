@@ -99,3 +99,5 @@ $string['enrolmentkey'] = "Kurssiavain";
 $string['toomanyselfenrolments'] = "Kurssilla on usea itserekisteröitymistapa käytössä. Jotta tämän lohkon kautta voitaisiin asettaa kurssiavain, sinun tulee poistaa ylimääräiset itserekisteröitymiset käytöstä osoitteessa ";
 $string['multiplepasswords'] = "Kurssilla on useampi itserekisteröitymistapa käytössä. Tarkista ne osallistujien lisäämistavoista.";
 $string['privacy:null_reason'] = "Tämä lisäosa ei käsittele henkilötietoja.";
+
+$string['buttonsorting'] = "Raahaa & pudota siirrelläksesi nappien paikkoja.";
