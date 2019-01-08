@@ -143,11 +143,10 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_heading('block_mmquicklink_sorting_options',
     get_string('sorting_options', 'block_mmquicklink'), ''));
 
-    $fuckarray = array("0" => "perkele", "1" => "kekkuli", "2" => "vittu");
     $settings->add(new admin_setting_configquicklinksort('mmquicklink/sorting',
     '',
     '', '',
-    $fuckarray));
+    ''));
 
 
 }
