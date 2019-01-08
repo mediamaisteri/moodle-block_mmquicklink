@@ -31,6 +31,5 @@ phpcs for complete project:
   cache:
     key: "$CI_PIPELINE_ID"
     untracked: true
-  allow_failure: true
   script:
     - phpcs --ignore=amd/build/* .
