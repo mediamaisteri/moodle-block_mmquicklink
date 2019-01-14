@@ -681,9 +681,6 @@ class block_mmquicklink extends block_base {
             $this->content->text = "<ul class='mmquicklink-list'>" . $this->content->text . "</ul>";
         }
 
-        // Add button adder js.
-        $this->page->requires->js_call_amd('block_mmquicklink/addblock', 'init', []);
-
         // Return data to block.
         return $this->content;
 
