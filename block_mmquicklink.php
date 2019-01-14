@@ -656,9 +656,6 @@ class block_mmquicklink extends block_base {
             return $this->content;
         }
 
-        // Add button adder js.
-        $this->page->requires->js_call_amd('block_mmquicklink/addblock', 'init', []);
-
         // Return data to block.
         return $this->content;
 
