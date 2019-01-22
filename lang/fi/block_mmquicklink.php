@@ -47,8 +47,8 @@ $string['setting_hidecourse_desc'] = "Valitse piilottaaksesi piilota/näytä kur
 
 $string['setting_archive'] = "Arkistoi kurssi";
 $string['setting_archive_desc'] = "Valitse piilottaaksesi arkistointipainikkeen. Painikkeen toiminta vaatii lisäksi local_course_archive -lisäosan.";
-$string['archive_course'] = "Arkistoi kurssi";
-$string['archived'] = "Kurssin siirtäminen arkistointikategoriaan onnistui.";
+$string['archive_course'] = "Siirrä kurssi roskakoriin";
+$string['archived'] = "Kurssin siirtäminen roskakoriin onnistui.";
 
 $string['mmquicklink:addinstance'] = "Lisää Quicklink-lohko";
 $string['mmquicklink:myaddinstance'] = "Lisää Quicklink-lohko työpöydälle";
