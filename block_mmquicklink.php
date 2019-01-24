@@ -343,7 +343,7 @@ class block_mmquicklink extends block_base {
                 if (has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
                     $archcat = $coursearchiveconf->archivecategory;
                     $delcat = $coursearchiveconf->deletecategory;
-                    if ($COURSE->category != $archcat && $COURSE->category != $delcat){
+                    if ($COURSE->category != $archcat && $COURSE->category != $delcat) {
                         $this->content->text .= $this->default_element($CFG->wwwroot .
                         "/blocks/mmquicklink/archive.php?courseid=" . $COURSE->id . "&categoryid=" . $COURSE->category,
                         get_string('archive_course', 'block_mmquicklink', 'archivecourse'));
