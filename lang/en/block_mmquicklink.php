@@ -38,7 +38,7 @@ $string['setting_course_grades_desc'] = "Check to hide course grades link";
 
 $string['setting_themesettings'] = "Theme settings";
 $string['setting_themesettings_desc'] = "Check to hide theme settings link";
-
+$string['addcourse'] = "Add course";
 $string['setting_delcourse'] = "Delete course";
 $string['setting_delcourse_desc'] = "Check to hide delete course link";
 $string['setting_hidecourse'] = "Show/hide course";
@@ -80,9 +80,9 @@ $string['setting_participants_select'] = "Participants link";
 $string['setting_participants_select_desc'] = "Choose where the participants link should redirect.";
 $string['setting_participants_users'] = "General participants page";
 $string['setting_participants_enrol'] = "User enrolment page";
-
+$string['enrolmentkey'] = "Enrolment key";
 $string["trainingmanagement"] = "Training management";
-
+$string['sorting_options'] = "Button sorting";
 $string['switchrole'] = "View as";
 $string['setting_otherrole_select'] = "View as role";
 $string['setting_otherrole_select_desc'] = "Select a role used with 'View as' link.";
@@ -97,3 +97,6 @@ $string['local_reports_summary'] = "Summary report";
 $string['toomanyselfenrolments'] = "This course has multiple self enrolment methods enabled. To use this functionality, remove extra self enrolment methods at ";
 $string['multiplepasswords'] = "This course has multiple self enrolments enabled. Check them on 'enrolment methods' page.";
 $string['privacy:null_reason'] = "This plugin does not handle or store user data.";
+
+$string['buttonsorting'] = "Drag and drop buttons to sort them.";
+$string['saved'] = "Changes have been succesfully saved!";

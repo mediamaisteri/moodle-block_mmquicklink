@@ -41,3 +41,44 @@ function mmquicklink_get_switched_role($user, $page, $options = array()) {
     return $returnobject;
 
 }
+
+// Create an admin_setting subclass.
+require_once($CFG->libdir . "/adminlib.php");
+class admin_setting_configquicklinksort extends admin_setting {
+    private function get_sort() {
+        global $DB;
+        $style = "";
+        $getsort = $DB->get_records_sql("SELECT * FROM {block_mmquicklink_sorting}");
+        foreach ($getsort as $element) {
+            $style .= "li[data-button='$element->button'] {order: $element->order} ";
+        }
+        return "<style>$style</style>";
+    }
+
+    public function __construct($name, $heading, $information) {
+        $this->nosave = true;
+        parent::__construct($name, $heading, $information, '');
+    }
+
+    public function get_setting() {
+        return true;
+    }
+
+    public function get_defaultsetting() {
+        return true;
+    }
+
+    public function write_setting($data) {
+        return '';
+    }
+
+    public function output_html($data, $query = '') {
+        global $OUTPUT;
+        $context = new stdClass();
+        $context->title = $this->visiblename;
+        $context->description = $this->description;
+        $context->descriptionformatted = highlight($query, markdown_to_html($this->description));
+        return $this->get_sort() . $OUTPUT->render_from_template('block_mmquicklink/setting_quicklink', $context);
+    }
+
+}
