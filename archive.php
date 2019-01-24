@@ -23,6 +23,7 @@
  */
 
 require_once(dirname(__FILE__) . '/../../config.php');
+require_once($CFG->dirroot . '/course/lib.php');
 require_once($CFG->dirroot . '/my/lib.php');
 require_once($CFG->dirroot . '/user/profile/lib.php');
 require_once($CFG->dirroot . '/user/lib.php');
@@ -38,10 +39,12 @@ $categoryid = optional_param('categoryid', '', PARAM_INT);
 $urltogo = $_SERVER['HTTP_REFERER'];
 
 // Check if user has permission to edit course enrolment methods.
-if (has_capability('moodle/course:delete', context_course::instance($courseid))) {
+if (has_capability('moodle/course:update', context_course::instance($courseid))) {
+    $coursearchiveconf = get_config('local_course_archive');
+    $archcat = $coursearchiveconf->archivecategory;
     $time = new DateTime("now");
     $timestamp = $time->getTimestamp();
-    $move = $DB->execute("UPDATE {course} SET category=$categoryid WHERE id=$courseid LIMIT 1");
+    move_courses((array) $courseid, $archcat);
     $add = $DB->execute("INSERT INTO {local_course_archive} VALUES(null, $courseid, $categoryid, $timestamp)");
     redirect($urltogo, get_string('archived', 'block_mmquicklink'), null, 'success');
 } else {
