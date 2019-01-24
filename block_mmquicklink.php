@@ -620,7 +620,8 @@ class block_mmquicklink extends block_base {
             }
 
             // Render local_reports navigation.
-            if (empty(get_config('mmquicklink', 'config_hide_reports'))) {
+            if (empty(get_config('mmquicklink', 'config_hide_reports')) &&
+            !empty(core_plugin_manager::instance()->get_plugins_of_type('local')["reports"]->name)) {
                 $categorymanager = 0;
                 if (!has_capability('local/reports:viewall', context_system::instance())) {
                     if (isset($CFG->local_reports_allowcategorymanagers)) {
