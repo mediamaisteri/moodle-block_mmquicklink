@@ -163,6 +163,16 @@ class block_mmquicklink extends block_base {
         return $attributes;
     }
 
+    private function get_sort() {
+        global $DB;
+        $style = "";
+        $getsort = $DB->get_records_sql("SELECT * FROM {block_mmquicklink_sorting}");
+        foreach ($getsort as $element) {
+            $style .= ".list-$element->button {order: $element->order} ";
+        }
+        return "<style>$style</style>";
+    }
+
     // User can edit only is the user has access.
     public function user_can_edit() {
         if (is_siteadmin()) {
@@ -190,7 +200,7 @@ class block_mmquicklink extends block_base {
     }
 
     private function default_element($url, $str, $buttonid = "null") {
-        $link = "<li class='list'><a class='btn btn-secondary btn-$buttonid' href='" .
+        $link = "<li class='list list-$buttonid'><a class='btn btn-secondary btn-$buttonid' href='" .
             new moodle_url($url) . "'>" . $str . "</a></li>";
         return $link;
     }
@@ -264,7 +274,7 @@ class block_mmquicklink extends block_base {
 
         // Set variable.
         $this->content = new stdClass;
-        $this->content->text = "";
+        $this->content->text = $this->get_sort();
 
         // Links to show on course pages.
         if ($PAGE->pagelayout == 'course' || $PAGE->pagelayout == "incourse" || $PAGE->pagetype == 'course-view-topics') {
@@ -365,7 +375,7 @@ class block_mmquicklink extends block_base {
                 foreach ($oldkey as $oneoldkey) {
                     $realoldkey = $oneoldkey->password;
                     $setstring = get_string('check', 'core');
-                    $keyclass = "mmcuicklink-enrolmentkey-set";
+                    $keyclass = "mmquicklink-enrolmentkey-set";
                     break;
                 }
                 if (empty($realoldkey)) {
@@ -375,17 +385,20 @@ class block_mmquicklink extends block_base {
                 }
                 if (count($oldkey) > 1) {
                     $this->content->text .= "
-                    <li class='list mmquicklink-enrolmentkey $keyclass'><a class='btn btn-secondary btn-enrolmentkey' href=''>"
+                    <li class='list list-enrolmentkey mmquicklink-enrolmentkey $keyclass'>
+                    <a class='btn btn-secondary btn-enrolmentkey' href=''>"
                      . $setstring . " " .
                     strtolower(get_string('password', 'enrol_self')) . "</a></li>
-                    <div class='mmquicklink-enrolmentkey-div'> " . get_string('multiplepasswords', 'block_mmquicklink') . "</div>
+                    <div class='list-enrolmentkey mmquicklink-enrolmentkey-div'> " .
+                    get_string('multiplepasswords', 'block_mmquicklink') . "</div>
                     ";
                 } else {
                     $this->content->text .= "
-                    <li class='list mmquicklink-enrolmentkey $keyclass'><a class='btn btn-secondary btn-enrolmentkey' href=''>"
+                    <li class='list list-enrolmentkey mmquicklink-enrolmentkey $keyclass'>
+                    <a class='btn btn-secondary btn-enrolmentkey' href=''>"
                      . $setstring . " " .
                     strtolower(get_string('password', 'enrol_self')) . "</a></li>
-                    <div class='mmquicklink-enrolmentkey-div'>
+                    <div class='list-enrolmentkey mmquicklink-enrolmentkey-div'>
                         <form method='get' action='" . $CFG->wwwroot . "/blocks/mmquicklink/setenrolmentkey.php'>
                         <input type='hidden' name='courseid' value='" . $COURSE->id . "'>
                         <input class='form-control' type='text' name='enrolmentkey' value='" . $realoldkey . "'>
@@ -447,7 +460,7 @@ class block_mmquicklink extends block_base {
                     }
 
                     $this->content->text .= "
-                        <li class='list mmquicklink-otherrole'>
+                        <li class='list list-otherrole mmquicklink-otherrole'>
                         <div class='mmquicklink-otherrole-div'>
                             <form method='get' id='form-otherrole' action='" . $CFG->wwwroot . "/course/switchrole.php'>
                             <input type='hidden' name='id' value='" . $COURSE->id . "'>
@@ -657,6 +670,8 @@ class block_mmquicklink extends block_base {
             $this->page->requires->js_call_amd('block_mmquicklink/blockhider', 'init', []);
             // Stop executing the script.
             return $this->content;
+        } else {
+            $this->content->text = "<ul class='mmquicklink-list'>" . $this->content->text . "</ul>";
         }
 
         // Return data to block.

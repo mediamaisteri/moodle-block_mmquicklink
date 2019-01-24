@@ -23,7 +23,7 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-
+$PAGE->requires->js_call_amd('block_mmquicklink/jquery-sortable', 'init', []);
 if ($ADMIN->fulltree) {
     global $DB;
 
@@ -36,7 +36,6 @@ if ($ADMIN->fulltree) {
         }
         $categoryarray[$category->id] = $category->name;
     }
-
 
     $rolearray = [];
     $defaultroles = [];
@@ -139,4 +138,15 @@ if ($ADMIN->fulltree) {
     get_string('setting_otherrole_select', 'block_mmquicklink'),
     get_string('setting_otherrole_select_desc', 'block_mmquicklink'), '5',
     $rolearray));
+
+    // Sorting.
+    $settings->add(new admin_setting_heading('block_mmquicklink_sorting_options',
+    get_string('sorting_options', 'block_mmquicklink'), ''));
+
+    $settings->add(new admin_setting_configquicklinksort('mmquicklink/sorting',
+    '',
+    '', '',
+    ''));
+
+
 }
