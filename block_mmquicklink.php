@@ -340,11 +340,14 @@ class block_mmquicklink extends block_base {
             // Archive course button.
             $coursearchiveconf = get_config('local_course_archive');
             if (!empty($coursearchiveconf->plugin_enabled) && empty(get_config('mmquicklink', 'config_hide_archive'))) {
-                if (has_capability('moodle/course:delete', context_course::instance($COURSE->id))) {
-                    $categoryid = $coursearchiveconf->archivecategory;
-                    $this->content->text .= $this->default_element($CFG->wwwroot .
-                    "/blocks/mmquicklink/archive.php?courseid=" . $COURSE->id . "&categoryid=" . $categoryid,
-                    get_string('archive_course', 'block_mmquicklink'), 'archivecourse');
+                if (has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
+                    $archcat = $coursearchiveconf->archivecategory;
+                    $delcat = $coursearchiveconf->deletecategory;
+                    if ($COURSE->category != $archcat && $COURSE->category != $delcat){
+                        $this->content->text .= $this->default_element($CFG->wwwroot .
+                        "/blocks/mmquicklink/archive.php?courseid=" . $COURSE->id . "&categoryid=" . $COURSE->category,
+                        get_string('archive_course', 'block_mmquicklink', 'archivecourse'));
+                    }
                 }
             }
 
