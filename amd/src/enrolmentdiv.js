@@ -35,6 +35,8 @@ define(['jquery'], function($) {
                 $(".mmquicklink-reports").toggle();
             });
 
+            $(".mmquicklink-reports > li").addClass("mb-1");
+
         }
     }
 });
