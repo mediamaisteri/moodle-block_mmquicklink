@@ -639,9 +639,9 @@ class block_mmquicklink extends block_base {
                 if (has_capability('local/reports:viewall', context_system::instance()) OR $categorymanager == 1) {
                     if ($reports) {
                         $this->content->text .= "<li class='list list-reports mmquicklink-reports-button'>
-                        <a class='btn btn-secondary btn-reports'>" . get_string('pluginname', 'local_reports') . "</a>";
-                        $this->content->text .= $PAGE->get_renderer('block_mmquicklink')->mmquicklink_tree($reports);
-                        $this->content->text .= "</li>";
+                        <a class='btn btn-secondary btn-reports'>" . get_string('pluginname', 'local_reports') . "</a></li>";
+                        $this->content->text .= "<li class='list list-reports m-0'>" .
+                        $PAGE->get_renderer('block_mmquicklink')->mmquicklink_tree($reports) . "</li>";
                     }
                 }
             }
