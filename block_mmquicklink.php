@@ -285,7 +285,7 @@ class block_mmquicklink extends block_base {
                     if ($PAGE->user_is_editing()) {
                         $editingmode = "off";
                         $editingmodestring = get_string("turneditingoff");
-                        $editbuttonid = "turneditingoff";
+                        $editbuttonid = "turneditingon";
                     } else {
                         $editingmode = "on";
                         $editingmodestring = get_string("turneditingon");
@@ -499,7 +499,7 @@ class block_mmquicklink extends block_base {
                     if ($PAGE->user_is_editing()) {
                         $editingmode = "off";
                         $editingmodestring = get_string("turneditingoff");
-                        $editmodebuttonid = "turneditingoff";
+                        $editmodebuttonid = "turneditingon";
                     } else {
                         $editingmode = "on";
                         $editingmodestring = get_string("turneditingon");
@@ -638,9 +638,10 @@ class block_mmquicklink extends block_base {
                 $reports = $PAGE->navigation->find('local_reports', navigation_node::TYPE_CUSTOM);
                 if (has_capability('local/reports:viewall', context_system::instance()) OR $categorymanager == 1) {
                     if ($reports) {
-                        $this->content->text .= "<li class='list mmquicklink-reports-button'>
-                        <a class='btn btn-secondary btn-reports'>" . get_string('pluginname', 'local_reports') . "</a></li>";
+                        $this->content->text .= "<li class='list list-reports mmquicklink-reports-button'>
+                        <a class='btn btn-secondary btn-reports'>" . get_string('pluginname', 'local_reports') . "</a>";
                         $this->content->text .= $PAGE->get_renderer('block_mmquicklink')->mmquicklink_tree($reports);
+                        $this->content->text .= "</li>";
                     }
                 }
             }
