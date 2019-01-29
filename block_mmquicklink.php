@@ -262,6 +262,10 @@ class block_mmquicklink extends block_base {
         // Load custom JS.
         $this->page->requires->js_call_amd('block_mmquicklink/enrolmentdiv', 'init', []);
 
+        // Get block and local plugins.
+        $plugins = core_plugin_manager::instance()->get_plugins_of_type('block');
+        $localplugins = core_plugin_manager::instance()->get_plugins_of_type('local');
+
         // Check if visibility if wanted, because is_empty is not checked when user is in editing mode.
         if ($PAGE->user_is_editing()) {
             if ($this->hidetypes() == true) {
@@ -352,7 +356,6 @@ class block_mmquicklink extends block_base {
             }
 
             // Add a "completion progress" block.
-            $plugins = core_plugin_manager::instance()->get_plugins_of_type('block');
             // Check if module is installed.
             if (!empty($plugins["completion_progress"]->name)) {
                 if ($PAGE->blocks->is_block_present('completion_progress') == false) {
@@ -431,15 +434,17 @@ class block_mmquicklink extends block_base {
             }
 
             // MRaportointi summary report.
-            if (empty(get_config('mmquicklink', 'config_hide_local_reports_summary'))) {
-                if (has_capability('local/reports:viewall', context_system::instance()) && $COURSE->enablecompletion = 1) {
-                    $getcriteria = $DB->get_records_sql("SELECT * FROM {course_completion_criteria} WHERE course=$COURSE->id");
-                    if (!empty($getcriteria)) {
-                        $this->content->text .= $this->default_element($CFG->wwwroot .
-                        "/local/reports/summary.php?id=" . $COURSE->id .
-                        "&groupby=0&includesuspended=0&submitbutton=View+summary&sesskey=" .
-                        $USER->sesskey . "&_qf__local_reports_summary_form=1",
-                        get_string('local_reports_summary', 'block_mmquicklink', 'localreportssummary'));
+            if (!empty($localplugins["reports"]->name)) {
+                if (empty(get_config('mmquicklink', 'config_hide_local_reports_summary'))) {
+                    if (has_capability('local/reports:viewall', context_system::instance()) && $COURSE->enablecompletion = 1) {
+                        $getcriteria = $DB->get_records_sql("SELECT * FROM {course_completion_criteria} WHERE course=$COURSE->id");
+                        if (!empty($getcriteria)) {
+                            $this->content->text .= $this->default_element($CFG->wwwroot .
+                            "/local/reports/summary.php?id=" . $COURSE->id .
+                            "&groupby=0&includesuspended=0&submitbutton=View+summary&sesskey=" .
+                            $USER->sesskey . "&_qf__local_reports_summary_form=1",
+                            get_string('local_reports_summary', 'block_mmquicklink', 'localreportssummary'));
+                        }
                     }
                 }
             }
@@ -620,28 +625,32 @@ class block_mmquicklink extends block_base {
             }
 
             // Render local_reports navigation.
-            if (empty(get_config('mmquicklink', 'config_hide_reports')) &&
-            !empty(core_plugin_manager::instance()->get_plugins_of_type('local')["reports"]->name)) {
-                $categorymanager = 0;
-                if (!has_capability('local/reports:viewall', context_system::instance())) {
-                    if (isset($CFG->local_reports_allowcategorymanagers)) {
-                        if ($CFG->local_reports_allowcategorymanagers == 1) {
-                            // Check if user has manager's right somewhere.
-                            $role = $DB->get_records_sql("SELECT * FROM {role_assignments} WHERE roleid='1' && userid='$USER->id'");
-                            if (count($role) > 0) {
-                                $categorymanager = 1;
+            if (!empty($localplugins["reports"]->name)) {
+                if (empty(get_config('mmquicklink', 'config_hide_reports')) &&
+                !empty(core_plugin_manager::instance()->get_plugins_of_type('local')["reports"]->name)) {
+                    $categorymanager = 0;
+                    if (!has_capability('local/reports:viewall', context_system::instance())) {
+                        if (isset($CFG->local_reports_allowcategorymanagers)) {
+                            if ($CFG->local_reports_allowcategorymanagers == 1) {
+                                // Check if user has manager's right somewhere.
+                                $role = $DB->get_records_sql("SELECT * FROM {role_assignments}
+                                WHERE roleid='1' && userid='$USER->id'");
+
+                                if (count($role) > 0) {
+                                    $categorymanager = 1;
+                                }
                             }
                         }
                     }
-                }
 
-                $reports = $PAGE->navigation->find('local_reports', navigation_node::TYPE_CUSTOM);
-                if (has_capability('local/reports:viewall', context_system::instance()) OR $categorymanager == 1) {
-                    if ($reports) {
-                        $this->content->text .= "<li class='list list-reports mmquicklink-reports-button'>
-                        <a class='btn btn-secondary btn-reports'>" . get_string('pluginname', 'local_reports') . "</a></li>";
-                        $this->content->text .= "<li class='list list-reports m-0'>" .
-                        $PAGE->get_renderer('block_mmquicklink')->mmquicklink_tree($reports) . "</li>";
+                    $reports = $PAGE->navigation->find('local_reports', navigation_node::TYPE_CUSTOM);
+                    if (has_capability('local/reports:viewall', context_system::instance()) OR $categorymanager == 1) {
+                        if ($reports) {
+                            $this->content->text .= "<li class='list list-reports mmquicklink-reports-button'>
+                            <a class='btn btn-secondary btn-reports'>" . get_string('pluginname', 'local_reports') . "</a></li>";
+                            $this->content->text .= "<li class='list list-reports m-0'>" .
+                            $PAGE->get_renderer('block_mmquicklink')->mmquicklink_tree($reports) . "</li>";
+                        }
                     }
                 }
             }
