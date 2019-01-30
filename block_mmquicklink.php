@@ -519,13 +519,14 @@ class block_mmquicklink extends block_base {
                     }
 
                     // Dashboard editing mode.
-                    if ($PAGE->pagelayout == "mydashboard") {
+                    $indexsys = explode("/", $PAGE->url);
+                    if ($PAGE->pagelayout == "mydashboard" && $indexsys[count($indexsys) - 1] !== "indexsys.php") {
                         $this->content->text .= $this->default_element($PAGE->url . "?edit=" . $editingmode .
                         "&sesskey=" . $USER->sesskey, $editingmodestring, $editmodebuttonid);
                     }
 
                     // Admin page editing mode.
-                    if ($PAGE->pagelayout == "admin") {
+                    if ($PAGE->pagelayout == "admin" OR $indexsys[count($indexsys) - 1] == "indexsys.php") {
                         $adminurl = str_replace("query", "", $PAGE->url);
                         if (stripos($adminurl, "?") === false) {
                             $adminurl .= "?";
