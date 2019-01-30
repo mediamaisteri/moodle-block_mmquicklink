@@ -165,12 +165,15 @@ class block_mmquicklink extends block_base {
 
     private function get_sort() {
         global $DB;
+        $dbman = $DB->get_manager();
         $style = "";
-        $getsort = $DB->get_records_sql("SELECT * FROM {block_mmquicklink_sorting}");
-        foreach ($getsort as $element) {
-            $style .= ".list-$element->button {order: $element->order} ";
+        if ($dbman->table_exists("block_mmquicklink_sorting")) {
+            $getsort = $DB->get_records_sql("SELECT * FROM {block_mmquicklink_sorting}");
+            foreach ($getsort as $element) {
+                $style .= ".list-$element->button {order: $element->order} ";
+            }
+            return "<style>$style</style>";
         }
-        return "<style>$style</style>";
     }
 
     // User can edit only is the user has access.
