@@ -25,11 +25,14 @@
 define(['jquery'], function($) {
     return {
         init: function(){
-
             $(".block_mmquicklink").hide();
+            $hasmmquick = false;
             var num = $("#block-region-side-pre").find('aside').length;
             var numx = $("#block-region-side-pre").find('section').length;
-            if (num == 1 || numx == 1) {
+            if($("#block-region-side-pre").find('section').hasClass('block_mmquicklink')){
+                $hasmmquick = true;
+            }
+            if ((num == 1 || numx == 1) && $hasmmquick == true) {
                 $("#region-main").removeClass("has-blocks");
                 $("#region-main-settings-menu").removeClass("has-blocks");
             }
