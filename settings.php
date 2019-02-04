@@ -23,8 +23,8 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-$PAGE->requires->js_call_amd('block_mmquicklink/jquery-sortable', 'init', []);
 if ($ADMIN->fulltree) {
+    $PAGE->requires->js_call_amd('block_mmquicklink/jquery-sortable', 'init', []);
     global $DB;
 
     // Load course categories from DB.
