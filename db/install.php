@@ -50,5 +50,17 @@ function xmldb_block_mmquicklink_install() {
     // Insert a record into database.
     $insert = $DB->insert_record('block_instances', $instance, false);
 
+    // Set mmquicklink as an undeletable block.
+    $current = $DB->get_record("config", array("name" => "undeletableblocktypes"), "*", MUST_EXIST);
+    $protect = new stdClass();
+    $protect->id = $current->id;
+    $protect->name = $current->name;
+    if (!empty($current->value)) {
+        $protect->value = $current->value . ",mmquicklink";
+    } else {
+        $protect->value = "mmquicklink";
+    }
+    $undeletable = $DB->update_record("config", $protect, $bulk = false);
+
     return true;
 }
