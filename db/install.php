@@ -27,9 +27,10 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * After installation script.
  * Adds the block automatically on frontpage and all other pages.
+ * Sets mmquicklink also as an undeletable block.
  */
 function xmldb_block_mmquicklink_install() {
-    global $CFG, $DB;
+    global $CFG, $DB, $PAGE;
 
     $dbman = $DB->get_manager();
 
@@ -51,17 +52,13 @@ function xmldb_block_mmquicklink_install() {
     $insert = $DB->insert_record('block_instances', $instance, false);
 
     // Set mmquicklink as an undeletable block.
-    $current = $DB->get_record("config", array("name" => "undeletableblocktypes"), "*");
-    if (isset($current->name)) {
-        $protect = new stdClass();
-        $protect->id = $current->id;
-        $protect->name = $current->name;
-        if (!empty($current->value)) {
-            $protect->value = $current->value . ",mmquicklink";
-        } else {
-            $protect->value = "mmquicklink";
-        }
-        $undeletable = $DB->update_record("config", $protect, $bulk = false);
+    require_once($CFG->dirroot . "/lib/blocklib.php");
+    $page = $PAGE;
+    $blockmanager = new block_manager($page);
+    $undeletableblocktypes = $blockmanager->get_undeletable_block_types();
+    if (!in_array("mmquicklink", $undeletableblocktypes)) {
+        $undeletableblocktypes[] = "mmquicklink";
+        set_config('undeletableblocktypes', implode(',', $undeletableblocktypes));
     }
 
     return true;
