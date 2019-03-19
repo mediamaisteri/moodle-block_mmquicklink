@@ -100,3 +100,5 @@ $string['privacy:null_reason'] = "This plugin does not handle or store user data
 
 $string['buttonsorting'] = "Drag and drop buttons to sort them.";
 $string['saved'] = "Changes have been succesfully saved!";
+
+$string['fromtemplate'] = "Add from a template";
