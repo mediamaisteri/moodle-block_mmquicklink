@@ -557,14 +557,23 @@ class block_mmquicklink extends block_base {
 
             }
 
+            $coursetemplates = core_plugin_manager::instance()->get_plugins_of_type('local')["course_templates"]->name;
+
             // Show "add a course" button.
             if (optional_param('categoryid', '', PARAM_INT)) {
                 // Check if user can add course to current category.
                 if (has_capability('moodle/course:create', context_coursecat::instance(optional_param('categoryid', '',
                 PARAM_INT)))) {
-                    $this->content->text .= $this->default_element($CFG->wwwroot .
-                    "/course/edit.php?category=" . optional_param('categoryid', '', PARAM_INT),
-                    get_string('addnewcourse'), 'addnewcourse');
+                    if (!empty($coursetemplates)) {
+                        // Render dropdown menu from templates if course_templates is installed.
+                        global $OUTPUT;
+                        $this->content->text .= $OUTPUT->render_from_template('block_mmquicklink/addnewcourse',
+                            array("categoryid" => optional_param('categoryid', '', PARAM_INT)));
+                    } else {
+                        $this->content->text .= $this->default_element($CFG->wwwroot .
+                            "/course/edit.php?category=" . optional_param('categoryid', '', PARAM_INT),
+                            get_string('addnewcourse'), 'addnewcourse');
+                    }
                 }
             } else {
                 if ($USER->id) {
@@ -575,8 +584,15 @@ class block_mmquicklink extends block_base {
                     if (!empty($defaultcategory)) {
                         if ($defaultcategory > 0) {
                             if (has_capability('moodle/course:create', context_coursecat::instance($defaultcategory))) {
-                                $this->content->text .= $this->default_element($CFG->wwwroot .
-                                "/course/edit.php?category=" . $defaultcategory, get_string('addnewcourse'), 'addnewcourse');
+                                if (!empty($coursetemplates)) {
+                                    // Render dropdown menu from templates if course_templates is installed.
+                                    global $OUTPUT;
+                                    $this->content->text .= $OUTPUT->render_from_template('block_mmquicklink/addnewcourse',
+                                        array("categoryid" => $defaultcategory));
+                                } else {
+                                    $this->content->text .= $this->default_element($CFG->wwwroot .
+                                    "/course/edit.php?category=" . $defaultcategory, get_string('addnewcourse'), 'addnewcourse');
+                                }
                                 $defok = 1;
                             }
                         }
@@ -588,10 +604,17 @@ class block_mmquicklink extends block_base {
                         $categories = $DB->get_records('course_categories');
                         foreach ($categories as $category) {
                             if (has_capability('moodle/course:create', context_coursecat::instance($category->id))) {
-                                $this->content->text .= $this->default_element($CFG->wwwroot .
-                                "/course/edit.php?category=" . $category->id, get_string('addnewcourse'), 'addnewcourse');
-                                // Use the first found category with permissions.
-                                break;
+                                if (!empty($coursetemplates)) {
+                                    // Render dropdown menu from templates if course_templates is installed.
+                                    global $OUTPUT;
+                                    $this->content->text .= $OUTPUT->render_from_template('block_mmquicklink/addnewcourse',
+                                        array("categoryid" => $category->id));
+                                    break;
+                                } else {
+                                    $this->content->text .= $this->default_element($CFG->wwwroot .
+                                    "/course/edit.php?category=" . $category->id, get_string('addnewcourse'), 'addnewcourse');
+                                    break;
+                                }
                             }
                         }
                     }

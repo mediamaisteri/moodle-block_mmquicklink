@@ -102,3 +102,5 @@ $string['privacy:null_reason'] = "Tämä lisäosa ei käsittele henkilötietoja.
 
 $string['buttonsorting'] = "Raahaa & pudota nappeja siirrelläksesi niiden paikkoja.";
 $string['saved'] = "Muutokset tallennettiin onnistuneesti!";
+
+$string['fromtemplate'] = "Luo mallipohjasta";
