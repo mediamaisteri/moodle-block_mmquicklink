@@ -7,7 +7,7 @@
             <a class="dropdown-item" {{#disabled}} disabled {{/disabled}} href="{{{ config.wwwroot }}}/course/edit.php?category={{{ categoryid }}}">
                 {{# str }} addnewcourse {{/ str }}
             </a>
-            <a class="dropdown-item" href="../local/course_templates/index.php">
+            <a class="dropdown-item" href="{{{ config.wwwroot }}}/local/course_templates/index.php">
                 {{#str}} fromtemplate, block_mmquicklink {{/str}}
             </a>
         </div>
