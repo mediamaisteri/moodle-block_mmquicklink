@@ -104,3 +104,5 @@ $string['buttonsorting'] = "Raahaa & pudota nappeja siirrelläksesi niiden paikk
 $string['saved'] = "Muutokset tallennettiin onnistuneesti!";
 
 $string['fromtemplate'] = "Luo mallipohjasta";
+
+$string['areyousure'] = "Oletko varma, että haluat arkistoida seuraavan kurssin";
