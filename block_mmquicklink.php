@@ -352,7 +352,7 @@ class block_mmquicklink extends block_base {
                     $delcat = $coursearchiveconf->deletecategory;
                     if ($COURSE->category != $archcat && $COURSE->category != $delcat) {
                         $this->content->text .= $this->default_element($CFG->wwwroot .
-                        "/blocks/mmquicklink/archive.php?courseid=" . $COURSE->id . "&categoryid=" . $COURSE->category,
+                        "/blocks/mmquicklink/confirm.php?id=" . $COURSE->id . "&categoryid=" . $COURSE->category,
                         get_string('archive_course', 'block_mmquicklink', 'archivecourse'));
                     }
                 }

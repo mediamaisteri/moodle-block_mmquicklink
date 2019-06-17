@@ -102,3 +102,4 @@ $string['buttonsorting'] = "Drag and drop buttons to sort them.";
 $string['saved'] = "Changes have been succesfully saved!";
 
 $string['fromtemplate'] = "Add from a template";
+$string['areyousure'] = "Are you sure you want to archive the following course";

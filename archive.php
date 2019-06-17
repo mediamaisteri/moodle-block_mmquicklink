@@ -36,7 +36,6 @@ global $DB, $USER, $COURSE;
 // Course id & key from url variable.
 $courseid = optional_param('courseid', '', PARAM_INT);
 $categoryid = optional_param('categoryid', '', PARAM_INT);
-$urltogo = $_SERVER['HTTP_REFERER'];
 
 // Check if user has permission to edit course enrolment methods.
 if (has_capability('moodle/course:update', context_course::instance($courseid))) {
@@ -46,7 +45,7 @@ if (has_capability('moodle/course:update', context_course::instance($courseid)))
     $timestamp = $time->getTimestamp();
     move_courses((array) $courseid, $archcat);
     $add = $DB->execute("INSERT INTO {local_course_archive} VALUES(null, $courseid, $categoryid, $timestamp)");
-    redirect($urltogo, get_string('archived', 'block_mmquicklink'), null, 'success');
+    redirect($CFG->wwwroot . "/course/view.php?id=$courseid", get_string('archived', 'block_mmquicklink'), null, 'success');
 } else {
     print_error('noaccess');
 }
