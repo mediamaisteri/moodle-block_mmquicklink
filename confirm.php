@@ -60,9 +60,11 @@ if (!empty($coursearchiveconf->plugin_enabled)) {
 
         $continueurl = new moodle_url($CFG->wwwroot . "/blocks/mmquicklink/archive.php",
         array("courseid" => $course->id, "categoryid" => $course->category));
-
         $continuebutton = new single_button($continueurl, get_string('archive_course', 'block_mmquicklink'));
-        echo $OUTPUT->confirm($message, $continuebutton, $continueurl);
+
+        $cancelurl = new moodle_url($CFG->wwwroot . "/course/view.php?id=" . $id);
+
+        echo $OUTPUT->confirm($message, $continuebutton, $cancelurl);
     } else {
         print_error('alreadyarchived', 'block_mmquicklink');
     }

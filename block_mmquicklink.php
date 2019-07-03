@@ -557,7 +557,9 @@ class block_mmquicklink extends block_base {
 
             }
 
-            $coursetemplates = core_plugin_manager::instance()->get_plugins_of_type('local')["course_templates"]->name;
+            if (isset(core_plugin_manager::instance()->get_plugins_of_type('local')["course_templates"]->name)) {
+                $coursetemplates = core_plugin_manager::instance()->get_plugins_of_type('local')["course_templates"]->name;
+            }
 
             // Show "add a course" button.
             if (optional_param('categoryid', '', PARAM_INT)) {
