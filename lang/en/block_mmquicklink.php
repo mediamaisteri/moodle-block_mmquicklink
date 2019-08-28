@@ -103,3 +103,7 @@ $string['saved'] = "Changes have been succesfully saved!";
 
 $string['fromtemplate'] = "Add from a template";
 $string['areyousure'] = "Are you sure you want to archive the following course";
+$string['areyousurehide1'] = "Are you sure you want to hide the following course";
+$string['areyousurehide0'] = "Are you sure you want to show the following course";
+$string['hide1'] = "Hide course";
+$string['hide0'] = "Show course";
