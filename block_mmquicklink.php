@@ -539,6 +539,7 @@ class block_mmquicklink extends block_base {
             if ($PAGE->user_allowed_editing()) {
 
                 // Editing mode on/off link.
+                $editmodebuttonid = "editmodebuttonid";
                 if ($this->hasaccess() == true) {
                     // Check if user has capability to edit frontpage.
                     if ($PAGE->pagelayout == "frontpage" &&
