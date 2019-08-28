@@ -28,28 +28,54 @@ require_once($CFG->libdir.'/filelib.php');
 
 global $DB, $USER, $COURSE;
 $courseid = optional_param('id', '', PARAM_INT);
+$course = $DB->get_record("course", array("id" => $courseid));
+
+$PAGE->set_context(context_system::instance());
+$PAGE->set_title($SITE->fullname);
+$PAGE->set_heading($SITE->fullname);
+$PAGE->set_url(new moodle_url('/blocks/mmquicklink/changevisibility.php'));
+$PAGE->set_pagelayout('standard');
 
 require_login();
+
+$hide = required_param('hide', PARAM_INT);
+$confirm = optional_param('confirm', 0, PARAM_INT);
 
 // Check if user has permission to edit visibility in current course context.
 if (has_capability('moodle/course:visibility', context_course::instance($courseid))) {
 
-    if (optional_param('hide', '', PARAM_INT) == 1) {
+    if ($confirm == 0) {
+
+        echo $OUTPUT->header();
+
+        $message = get_string('areyousurehide' . $hide, 'block_mmquicklink') . ": " . format_string($course->fullname) . "?";
+        $continueurl = new moodle_url($CFG->wwwroot . "/blocks/mmquicklink/changevisibility.php",
+        array("id" => $course->id, "confirm" => 1, "hide" => $hide));
+        $continuebutton = new single_button($continueurl, get_string('hide' . $hide, 'block_mmquicklink'));
+        $cancelurl = new moodle_url($CFG->wwwroot . "/course/view.php", array("id" => $course->id));
+        echo $OUTPUT->confirm($message, $continuebutton, $cancelurl);
+
+        echo $OUTPUT->footer();
+
+    }
+
+    if ($hide == 1 && $confirm == 1) {
         // Update DB to hide course.
         $DB->set_field('course', 'visible', '0', array('id' => $courseid));
 
         // Redirect user back to course page with proper string.
-        $urltogo = $_SERVER['HTTP_REFERER'];
-        redirect("$urltogo", get_string('course') . " " . strtolower(get_string('hidden', 'core_grades')), 5);
+        $urltogo = new moodle_url($CFG->wwwroot . "/course/view.php", array("id" => $courseid));
+
+        redirect("$urltogo", get_string('course') . " " . strtolower(get_string('hidden', 'core_grades')) . ".", 5);
     }
 
-    if (optional_param('hide', '', PARAM_INT) == 0) {
+    if ($hide == 0 && $confirm == 1) {
         // Update DB to show course..
         $DB->set_field('course', 'visible', '1', array('id' => $courseid));
 
         // Redirect user back to course page with proper string.
-        $urltogo = $_SERVER['HTTP_REFERER'];
-        redirect("$urltogo", get_string('course') . " " . strtolower(get_string('shown', 'core_calendar')), 5);
+        $urltogo = new moodle_url($CFG->wwwroot . "/course/view.php", array("id" => $courseid));
+        redirect("$urltogo", get_string('course') . " " . strtolower(get_string('shown', 'core_calendar')) . ".", 5);
     }
 
 
