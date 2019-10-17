@@ -25,6 +25,9 @@ require_once($CFG->dirroot . '/my/lib.php');
 require_once($CFG->dirroot . '/user/profile/lib.php');
 require_once($CFG->dirroot . '/user/lib.php');
 require_once($CFG->libdir.'/filelib.php');
+require_once($CFG->libdir.'/completionlib.php');
+require_once($CFG->libdir.'/datalib.php');
+require_once($CFG->dirroot.'/course/format/lib.php');
 
 global $DB, $USER, $COURSE;
 $courseid = optional_param('id', '', PARAM_INT);
@@ -61,7 +64,18 @@ if (has_capability('moodle/course:visibility', context_course::instance($coursei
 
     if ($hide == 1 && $confirm == 1) {
         // Update DB to hide course.
-        $DB->set_field('course', 'visible', '0', array('id' => $courseid));
+        $DB->set_field('course', 'visible', '0', array('id' => $course->id));
+
+        // Trigger a course updated event.
+        $event = \core\event\course_updated::create(array(
+            'objectid' => $COURSE->id,
+            'context' => context_course::instance($course->id),
+            'other' => array('shortname' => $course->shortname,
+                             'fullname' => $course->fullname,
+                             'updatedfields' => array('category' => $course->category))
+        ));
+        $event->set_legacy_logdata(array($course->id, 'course', 'move', 'edit.php?id=' . $course->id, $course->id));
+        $event->trigger();
 
         // Redirect user back to course page with proper string.
         $urltogo = new moodle_url($CFG->wwwroot . "/course/view.php", array("id" => $courseid));
@@ -72,6 +86,17 @@ if (has_capability('moodle/course:visibility', context_course::instance($coursei
     if ($hide == 0 && $confirm == 1) {
         // Update DB to show course..
         $DB->set_field('course', 'visible', '1', array('id' => $courseid));
+
+        // Trigger a course updated event.
+        $event = \core\event\course_updated::create(array(
+            'objectid' => $COURSE->id,
+            'context' => context_course::instance($course->id),
+            'other' => array('shortname' => $course->shortname,
+                             'fullname' => $course->fullname,
+                             'updatedfields' => array('category' => $course->category))
+        ));
+        $event->set_legacy_logdata(array($course->id, 'course', 'move', 'edit.php?id=' . $course->id, $course->id));
+        $event->trigger();
 
         // Redirect user back to course page with proper string.
         $urltogo = new moodle_url($CFG->wwwroot . "/course/view.php", array("id" => $courseid));
