@@ -549,7 +549,8 @@ class block_mmquicklink extends block_base {
                             "edit" => $editingmode,
                             "sesskey" => $USER->sesskey,
                         ));
-                        $this->content->text .= $this->default_element($url->out(), $editingmodestring, $editmodebuttonid);
+                        $this->content->text .= $this->default_element($url->out(),
+                        $editingmodestring, $editmodebuttonid . " list-turneditingon");
                     }
 
                     // Dashboard editing mode.
@@ -559,7 +560,8 @@ class block_mmquicklink extends block_base {
                             "edit" => $editingmode,
                             "sesskey" => $USER->sesskey,
                         ));
-                        $this->content->text .= $this->default_element($url->out(), $editingmodestring, $editmodebuttonid);
+                        $this->content->text .= $this->default_element($url->out(),
+                        $editingmodestring, $editmodebuttonid . " list-turneditingon");
                     }
 
                     // Admin page editing mode.
@@ -568,7 +570,8 @@ class block_mmquicklink extends block_base {
                             "adminedit" => $editingmode,
                             "sesskey" => $USER->sesskey,
                         ));
-                        $this->content->text .= $this->default_element($adminurl->out(), $editingmodestring, $editmodebuttonid);
+                        $this->content->text .= $this->default_element($adminurl->out(),
+                        $editingmodestring, $editmodebuttonid . " list-turneditingon");
                     }
 
                     // Grader requires a specialized editmode link.
@@ -584,7 +587,8 @@ class block_mmquicklink extends block_base {
                             "edit" => $editingmode,
                             "sesskey" => $USER->sesskey,
                         ));
-                        $this->content->text .= $this->default_element($adminurl->out(), $editingmodestring, $editmodebuttonid);
+                        $this->content->text .= $this->default_element($adminurl->out(),
+                        $editingmodestring, $editmodebuttonid . " list-turneditingon");
                     }
 
                 }
