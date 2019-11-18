@@ -15,10 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Form for editing HTML block instances.
+ * Default capabilities.
  *
  * @package   block_mmquicklink
- * @copyright 2017 Mediamaisteri Oy
+ * @copyright 2019 Mediamaisteri Oy
+ * @author    Mikko Haikonen <mikko.haikonen@mediamaisteri.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

@@ -19,7 +19,7 @@
  * and teachers to navigate through Moodle.
  *
  * @package   block_mmquicklink
- * @copyright 2018 Mediamaisteri Oy
+ * @copyright 2017-2019 Mediamaisteri Oy
  * @author    Mikko Haikonen <mikko.haikonen@mediamaisteri.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -29,12 +29,21 @@ require_once($CFG->dirroot.'/blocks/mmquicklink/lib.php');
 
 class block_mmquicklink extends block_base {
 
-    // Tell block to use global settings.
+    /**
+     * Use global configuration.
+     *
+     * @return boolean true, since we use global configurationl.
+     */
     public function has_config() {
         return true;
     }
 
-    // Function to check if user is admin, manager or teacher.
+    /**
+     * Check if current user has access to block.
+     * Private, to be used only in this class.
+     *
+     * @return boolean should user see the block.
+     */
     private function hasaccess() {
         global $USER, $DB, $COURSE, $PAGE;
 
@@ -97,7 +106,11 @@ class block_mmquicklink extends block_base {
 
     }
 
-    // Function to hide the block on specific pagetypes.
+    /**
+     * Check if block is suppoed to be shown on current pagelayout.
+     *
+     * @return boolean true/false depending if block is to be shown on current pagelayout.
+     */
     private function hidetypes() {
         global $PAGE;
 
@@ -140,7 +153,10 @@ class block_mmquicklink extends block_base {
         return false;
     }
 
-    // Block initialization and title setting.
+    /**
+     * Block initialization.
+     * Sets block title.
+     */
     public function init() {
         if (empty(get_config('mmquicklink', 'config_blocktitle'))) {
             $this->title = get_string('title', 'block_mmquicklink');
@@ -149,12 +165,20 @@ class block_mmquicklink extends block_base {
         }
     }
 
-    // Don't allow multiple instances.
+    /**
+     * Do not allow multiple instances.
+     */
     public function instance_allow_multiple() {
         return false;
     }
 
-    // Dock block on default.
+    /**
+     * Dock block on default.
+     * Usable only on clean based themes.
+     *
+     * @todo remove function after all the clean based themes are removed from customers.
+     * @return array $attributes block content attributes array.
+     */
     public function html_attributes() {
         $attributes = parent::html_attributes();
         if ($this->instance_can_be_docked() && get_user_preferences('docked_block_instance_'.$this->instance->id, 1)) {
@@ -163,6 +187,13 @@ class block_mmquicklink extends block_base {
         return $attributes;
     }
 
+    /**
+     * Use custom button sorting.
+     * Retrieve sorting from database.
+     *
+     * @todo Check if custom sort is set (to prevent returning redundant <style></style>).
+     * @return string inline <style> for sorting the block links.
+     */
     private function get_sort() {
         global $DB;
         $dbman = $DB->get_manager();
@@ -176,7 +207,12 @@ class block_mmquicklink extends block_base {
         }
     }
 
-    // User can edit only is the user has access.
+    /**
+     * Can user edit the block settings or not?
+     *
+     * @todo allow managers to to edit block settings - maybe?
+     * @return boolean true if user can edit.
+     */
     public function user_can_edit() {
         if (is_siteadmin()) {
             return true;
@@ -184,7 +220,11 @@ class block_mmquicklink extends block_base {
         return false;
     }
 
-    // Show empty content if user has no access.
+    /**
+     * Do not show content, if user doesn't have access to block.
+     *
+     * @return boolean
+     */
     public function is_empty() {
         global $PAGE;
 
@@ -202,12 +242,47 @@ class block_mmquicklink extends block_base {
         return true;
     }
 
+    /**
+     * Render default link element.
+     *
+     * @param string $url URL to be linked to.
+     * @param string $str Lang string to be shown on link.
+     * @param string $buttonid Button's identifier (for sorting).
+     * @return html list-item element rendered via templates.
+     */
     private function default_element($url, $str, $buttonid = "null") {
-        $link = "<li class='list list-$buttonid'><a class='btn btn-secondary btn-$buttonid' href='" .
-            new moodle_url($url) . "'>" . $str . "</a></li>";
-        return $link;
+        global $OUTPUT;
+        $html = $OUTPUT->render_from_template("block_mmquicklink/li",
+            array(
+                "url" => $url,
+                "str" => $str,
+                "buttonid" => $buttonid
+            )
+        );
+        return $html;
     }
 
+    /**
+     * Check if local_course_templates plugin is installed on the system.
+     *
+     * @return core_plugin_manager instance if local_course_templates plugin is installed.
+     */
+    private function coursetemplates() {
+        // Check if local_course_templates -plugin is installed.
+        if (isset(core_plugin_manager::instance()->get_plugins_of_type('local')["course_templates"]->name)) {
+            $coursetemplates = core_plugin_manager::instance()->get_plugins_of_type('local')["course_templates"]->name;
+            return $coursetemplates;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Get content for output.
+     *
+     * @param $output
+     * @todo find out wtf the param really is ":D".
+     */
     public function get_content_for_output($output) {
         global $CFG;
         $bc = new block_contents($this->html_attributes());
@@ -220,7 +295,7 @@ class block_mmquicklink extends block_base {
                 $bc->footer = $this->content->footer;
             }
         } else {
-            $bc->add_class('invisible');
+            $bc->add_class('invisibleblock');
         }
         if (!$this->hide_header()) {
             $bc->title = $this->title;
@@ -254,15 +329,21 @@ class block_mmquicklink extends block_base {
         return $bc;
     }
 
+    /**
+     * Get block content.
+     *
+     * @return html Data to be printed in the block.
+     */
     public function get_content() {
         // Load required globals.
-        global $PAGE, $CFG, $USER, $COURSE, $DB;
+        global $PAGE, $CFG, $USER, $COURSE, $DB, $OUTPUT;
 
+        // Prevents 'double output'.
         if ($this->content !== null) {
             return $this->content;
         }
 
-        // Load custom JS.
+        // Load custom JS required for enrolment div toggling.
         $this->page->requires->js_call_amd('block_mmquicklink/enrolmentdiv', 'init', []);
 
         // Get block and local plugins.
@@ -398,12 +479,12 @@ class block_mmquicklink extends block_base {
 
             // Show enrolment key add button.
             if (has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
-                global $DB;
                 $oldkey = $DB->get_records('enrol', array('courseid' => $COURSE->id, 'enrol' => 'self', 'status' => 0), 'password');
                 foreach ($oldkey as $oneoldkey) {
                     $realoldkey = $oneoldkey->password;
                     $setstring = get_string('check', 'core');
                     $keyclass = "mmquicklink-enrolmentkey-set";
+                    // Stop looping when the first key is found. That's all we need.
                     break;
                 }
                 if (empty($realoldkey)) {
@@ -411,29 +492,13 @@ class block_mmquicklink extends block_base {
                     $setstring = get_string('set', 'portfolio_flickr');
                     $keyclass = "mmquicklink-enrolmentkey-unset";
                 }
-                if (count($oldkey) > 1) {
-                    $this->content->text .= "
-                    <li class='list list-enrolmentkey mmquicklink-enrolmentkey $keyclass'>
-                    <a class='btn btn-secondary btn-enrolmentkey' href=''>"
-                     . $setstring . " " .
-                    strtolower(get_string('password', 'enrol_self')) . "</a></li>
-                    <div class='list-enrolmentkey mmquicklink-enrolmentkey-div'> " .
-                    get_string('multiplepasswords', 'block_mmquicklink') . "</div>
-                    ";
-                } else {
-                    $this->content->text .= "
-                    <li class='list list-enrolmentkey mmquicklink-enrolmentkey $keyclass'>
-                    <a class='btn btn-secondary btn-enrolmentkey' href=''>"
-                     . $setstring . " " .
-                    strtolower(get_string('password', 'enrol_self')) . "</a></li>
-                    <div class='list-enrolmentkey mmquicklink-enrolmentkey-div'>
-                        <form method='get' action='" . $CFG->wwwroot . "/blocks/mmquicklink/setenrolmentkey.php'>
-                        <input type='hidden' name='courseid' value='" . $COURSE->id . "'>
-                        <input class='form-control' type='text' name='enrolmentkey' value='" . $realoldkey . "'>
-                        <input class='btn btn-primary' type='submit' value='" . get_string('save', 'core_admin') . "'>
-                        </form>
-                    </div>";
-                }
+                $setstring .= " " . strtolower(get_string('password', 'enrol_self'));
+                $this->content->text .= $OUTPUT->render_from_template("block_mmquicklink/li-enrolmentkey", array(
+                    "keyclass" => $keyclass,
+                    "setstring" => $setstring,
+                    "courseid" => $COURSE->id,
+                    "realoldkey" => $realoldkey
+                ));
             }
 
             // Course participants.
@@ -500,22 +565,15 @@ class block_mmquicklink extends block_base {
                         $otherroleshowname = role_get_name($otherrolename, context_system::instance(), ROLENAME_ALIAS);
                     }
 
-                    $this->content->text .= "
-                        <li class='list list-otherrole mmquicklink-otherrole'>
-                        <div class='mmquicklink-otherrole-div'>
-                            <form method='get' id='form-otherrole' action='" . $CFG->wwwroot . "/course/switchrole.php'>
-                            <input type='hidden' name='id' value='" . $COURSE->id . "'>
-                            <input type='hidden' name='switchrole' value='" . $otherrole ."'>
-                            <input type='hidden' name='sesskey' value='" . $USER->sesskey . "'>
-                            <input type='hidden' name='returnurl' value='" . $PAGE->url . "'>
-                            <a onclick='document.getElementById(\"form-otherrole\").submit()'
-                            class='mmquicklink-btn btn btn-secondary btn-otherrole' value='" .
-                            get_string('switchrole', 'block_mmquicklink') .
-                            " " . $otherrolename->shortname . "'>" . get_string('switchrole', 'block_mmquicklink') . " "
-                            . $otherroleshowname . "</a>
-                            </form>
-                        </div>
-                        </li>";
+                    // Render from template.
+                    $this->content->text .= $OUTPUT->render_from_template("block_mmquicklink/li-otherrole", array(
+                        "courseid" => $COURSE->id,
+                        "otherrole" => $otherrole,
+                        "sesskey" => $USER->sesskey,
+                        "url" => $PAGE->url,
+                        "otherroleshortname" => $otherrolename->shortname,
+                        "otherroleshowname" => $otherroleshowname,
+                    ));
                 } else {
                     $url = new moodle_url($CFG->wwwroot . "/course/switchrole.php", array(
                         "id" => $COURSE->id,
@@ -535,7 +593,6 @@ class block_mmquicklink extends block_base {
 
         } else {
             // Links shown on other pagelayouts and types.
-
             if ($PAGE->user_allowed_editing()) {
 
                 // Editing mode on/off link.
@@ -595,9 +652,8 @@ class block_mmquicklink extends block_base {
 
             }
 
-            if (isset(core_plugin_manager::instance()->get_plugins_of_type('local')["course_templates"]->name)) {
-                $coursetemplates = core_plugin_manager::instance()->get_plugins_of_type('local')["course_templates"]->name;
-            }
+            // Check if local_course_templates is installed.
+            $coursetemplates = $this->coursetemplates();
 
             // Show "add a course" button.
             if (optional_param('categoryid', '', PARAM_INT)) {
@@ -628,7 +684,6 @@ class block_mmquicklink extends block_base {
                             if (has_capability('moodle/course:create', context_coursecat::instance($defaultcategory))) {
                                 if (!empty($coursetemplates)) {
                                     // Render dropdown menu from templates if course_templates is installed.
-                                    global $OUTPUT;
                                     $this->content->text .= $OUTPUT->render_from_template('block_mmquicklink/addnewcourse',
                                         array("categoryid" => $defaultcategory));
                                 } else {
@@ -642,13 +697,11 @@ class block_mmquicklink extends block_base {
 
                     // Check if user has capability to add a course to at least one category & default category didn't work.
                     if ($defok == 0) {
-                        global $DB;
                         $categories = $DB->get_records('course_categories');
                         foreach ($categories as $category) {
                             if (has_capability('moodle/course:create', context_coursecat::instance($category->id))) {
                                 if (!empty($coursetemplates)) {
                                     // Render dropdown menu from templates if course_templates is installed.
-                                    global $OUTPUT;
                                     $this->content->text .= $OUTPUT->render_from_template('block_mmquicklink/addnewcourse',
                                         array("categoryid" => $category->id));
                                     break;
@@ -664,7 +717,6 @@ class block_mmquicklink extends block_base {
             }
 
             // Show course management button.
-            global $PAGE;
             if ($PAGE->bodyid == 'page-course-index-category') {
                 if (can_edit_in_category(optional_param('categoryid', '', PARAM_INT))) {
                     $this->content->text .= $this->default_element($CFG->wwwroot .
@@ -746,16 +798,19 @@ class block_mmquicklink extends block_base {
 
         // Show placeholder text if block has no content.
         if (strlen($this->content->text) < 10) {
-            $this->content->text .= "<div id='empty'>" . get_string('emptyblock', 'block_mmquicklink') . "</div>";
+            $this->content->text .= $OUTPUT->render_from_template("block_mmquicklink/empty", array());
             // Force hiding with JS.
             $this->page->requires->js_call_amd('block_mmquicklink/blockhider', 'init', []);
             // Stop executing the script.
             return $this->content;
         } else {
-            $this->content->text = "<ul class='mmquicklink-list'>" . $this->content->text . "</ul>";
+            // Wrap everything into one unsorted list.
+            $this->content->text = $OUTPUT->render_from_template("block_mmquicklink/wrap",
+                array("content" => $this->content->text)
+            );
         }
 
-        // Return data to block.
+        // Return data to block. Finally!
         return $this->content;
 
     }

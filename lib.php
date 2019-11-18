@@ -13,15 +13,26 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 /**
- * mmquicklink lib
+ * MM Quicklink lib.
  *
  * @package   block_mmquicklink
- * @copyright 2017 Mediamaisteri Oy
+ * @copyright 2019 Mediamaisteri Oy
+ * @author    Mikko Haikonen <mikko.haikonen@mediamaisteri.com>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Check if user is using a 'switched role' functionality.
+ *
+ * @param object $user USER object.
+ * @param object $page $PAGE object.
+ * @param array $options Options array.
+ * @return object $returnobject.
+ */
 function mmquicklink_get_switched_role($user, $page, $options = array()) {
     global $OUTPUT, $DB, $SESSION, $CFG, $COURSE;
 
@@ -42,7 +53,7 @@ function mmquicklink_get_switched_role($user, $page, $options = array()) {
 
 }
 
-// Create an admin_setting subclass.
+// Create an 'admin setting' sub class for sorting.
 require_once($CFG->libdir . "/adminlib.php");
 class admin_setting_configquicklinksort extends admin_setting {
     private function get_sort() {

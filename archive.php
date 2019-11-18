@@ -13,13 +13,14 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 /**
- * Move course to archive category.
+ * Move selected course to 'archive' category.
  *
- * @package    block_mmquicklink
- * @author     Mikko Haikonen <mikko.haikonen@mediamaisteri.com>
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- *
+ * @package   block_mmquicklink
+ * @copyright 2019 Mediamaisteri Oy
+ * @author    Mikko Haikonen <mikko.haikonen@mediamaisteri.com>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 require_once(dirname(__FILE__) . '/../../config.php');

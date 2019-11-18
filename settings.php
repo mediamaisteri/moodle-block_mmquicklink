@@ -15,11 +15,12 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Settings for the teachers' toolbox.
+ * Settings for MM Quicklink Block.
  *
  * @package   block_mmquicklink
+ * @copyright 2019 Mediamaisteri Oy
  * @author    Mikko Haikonen <mikko.haikonen@mediamaisteri.com>
- *
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die;
