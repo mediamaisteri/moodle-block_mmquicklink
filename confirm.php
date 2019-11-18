@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * eOppiva customized settings.
+ * Confirmation box.
  *
  * @package    theme_maisteriboost
  * @copyright  2019 Mediamaisteri Oy

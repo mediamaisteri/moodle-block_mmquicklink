@@ -13,17 +13,26 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 /**
- * Render local_reports navigation.
+ * MM Quicklink block renderer.
  *
  * @package   block_mmquicklink
- * @copyright 2017 Mediamaisteri Oy
+ * @copyright 2019 Mediamaisteri Oy
+ * @author    Mikko Haikonen <mikko.haikonen@mediamaisteri.com>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
 class block_mmquicklink_renderer extends plugin_renderer_base {
 
+    /**
+     * Copy mReports tree from navigation.
+     *
+     * @param navigation
+     * @return html content
+     */
     public function mmquicklink_tree($navigation) {
         global $PAGE;
         $content = $this->mmquicklink_node($navigation->children);
@@ -33,6 +42,12 @@ class block_mmquicklink_renderer extends plugin_renderer_base {
         return $content;
     }
 
+    /**
+     * Render 'sub' menu for mReports.
+     *
+     * @param array $items Array of link items.
+     * @return html $itemlist List of items.
+     */
     protected function mmquicklink_node($items) {
         $itemlist = "<ul class='mmquicklink-reports'>";
 

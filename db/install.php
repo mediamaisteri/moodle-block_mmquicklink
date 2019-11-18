@@ -15,19 +15,22 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * MM Quick Link
+ * MM Quick Link installation file.
  *
  * @package block_mmquicklink
  * @copyright 2019 Mediamaisteri Oy
  * @author Mikko Haikonen <mikko.haikonen@mediamaisteri.com>
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
 defined('MOODLE_INTERNAL') || die();
 
 /**
  * After installation script.
  * Adds the block automatically on frontpage and all other pages.
  * Sets mmquicklink also as an undeletable block.
+ *
+ * @return boolean always true
  */
 function xmldb_block_mmquicklink_install() {
     global $CFG, $DB, $PAGE;

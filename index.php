@@ -13,13 +13,17 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 /**
- * mmquicklink lib
+ * MM Quicklink block index.
  *
  * @package   block_mmquicklink
- * @copyright 2017 Mediamaisteri Oy
+ * @copyright 2019 Mediamaisteri Oy
+ * @author    Mikko Haikonen <mikko.haikonen@mediamaisteri.com>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
-
 echo $_SERVER['REQUEST_URI'];
+
+// Nothing to do here.

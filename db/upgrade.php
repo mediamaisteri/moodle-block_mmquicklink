@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * MM Quick Link
+ * MM Quick Link upgrade script.
  *
  * @package block_mmquicklink
  * @copyright 2019 Mediamaisteri Oy
