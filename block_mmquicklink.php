@@ -281,7 +281,7 @@ class block_mmquicklink extends block_base {
      * Get content for output.
      *
      * @param $output
-     * @todo find out wtf the param really is ":D".
+     * @todo find out what the output param really is ":D".
      */
     public function get_content_for_output($output) {
         global $CFG;
