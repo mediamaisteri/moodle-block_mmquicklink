@@ -1,11 +1,8 @@
 # block_mmquicklink
 
-Admineille, hallinnoijille ja opettajille näkyvä
-lohko, jossa on pikalinkkejä näppäriin toimenpiteisiin.
-Linkit vaihtuvat dynaamisesti sivun mukaan, eli kursseilla
-on eri toimintoja, kuin etusivulla.
+A block for administrators, managers and teachers to simplify navigation in Moodle. Contains easy access links to most used functions. Content is based on user's role & capabilities and page context.
 
-# Tuetut versiot
+# Supported versions
 
-Moodle 3.5. alkaen.
-Todennäköisesti toimii myös 3.1:ssä ja 3.3:ssa, mutta bugikorjauksia niihin ei enää tehdä.
+Moodle 3.5. onwards.
+Tested on following themes: boost, classic, clean, maisteriboost.
