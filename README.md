@@ -6,3 +6,7 @@ A block for administrators, managers and teachers to simplify navigation in Mood
 
 Moodle 3.5. onwards.
 Tested on following themes: boost, classic, clean, maisteriboost.
+
+# Screenshot
+
+![image](/uploads/37ef52d8b2ed8b9531723d19a8e74633/image.png)
