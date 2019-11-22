@@ -76,7 +76,6 @@ if (has_capability('moodle/course:visibility', context_course::instance($coursei
                              'fullname' => $course->fullname,
                              'updatedfields' => array('category' => $course->category))
         ));
-        $event->set_legacy_logdata(array($course->id, 'course', 'move', 'edit.php?id=' . $course->id, $course->id));
         $event->trigger();
 
         // Redirect user back to course page with proper string.
@@ -97,7 +96,6 @@ if (has_capability('moodle/course:visibility', context_course::instance($coursei
                              'fullname' => $course->fullname,
                              'updatedfields' => array('category' => $course->category))
         ));
-        $event->set_legacy_logdata(array($course->id, 'course', 'move', 'edit.php?id=' . $course->id, $course->id));
         $event->trigger();
 
         // Redirect user back to course page with proper string.
