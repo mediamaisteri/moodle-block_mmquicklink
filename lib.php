@@ -66,23 +66,56 @@ class admin_setting_configquicklinksort extends admin_setting {
         return "<style>$style</style>";
     }
 
+    /**
+     * Construct.
+     *
+     * @param string $name Element name.
+     * @param string $heading Visible name.
+     * @param string $information Description.
+     */
     public function __construct($name, $heading, $information) {
         $this->nosave = true;
         parent::__construct($name, $heading, $information, '');
     }
 
+    /**
+     * Usually retrieves the current setting using the objects name.
+     * Here return true is enough.
+     *
+     * @return true
+     */
     public function get_setting() {
         return true;
     }
 
+    /**
+     * Usually retrieves the default settings using the objects name.
+     * Here return true is enough.
+     *
+     * @return true
+     */
     public function get_defaultsetting() {
         return true;
     }
 
+    /**
+     * Usually sets the value for the setting.
+     * Here not needed as we use another database table for sorting.
+     *
+     * @param mixed $data
+     * @return string empty string
+     */
     public function write_setting($data) {
         return '';
     }
 
+    /**
+     * Returns the sorting field.
+     *
+     * @param string $data Inputted data.
+     * @param string $query
+     * @return string HTML to output.
+     */
     public function output_html($data, $query = '') {
         global $OUTPUT;
         $context = new stdClass();

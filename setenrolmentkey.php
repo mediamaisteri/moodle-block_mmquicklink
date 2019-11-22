@@ -38,6 +38,12 @@ $urltogo = $_SERVER['HTTP_REFERER'];
 
 // Check if user has permission to edit course enrolment methods.
 if (has_capability('moodle/course:enrolconfig', context_course::instance($courseid))) {
+    $event = \block_mmquicklink\event\enrolmentkey_updated::create(array(
+        'objectid' => $courseid,
+        'userid' => $USER->id,
+        'context' => context_course::instance($courseid),
+    ));
+    $event->trigger();
 
     // Check how many self-enrolment instances are in use in the course.
     $self = $DB->get_records('enrol', array('courseid' => $courseid, 'enrol' => 'self', 'status' => 0), 'password');
