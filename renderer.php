@@ -31,7 +31,7 @@ class block_mmquicklink_renderer extends plugin_renderer_base {
      * Copy mReports tree from navigation.
      *
      * @param navigation
-     * @return html content
+     * @return string html content
      */
     public function mmquicklink_tree($navigation) {
         global $PAGE;
