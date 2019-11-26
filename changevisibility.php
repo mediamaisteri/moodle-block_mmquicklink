@@ -32,7 +32,7 @@ require_once($CFG->libdir.'/datalib.php');
 require_once($CFG->dirroot.'/course/format/lib.php');
 
 global $DB, $USER, $COURSE;
-$courseid = optional_param('id', '', PARAM_INT);
+$courseid = required_param('id', PARAM_INT);
 $course = $DB->get_record("course", array("id" => $courseid));
 
 $PAGE->set_context(context_system::instance());

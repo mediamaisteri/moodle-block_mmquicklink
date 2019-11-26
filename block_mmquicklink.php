@@ -380,6 +380,8 @@ class block_mmquicklink extends block_base {
 
         // Links to show on course pages.
         if ($PAGE->pagelayout == 'course' || $PAGE->pagelayout == "incourse" || $PAGE->pagetype == 'course-view-topics') {
+            
+            $PAGE->requires->js_call_amd("block_mmquicklink/confirm", "init", array("courseid" => $COURSE->id, "hide" => $COURSE->visible, "coursename" => $COURSE->fullname));
 
             if ($PAGE->user_allowed_editing()) {
                 // Editing mode on/off link.
