@@ -111,35 +111,38 @@ class block_mmquicklink extends block_base {
      *
      * @return boolean true/false depending if block is to be shown on current pagelayout.
      */
-    private function hidetypes() {
+    private function hidetypes($found = 0) {
         global $PAGE;
 
+        // Get selected pagelayouts from configuration.
         $pagelayouts = get_config('mmquicklink', 'config_pagelayouts');
         $pagelayouts = explode(",", $pagelayouts);
 
-        $pagelayoutlist = ['base',
-        'standard',
-        'course',
-        'coursecategory',
-        'incourse',
-        'frontpage',
-        'admin',
-        'mydashboard',
-        'mypublic',
-        'login',
-        'popup',
-        'frametop',
-        'embedded',
-        'maintenance',
-        'print',
-        'redirect',
-        'report'];
+        $pagelayoutlist = [
+            'base',
+            'standard',
+            'course',
+            'coursecategory',
+            'incourse',
+            'frontpage',
+            'admin',
+            'mydashboard',
+            'mypublic',
+            'login',
+            'popup',
+            'frametop',
+            'embedded',
+            'maintenance',
+            'print',
+            'redirect',
+            'report'
+        ];
 
-        $found = 0;
+        // Loop through the pagelayouts.
+        // TODO: Make the array search better.
         if (count($pagelayouts) > 0 && strlen($pagelayouts[0]) > 0) {
             foreach ($pagelayouts as $pagelayout) {
                 if ($PAGE->pagelayout == $pagelayoutlist[$pagelayout]) {
-                    $found = 1;
                     return false;
                 }
             }
