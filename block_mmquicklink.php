@@ -381,6 +381,9 @@ class block_mmquicklink extends block_base {
         // Links to show on course pages.
         if ($PAGE->pagelayout == 'course' || $PAGE->pagelayout == "incourse" || $PAGE->pagetype == 'course-view-topics') {
 
+            $PAGE->requires->js_call_amd("block_mmquicklink/confirm", "init", array("courseid" => $COURSE->id,
+            "hide" => $COURSE->visible, "coursename" => $COURSE->fullname, "category" => $COURSE->category));
+
             if ($PAGE->user_allowed_editing()) {
                 // Editing mode on/off link.
                 if (has_capability('moodle/course:update', context_course::instance($COURSE->id))) {
@@ -455,7 +458,7 @@ class block_mmquicklink extends block_base {
                             "categoryid" => $COURSE->category,
                         ));
                         $this->content->text .= $this->default_element($url->out(),
-                        get_string('archive_course', 'block_mmquicklink', 'archivecourse'));
+                        get_string('archive_course', 'block_mmquicklink'), 'archivecourse');
                     }
                 }
             }

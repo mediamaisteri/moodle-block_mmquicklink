@@ -35,8 +35,8 @@ require_login();
 global $DB, $USER, $COURSE;
 
 // Course id & key from url variable.
-$courseid = optional_param('courseid', '', PARAM_INT);
-$categoryid = optional_param('categoryid', '', PARAM_INT);
+$courseid = required_param('courseid', PARAM_INT);
+$categoryid = required_param('categoryid', PARAM_INT);
 
 // Check if user has the capability to update the course.
 if (has_capability('moodle/course:update', context_course::instance($courseid))) {
