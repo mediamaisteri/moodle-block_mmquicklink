@@ -22,7 +22,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'MM Quick Link';
+$string['pluginname'] = 'MM Quicklink / hallintatyökalut';
 $string['title'] = "Hallintatyökalut";
 
 $string['visibility_settings'] = "Näkyvyysasetukset";
