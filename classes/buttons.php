@@ -226,6 +226,25 @@ class buttons {
     }
 
     /**
+     * Show easylink button.
+     *
+     * @return html rendered element.
+     */
+    public function easylink($authplugins) {
+        if (!empty($authplugins["easylink"]->name)) {
+            if (has_capability('auth/easylink:manage', context_course::instance($this->course->id))) {
+                $url = new moodle_url($this->cfg->wwwroot . "/auth/easylink/manager.php",
+                    array(
+                        "course" => $this->course->id,
+                    )
+                );
+                return $this->default_element($url->out(),
+                get_string('pluginname', 'auth_easylink'), 'easylink');
+            }
+        }
+    }
+
+    /**
      * Render 'archive course' element.
      *
      * @return html rendered element.
