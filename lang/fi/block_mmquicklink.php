@@ -36,6 +36,7 @@ $string['setting_participants_desc'] = "Valitse piilottaaksesi osallistujat-link
 
 $string['setting_course_grades'] = "Arvioinnit";
 $string['setting_course_grades_desc'] = "Valitse piilottaaksesi arvioinnit-linkin";
+$string['setting_easylink'] = "HelppoLinkki";
 
 $string['setting_themesettings'] = "Teeman asetukset";
 $string['setting_themesettings_desc'] = "Valitse piilottaaksesi teeman asetukset -linkin";

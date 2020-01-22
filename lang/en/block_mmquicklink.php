@@ -43,6 +43,7 @@ $string['setting_delcourse'] = "Delete course";
 $string['setting_delcourse_desc'] = "Check to hide delete course link";
 $string['setting_hidecourse'] = "Show/hide course";
 $string['setting_hidecourse_desc'] = "Check to hide show/hide course link";
+$string['setting_easylink'] = "Easylink";
 
 $string['setting_archive'] = "Archive course";
 $string['setting_archive_desc'] = "Check to hide 'archive course' button. This functionality required local_course_archive -plugin to be installed.";

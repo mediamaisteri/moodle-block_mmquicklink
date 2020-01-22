@@ -366,6 +366,7 @@ class block_mmquicklink extends block_base {
 
         // Get block and local plugins.
         $plugins = core_plugin_manager::instance()->get_plugins_of_type('block');
+        $authplugins = core_plugin_manager::instance()->get_plugins_of_type('auth');
         $localplugins = core_plugin_manager::instance()->get_plugins_of_type('local');
 
         // Check if visibility if wanted, because is_empty is not checked when user is in editing mode.
@@ -400,6 +401,7 @@ class block_mmquicklink extends block_base {
             $this->content->text .= $buttons->completionprogressblock($plugins);
             $this->content->text .= $buttons->enrolmentkey();
             $this->content->text .= $buttons->participants();
+            $this->content->text .= $buttons->easylink($authplugins);
             $this->content->text .= $buttons->grading();
             $this->content->text .= $buttons->mreports($localplugins);
             $this->content->text .= $buttons->switchrole();
