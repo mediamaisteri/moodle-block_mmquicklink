@@ -14,45 +14,57 @@ define(['jquery', 'core/config','core/templates', 'core/modal_factory', 'core/mo
                 // Prevent default link action.
                 e.preventDefault();
                 createshowhidemodal();
-                function createshowhidemodal() {
-                    ModalFactory.create({
-                        type: ModalFactory.types.SAVE_CANCEL,
-                        title: templates.render("block_mmquicklink/modal_hidecourse_title", data),
-                        body: templates.render("block_mmquicklink/modal_hidecourse_body", data),
-                    }).then(function(modal) {
-                        var root = modal.getRoot();
-                        root.on(ModalEvents.save, function() {
-                            $.get(mdlcfg.wwwroot + '/blocks/mmquicklink/changevisibility.php', { 'id': courseid, 'hide': hide, 'confirm': 1 } ).done(function(data) {
-                                // Nothing to do here.
-                            });
+            });
+
+            /**
+             * This function creates a show/hide modal.
+             */
+            function createshowhidemodal() {
+                ModalFactory.create({
+                    type: ModalFactory.types.SAVE_CANCEL,
+                    title: templates.render("block_mmquicklink/modal_hidecourse_title", data),
+                    body: templates.render("block_mmquicklink/modal_hidecourse_body", data),
+                }).then(function(modal) {
+                    var root = modal.getRoot();
+                    root.on(ModalEvents.save, function() {
+                        $.get(mdlcfg.wwwroot + '/blocks/mmquicklink/changevisibility.php', { 'id': courseid, 'hide': hide, 'confirm': 1 } ).done(function(data) {
+                            // Nothing to do here.
                             location.reload();
                         });
-                        modal.show();
+                        
                     });
-                }
-            });
+                    modal.show();
+                });
+            }
+
+
+            /**
+             * This function creates a archive modal.
+             */
+            function archive() {
+                ModalFactory.create({
+                    type: ModalFactory.types.SAVE_CANCEL,
+                    title: templates.render("block_mmquicklink/modal_archivecourse_title", data),
+                    body: templates.render("block_mmquicklink/modal_archivecourse_body", data),
+                }).then(function(modal) {
+                    var root = modal.getRoot();
+                    root.on(ModalEvents.save, function() {
+                        $.get(mdlcfg.wwwroot + '/blocks/mmquicklink/archive.php', { 'courseid': courseid, 'categoryid': categoryid, 'confirm': 1 } ).done(function(data) {
+                            // Nothing to do here.
+                            location.reload();
+                        });
+                        
+                    });
+                    modal.show();
+                });
+            }
 
             // What happens when user clicks archive course button.
             $(".btn-archivecourse").click(function(e) {
                 // Prevent default link action.
                 e.preventDefault();
-                createshowhidemodal();
-                function createshowhidemodal() {
-                    ModalFactory.create({
-                        type: ModalFactory.types.SAVE_CANCEL,
-                        title: templates.render("block_mmquicklink/modal_archivecourse_title", data),
-                        body: templates.render("block_mmquicklink/modal_archivecourse_body", data),
-                    }).then(function(modal) {
-                        var root = modal.getRoot();
-                        root.on(ModalEvents.save, function() {
-                            $.get(mdlcfg.wwwroot + '/blocks/mmquicklink/archive.php', { 'courseid': courseid, 'categoryid': categoryid, 'confirm': 1 } ).done(function(data) {
-                                // Nothing to do here.
-                            });
-                            location.reload();
-                        });
-                        modal.show();
-                    });
-                }
+                archive();
+
             });
 
         }
