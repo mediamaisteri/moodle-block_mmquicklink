@@ -406,6 +406,7 @@ class block_mmquicklink extends block_base {
             $this->content->text .= $buttons->mreports($localplugins);
             $this->content->text .= $buttons->switchrole();
             $this->content->text .= $buttons->hrd();
+            $this->content->text .= $buttons->coursebgimagechanger();
 
         } else {
 

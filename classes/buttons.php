@@ -101,6 +101,21 @@ class buttons {
         return $html;
     }
 
+    public function coursebgimagechanger($html = "") {
+        if (empty(get_config('mmquicklink', 'config_hide_coursebgimagechanger'))) {
+            if ($this->page->theme->name == "maisteriboost") {
+                if (file_exists($this->cfg->dirroot . "/theme/maisteriboost/classes/coursebgimagechanger.php")) {
+                    if (has_capability('moodle/course:update', context_course::instance($this->course->id))) {
+                        $html = $this->default_element($this->cfg->wwwroot .
+                        "/theme/maisteriboost/classes/coursebgimagechanger.php?id=" . $this->course->id,
+                        get_string('coursebgimagechanger', 'block_mmquicklink'), 'coursebgimagechanger');
+                    }
+                }
+            }
+        }
+        return $html;
+    }
+
     /**
      * Renders the editing mode button.
      *
@@ -380,7 +395,7 @@ class buttons {
                             "_qf__local_reports_summary_form" => 1,
                         ));
                         return $this->default_element($url->out(),
-                        get_string('local_reports_summary', 'block_mmquicklink', 'localreportssummary'));
+                        get_string('local_reports_summary', 'block_mmquicklink'), 'localreportssummary');
                     }
                 }
             }
