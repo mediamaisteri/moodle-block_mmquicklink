@@ -116,6 +116,9 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_local_reports_summary',
     get_string('setting_localreportssummary', 'block_mmquicklink'),
     get_string('setting_localreportssummary_desc', 'block_mmquicklink'), 1));
+    $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_coursebgimagechanger',
+    get_string('setting_coursebgimagechanger', 'block_mmquicklink'),
+    get_string('setting_coursebgimagechanger_desc', 'block_mmquicklink'), 1));
 
     // Advanced options.
     $settings->add(new admin_setting_heading('block_mmquicklink_advanced_options',

@@ -94,6 +94,9 @@ $string['setting_defaultcategory_desc'] = "Please select the default category fo
 $string['setting_localreportssummary'] = "mReports on course page";
 $string['setting_localreportssummary_desc'] = "Check to hide mRaportointi link on course page";
 $string['local_reports_summary'] = "Summary report";
+$string['setting_coursebgimagechanger'] = "Course background";
+$string['setting_coursebgimagechanger_desc'] = "Check to hide 'course background' button.";
+$string['coursebgimagechanger'] = "Course background";
 
 $string['toomanyselfenrolments'] = "This course has multiple self enrolment methods enabled. To use this functionality, remove extra self enrolment methods at ";
 $string['multiplepasswords'] = "This course has multiple self enrolments enabled. Check them on 'enrolment methods' page.";

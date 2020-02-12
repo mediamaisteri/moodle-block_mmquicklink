@@ -96,6 +96,9 @@ $string['setting_localreportssummary'] = "mReports kurssisivulla";
 $string['setting_localreportssummary_desc'] = "Valitse piilottaaksesi mRaportointilinkki kurssisivulla";
 $string['local_reports_summary'] = "Yhteenvetoraportti";
 $string['enrolmentkey'] = "Kurssiavain";
+$string['setting_coursebgimagechanger'] = "Kurssin taustakuva";
+$string['setting_coursebgimagechanger_desc'] = "Valitse piilottaaksesi 'kurssin taustakuvan vaihtaja' -painikkeen.";
+$string['coursebgimagechanger'] = "Kurssin taustakuva";
 
 $string['toomanyselfenrolments'] = "Kurssilla on usea itserekisteröitymistapa käytössä. Jotta tämän lohkon kautta voitaisiin asettaa kurssiavain, sinun tulee poistaa ylimääräiset itserekisteröitymiset käytöstä osoitteessa ";
 $string['multiplepasswords'] = "Kurssilla on useampi itserekisteröitymistapa käytössä. Tarkista ne osallistujien lisäämistavoista.";
