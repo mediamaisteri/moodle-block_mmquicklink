@@ -29,4 +29,4 @@ $plugin->component = 'block_mmquicklink';
 $plugin->version = 2020011600;
 $plugin->requires = 2016052300;
 $plugin->maturity = MATURITY_STABLE;
-$plugin->release = "1.3.3";
+$plugin->release = "1.3.4";
