@@ -124,7 +124,8 @@ class buttons {
     public function editingmode() {
         // Dashboard editing mode.
         $indexsys = explode("/", $this->page->url);
-        if ($this->page->pagelayout == "mydashboard" && $indexsys[count($indexsys) - 1] !== "indexsys.php") {
+        if (has_capability('moodle/my:manageblocks', context_system::instance()) &&
+        $this->page->pagelayout == "mydashboard" && $indexsys[count($indexsys) - 1] !== "indexsys.php") {
             $url = new moodle_url($this->page->url, array(
                 "edit" => $this->editingmode,
                 "sesskey" => $this->user->sesskey,
