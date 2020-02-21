@@ -103,6 +103,7 @@ $string['multiplepasswords'] = "This course has multiple self enrolments enabled
 $string['privacy:null_reason'] = "This plugin does not handle or store user data.";
 
 $string['buttonsorting'] = "Drag and drop buttons to sort them.";
+$string['clicktoreset'] = "Click to reset sorting";
 $string['saved'] = "Changes have been succesfully saved!";
 
 $string['fromtemplate'] = "Add from a template";
