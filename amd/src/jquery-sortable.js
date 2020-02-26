@@ -28,11 +28,19 @@ define(['jquery', 'jqueryui'], function($, jqui) {
                 $("#quicklink-sort").sortable({
                     update: function(e, ui) {
                         var orderid = 1;
+                        var len = $("#quicklink-sort li").length;
                         $("#quicklink-sort li").each(function() {
+                            var $this = $(this);
                             $("#quicklink-sort").css({display: "block"});
                             var button = $(this).attr("data-button");
                             $.get("../blocks/mmquicklink/setorder.php", { button: button, order: orderid } ).done(function(data) {
-                                $("#quicklink-sort-alert").attr("style", "display: block !important;");
+                                if ($this[0] == $("#quicklink-sort li").last()[0]) {
+                                    $("#quicklink-sort-alert-saving").attr("style", "display: none !important;");
+                                    $("#quicklink-sort-alert").attr("style", "display: block !important;");
+                                } else {
+                                    $("#quicklink-sort-alert").attr("style", "display: none !important");
+                                    $("#quicklink-sort-alert-saving").attr("style", "display: block !important");
+                                }
                             });
                             orderid = orderid + 1;
                         });

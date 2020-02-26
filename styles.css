@@ -39,6 +39,10 @@
     flex-direction: column;
 }
 
+#quicklink-sort li {
+    margin-top: .5rem;
+}
+
 .mmquicklink-list {
     display: flex;
     flex-direction: column;

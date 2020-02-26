@@ -235,7 +235,7 @@ class buttons {
                         "sesskey" => $this->user->sesskey,
                     ));
                     return $this->default_element($url->out(),
-                    get_string('show_course', 'block_mmquicklink'), 'showcourse');
+                    get_string('show_course', 'block_mmquicklink'), 'hidecourse');
                 }
             }
         }
