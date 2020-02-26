@@ -381,10 +381,9 @@ class block_mmquicklink extends block_base {
 
         // Set content variable.
         $this->content = new stdClass;
-        $this->content->text = $this->get_sort();
 
         // Editing mode button.
-        $this->content->text .= $buttons->editingmode();
+        $this->content->text = $buttons->editingmode();
 
         // Links to show on course pages.
         if ($PAGE->pagelayout == 'course' || $PAGE->pagelayout == "incourse" || $PAGE->pagetype == 'course-view-topics') {
@@ -427,6 +426,7 @@ class block_mmquicklink extends block_base {
             return $this->content;
         } else {
             // Wrap everything into one unsorted list.
+            $this->content->text .= $this->get_sort();
             $this->content->text = $OUTPUT->render_from_template("block_mmquicklink/wrap",
                 array("content" => $this->content->text)
             );
