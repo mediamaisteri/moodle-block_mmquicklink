@@ -116,6 +116,11 @@ class buttons {
         return $html;
     }
 
+    private function firstcourse() {
+        $course = $this->db->get_record_sql("SELECT id FROM {course} WHERE id > 1 LIMIT 1");
+        return $course->id;
+    }
+
     /**
      * Renders the editing mode button.
      *
@@ -176,12 +181,28 @@ class buttons {
 
         if ($this->page->user_allowed_editing()) {
             // Editing mode on/off link.
+
             if (has_capability('moodle/course:update', context_course::instance($this->course->id))) {
-                $url = new moodle_url($this->cfg->wwwroot . "/course/view.php", array(
-                    "id" => $this->course->id,
-                    "edit" => $this->editingmode,
-                    "sesskey" => $this->user->sesskey,
-                ));
+                if ($this->page->pagelayout == "coursecategory") {
+                    $categoryid = optional_param("categoryid", null, PARAM_INT);
+                    if (isset($categoryid)) {
+                        $categoryurl = "/course/?categoryid=" . $categoryid;
+                    } else {
+                        $categoryurl = "/course";
+                    }
+                    $url = new moodle_url($this->cfg->wwwroot . "/course/view.php", array(
+                        "id" => $this->firstcourse(),
+                        "edit" => $this->editingmode,
+                        "sesskey" => $this->user->sesskey,
+                        "return" => $categoryurl,
+                    ));
+                } else {
+                    $url = new moodle_url($this->cfg->wwwroot . "/course/view.php", array(
+                        "id" => $this->course->id,
+                        "edit" => $this->editingmode,
+                        "sesskey" => $this->user->sesskey,
+                    ));
+                }
                 return $this->default_element($url->out(), $this->editingmodestring, $this->editbuttonid);
             }
         }
