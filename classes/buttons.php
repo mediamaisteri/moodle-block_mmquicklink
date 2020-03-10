@@ -268,7 +268,7 @@ class buttons {
      * @return html rendered element.
      */
     public function easylink($authplugins) {
-        if (!empty($authplugins["easylink"]->name)) {
+        if (!empty($authplugins["easylink"]->name) && is_enabled_auth('easylink')) {
             if (has_capability('auth/easylink:manage', context_course::instance($this->course->id))) {
                 $url = new moodle_url($this->cfg->wwwroot . "/auth/easylink/manager.php",
                     array(
