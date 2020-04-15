@@ -2,10 +2,13 @@ define(['jquery', 'core/config','core/templates', 'core/modal_factory', 'core/mo
 
     return {
         init: function(courseid, hide, coursename, categoryid) {
+            console.log(mdlcfg.sesskey);
             // Define data array depending on hide variable.
             if (hide == 1) {
+                var showhideaction = "hidecourse";
                 var data = { hide: hide , 'coursename': coursename};
             } else {
+                var showhideaction = "showcourse";
                 var data = { 'coursename': coursename };
             }
 
@@ -27,7 +30,12 @@ define(['jquery', 'core/config','core/templates', 'core/modal_factory', 'core/mo
                 }).then(function(modal) {
                     var root = modal.getRoot();
                     root.on(ModalEvents.save, function() {
-                        $.get(mdlcfg.wwwroot + '/blocks/mmquicklink/changevisibility.php', { 'id': courseid, 'hide': hide, 'confirm': 1 } ).done(function(data) {
+                        $.get(mdlcfg.wwwroot + '/course/ajax/management.php', {
+                            'courseid': courseid,
+                            'action': showhideaction,
+                            'confirm': 1,
+                            'sesskey': mdlcfg.sesskey,
+                        }).done(function(data) {
                             // Nothing to do here.
                             location.reload();
                         });
