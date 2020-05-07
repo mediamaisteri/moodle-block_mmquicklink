@@ -32,8 +32,6 @@ require_once($CFG->libdir.'/filelib.php');
 
 require_login();
 
-global $DB, $USER, $COURSE;
-
 // Course id & key from url variable.
 $courseid = required_param('courseid', PARAM_INT);
 $categoryid = required_param('categoryid', PARAM_INT);

@@ -34,7 +34,7 @@ defined('MOODLE_INTERNAL') || die();
  * @return object $returnobject.
  */
 function mmquicklink_get_switched_role($user, $page, $options = array()) {
-    global $OUTPUT, $DB, $SESSION, $CFG, $COURSE;
+    global $DB, $COURSE;
 
     $returnobject = new stdClass();
     $returnobject->metadata = array();

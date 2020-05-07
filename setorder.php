@@ -30,8 +30,6 @@ require_once($CFG->libdir.'/filelib.php');
 
 require_login();
 
-global $DB;
-
 // Check if user has capability.
 if (has_capability('moodle/category:manage', context_system::instance())) {
     $button = required_param('button', PARAM_RAW);

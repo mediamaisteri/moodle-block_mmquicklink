@@ -19,7 +19,7 @@
  * and teachers to navigate through Moodle.
  *
  * @package   block_mmquicklink
- * @copyright 2017-2019 Mediamaisteri Oy
+ * @copyright 2020 Mediamaisteri Oy
  * @author    Mikko Haikonen <mikko.haikonen@mediamaisteri.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -46,13 +46,13 @@ class block_mmquicklink extends block_base {
      * @return boolean should user see the block.
      */
     private function hasaccess() {
-        global $USER, $DB, $COURSE, $PAGE;
+        global $USER, $DB, $COURSE;
 
         // If user has switched role, check access against that role.
         if (is_role_switched($COURSE->id)) {
 
             // Get switched role's role id.
-            $opts = mmquicklink_get_switched_role($USER, $PAGE);
+            $opts = mmquicklink_get_switched_role($USER, $this->page);
             if (!empty($opts->metadata['asotherrole'])) {
                 $roleid = $opts->metadata['roleid'];
 
@@ -114,8 +114,6 @@ class block_mmquicklink extends block_base {
      * @return boolean true/false depending if block is to be shown on current pagelayout.
      */
     private function hidetypes($found = 0) {
-        global $PAGE;
-
         // Get selected pagelayouts from configuration.
         $pagelayouts = get_config('mmquicklink', 'config_pagelayouts');
         $pagelayouts = explode(",", $pagelayouts);
@@ -144,7 +142,7 @@ class block_mmquicklink extends block_base {
         // TODO: Make the array search better.
         if (count($pagelayouts) > 0 && strlen($pagelayouts[0]) > 0) {
             foreach ($pagelayouts as $pagelayout) {
-                if ($PAGE->pagelayout == $pagelayoutlist[$pagelayout]) {
+                if ($this->page->pagelayout == $pagelayoutlist[$pagelayout]) {
                     return false;
                 }
             }
@@ -235,8 +233,6 @@ class block_mmquicklink extends block_base {
      * @return boolean
      */
     public function is_empty() {
-        global $PAGE;
-
         // Check if block is wanted on this pagetype.
         if ($this->hidetypes() == true) {
             return true;
@@ -347,9 +343,9 @@ class block_mmquicklink extends block_base {
      */
     public function get_content() {
         // Load required globals.
-        global $PAGE, $CFG, $USER, $COURSE, $DB, $OUTPUT;
+        global $CFG, $USER, $COURSE, $DB, $OUTPUT;
         require_once($CFG->dirroot . '/blocks/mmquicklink/classes/buttons.php');
-        $buttons = new buttons($CFG, $PAGE, $USER, $COURSE, $DB, $OUTPUT);
+        $buttons = new buttons($CFG, $this->page, $USER, $COURSE, $DB, $OUTPUT);
 
         // Prevents 'double output'.
         if ($this->content !== null) {
@@ -370,7 +366,7 @@ class block_mmquicklink extends block_base {
         $localplugins = core_plugin_manager::instance()->get_plugins_of_type('local');
 
         // Check if visibility if wanted, because is_empty is not checked when user is in editing mode.
-        if ($PAGE->user_is_editing()) {
+        if ($this->page->user_is_editing()) {
             if ($this->hidetypes() == true) {
                 // Force hiding with JS.
                 $this->page->requires->js_call_amd('block_mmquicklink/blockhider', 'init', []);
@@ -386,10 +382,11 @@ class block_mmquicklink extends block_base {
         $this->content->text = $buttons->editingmode();
 
         // Links to show on course pages.
-        if ($PAGE->pagelayout == 'course' || $PAGE->pagelayout == "incourse" || $PAGE->pagetype == 'course-view-topics') {
+        if ($this->page->pagelayout == 'course' ||
+        $this->page->pagelayout == "incourse" || $this->page->pagetype == 'course-view-topics') {
 
             // Require confirm modal js (archive, show/hide).
-            $PAGE->requires->js_call_amd("block_mmquicklink/confirm", "init", array("courseid" => $COURSE->id,
+            $this->page->requires->js_call_amd("block_mmquicklink/confirm", "init", array("courseid" => $COURSE->id,
             "hide" => $COURSE->visible, "coursename" => $COURSE->fullname, "category" => $COURSE->category));
 
             // Render buttons needed on course pages.
