@@ -30,8 +30,6 @@ require_once($CFG->libdir.'/filelib.php');
 
 require_login();
 
-global $DB, $USER;
-
 if (is_siteadmin()) {
 
     $DB->delete_records("block_mmquicklink_sorting");

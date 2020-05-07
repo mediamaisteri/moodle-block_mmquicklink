@@ -26,7 +26,6 @@
 require_once("../../config.php");
 require_login();
 
-global $SITE, $DB;
 $PAGE->set_context(context_system::instance());
 $PAGE->set_title($SITE->fullname);
 $PAGE->set_heading($SITE->fullname);

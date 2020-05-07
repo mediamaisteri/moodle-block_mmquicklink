@@ -24,6 +24,4 @@
  */
 
 defined('MOODLE_INTERNAL') || die();
-echo $_SERVER['REQUEST_URI'];
-
 // Nothing to do here. Cheerio!

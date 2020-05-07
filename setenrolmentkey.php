@@ -29,12 +29,10 @@ require_once($CFG->libdir.'/filelib.php');
 
 require_login();
 
-global $DB, $USER, $COURSE;
-
 // Course id & key from url variable.
 $courseid = optional_param('courseid', '', PARAM_TEXT);
 $enrolmentkey = optional_param('enrolmentkey', '', PARAM_TEXT);
-$urltogo = $_SERVER['HTTP_REFERER'];
+$urltogo = new moodle_url(get_local_referer(), array("id" => $courseid));
 
 // Check if user has permission to edit course enrolment methods.
 if (has_capability('moodle/course:enrolconfig', context_course::instance($courseid))) {
@@ -60,7 +58,7 @@ if (has_capability('moodle/course:enrolconfig', context_course::instance($course
         $DB->set_field('enrol', 'password', $enrolmentkey, array('courseid' => $courseid, 'enrol' => 'self'));
 
         // Redirect user back to course page with proper string.
-        redirect("$urltogo", get_string('password', 'enrol_self') . " " . strtolower(get_string('saved', 'core_completion')), 5);
+        redirect($urltogo, get_string('password', 'enrol_self') . " " . strtolower(get_string('saved', 'core_completion')), 5);
 
     } else {
         // DB queries to disable enrolment key.
@@ -68,14 +66,13 @@ if (has_capability('moodle/course:enrolconfig', context_course::instance($course
         $DB->set_field('enrol', 'password', '', array('courseid' => $courseid, 'enrol' => 'self'));
 
         // Redirect user back to course page with proper string.
-        redirect("$urltogo", get_string('password', 'enrol_self') . " " . strtolower(get_string('deleted', 'core')), 5);
+        redirect($urltogo, get_string('password', 'enrol_self') . " " . strtolower(get_string('deleted', 'core')), 5);
 
     }
 
 } else {
 
     // Redirect user back to course page with an error message.
-    $urltogo = $_SERVER['HTTP_REFERER'];
-    redirect("$urltogo", get_string('error') . " (" . get_string('manageroles') . ")", 5);
+    redirect($urltogo, get_string('error') . " (" . get_string('manageroles') . ")", 5);
 
 }

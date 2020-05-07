@@ -34,7 +34,6 @@ class block_mmquicklink_renderer extends plugin_renderer_base {
      * @return string html content
      */
     public function mmquicklink_tree($navigation) {
-        global $PAGE;
         $content = $this->mmquicklink_node($navigation->children);
         if (isset($navigation->id) && !is_numeric($navigation->id) && !empty($content)) {
             $content = $this->output->box($content, 'block_tree_box', $navigation->id);
