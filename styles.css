@@ -46,6 +46,7 @@
 .mmquicklink-list {
     display: flex;
     flex-direction: column;
+    padding: 0;
 }
 
 .mmquicklink-otherrole-div form {
