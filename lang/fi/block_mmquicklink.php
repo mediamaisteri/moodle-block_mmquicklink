@@ -99,6 +99,8 @@ $string['enrolmentkey'] = "Kurssiavain";
 $string['setting_coursebgimagechanger'] = "Kurssin taustakuva";
 $string['setting_coursebgimagechanger_desc'] = "Valitse piilottaaksesi 'kurssin taustakuvan vaihtaja' -painikkeen.";
 $string['coursebgimagechanger'] = "Kurssin taustakuva";
+$string['setting_allowedcategories'] = "Sallitut kategoriat missä helppolinkki painike näytetään";
+$string['setting_allowedcategories_desc'] = "Käytä ainoastaan ylätason kategorioita esim. 1,2,3. Vaikuttaa myös ylätason kategorian alakategorioihin.";
 
 $string['toomanyselfenrolments'] = "Kurssilla on usea itserekisteröitymistapa käytössä. Jotta tämän lohkon kautta voitaisiin asettaa kurssiavain, sinun tulee poistaa ylimääräiset itserekisteröitymiset käytöstä osoitteessa ";
 $string['multiplepasswords'] = "Kurssilla on useampi itserekisteröitymistapa käytössä. Tarkista ne osallistujien lisäämistavoista.";

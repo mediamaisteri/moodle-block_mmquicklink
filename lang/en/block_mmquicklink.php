@@ -97,6 +97,8 @@ $string['local_reports_summary'] = "Summary report";
 $string['setting_coursebgimagechanger'] = "Course background";
 $string['setting_coursebgimagechanger_desc'] = "Check to hide 'course background' button.";
 $string['coursebgimagechanger'] = "Course background";
+$string['setting_allowedcategories'] = "Allowed categories where easylink button is displayed";
+$string['setting_allowedcategories_desc'] = "Use top level categories only e.g. 1,2,3. Affects to top level category subcategories.";
 
 $string['toomanyselfenrolments'] = "This course has multiple self enrolment methods enabled. To use this functionality, remove extra self enrolment methods at ";
 $string['multiplepasswords'] = "This course has multiple self enrolments enabled. Check them on 'enrolment methods' page.";
@@ -113,3 +115,4 @@ $string['areyousurehide1'] = "Are you sure you want to hide the following course
 $string['areyousurehide0'] = "Are you sure you want to show the following course";
 $string['hide1'] = "Hide course";
 $string['hide0'] = "Show course";
+

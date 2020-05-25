@@ -120,6 +120,9 @@ if ($ADMIN->fulltree) {
     get_string('setting_coursebgimagechanger', 'block_mmquicklink'),
     get_string('setting_coursebgimagechanger_desc', 'block_mmquicklink'), 1));
 
+    $settings->add(new admin_setting_configtext('mmquicklink/config_allowedcategories', get_string('setting_allowedcategories',
+    'block_mmquicklink'), get_string('setting_allowedcategories_desc', 'block_mmquicklink'), ''));
+
     // Advanced options.
     $settings->add(new admin_setting_heading('block_mmquicklink_advanced_options',
     get_string('advanced_options', 'block_mmquicklink'), ''));
