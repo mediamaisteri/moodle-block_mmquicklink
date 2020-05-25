@@ -286,7 +286,6 @@ class buttons {
                 }
             }
         }
-        
     }
 
     /**
