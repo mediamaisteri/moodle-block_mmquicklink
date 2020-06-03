@@ -621,13 +621,11 @@ class buttons {
                 }
 
                 $reports = $this->page->navigation->find('local_reports', navigation_node::TYPE_CUSTOM);
-                if (has_capability('local/reports:viewall', context_system::instance()) OR $categorymanager == 1) {
-                    if ($reports) {
-                        return "<li class='list list-reports mmquicklink-reports-button'>
-                        <a href='#' class='btn btn-secondary btn-reports'>" .
-                        get_string('pluginname', 'local_reports') . "</a></li><li class='list list-reports m-0'>" .
-                        $this->page->get_renderer('block_mmquicklink')->mmquicklink_tree($reports) . "</li>";
-                    }
+                if ($reports) {
+                    return "<li class='list list-reports mmquicklink-reports-button'>
+                    <a href='#' class='btn btn-secondary btn-reports'>" .
+                    get_string('pluginname', 'local_reports') . "</a></li><li class='list list-reports m-0'>" .
+                    $this->page->get_renderer('block_mmquicklink')->mmquicklink_tree($reports) . "</li>";
                 }
             }
         }
