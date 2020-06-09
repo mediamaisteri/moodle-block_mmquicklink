@@ -14,4 +14,4 @@ phpcs for complete project:
     key: "$CI_PIPELINE_ID"
     untracked: true
   script:
-    - phpcs --ignore=amd/*,db/install.xml .
+    - phpcs --ignore=amd/*,db/install.xml,tests/* .
