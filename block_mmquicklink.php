@@ -40,12 +40,27 @@ class block_mmquicklink extends block_base {
     }
 
     /**
+     * Return the plugin config settings for external functions.
+     *
+     * @return stdClass the configs for both the block instance and plugin
+     */
+    public function get_config_for_external() {
+        $configs = get_config('mmquicklink');
+        $version = get_config('block_mmquicklink');
+        $configs->version = (int)$version->version;
+        return (object) [
+            'instance' => new stdClass(),
+            'plugin' => $configs,
+        ];
+    }
+
+    /**
      * Check if current user has access to block.
      * Private, to be used only in this class.
      *
      * @return boolean should user see the block.
      */
-    private function hasaccess() {
+    public function hasaccess() {
         global $USER, $DB, $COURSE;
 
         // If user has switched role, check access against that role.
