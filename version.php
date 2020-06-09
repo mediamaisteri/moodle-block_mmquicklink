@@ -26,7 +26,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'block_mmquicklink';
-$plugin->version = 2020060300;
+$plugin->version = 2020060800;
 $plugin->requires = 2016052300;
 $plugin->maturity = MATURITY_STABLE;
 $plugin->release = "1.5.0";
