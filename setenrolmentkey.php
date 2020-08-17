@@ -53,6 +53,11 @@ if (has_capability('moodle/course:enrolconfig', context_course::instance($course
 
     // Update field to either set or disable enrolment key.
     if ($enrolmentkey) {
+
+        // If in db self enroll line has been removed, this will make new one.
+        if (!$DB->get_records('enrol', array('courseid' => $courseid, 'enrol' => 'self'))) {
+            $DB->insert_record('enrol', array('id' => '0', 'courseid' => $courseid, 'enrol' => 'self', 'roleid' => '5'));
+        }
         // DB queries to set enrolment key.
         $DB->set_field('enrol', 'status', '0', array('courseid' => $courseid, 'enrol' => 'self'));
         $DB->set_field('enrol', 'password', $enrolmentkey, array('courseid' => $courseid, 'enrol' => 'self'));
