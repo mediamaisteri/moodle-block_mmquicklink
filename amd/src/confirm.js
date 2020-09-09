@@ -1,28 +1,37 @@
+/* eslint-disable promise/always-return */
+/* eslint-disable promise/catch-or-return */
 define(['jquery', 'core/config','core/templates', 'core/modal_factory', 'core/modal_events','core/str'], function($, mdlcfg, templates, ModalFactory, ModalEvents, str) {
 
     return {
         init: function(courseid, hide, coursename, categoryid) {
-            console.log(mdlcfg.sesskey);
+
+            // Define variables.
+            var showhideaction;
+            var data;
+
             // Define data array depending on hide variable.
             if (hide == 1) {
-                var showhideaction = "hidecourse";
-                var data = { hide: hide , 'coursename': coursename};
+                showhideaction = "hidecourse";
+                data = { hide: hide , 'coursename': coursename};
             } else {
-                var showhideaction = "showcourse";
-                var data = { 'coursename': coursename };
+                showhideaction = "showcourse";
+                data = { 'coursename': coursename };
             }
 
             // What happens when user clicks hide/show course button.
             $(".btn-hidecourse, .btn-showcourse").click(function(e) {
                 // Prevent default link action.
                 e.preventDefault();
-                createshowhidemodal();
+                createshowhidemodal(showhideaction, data);
             });
 
             /**
              * This function creates a show/hide modal.
+             *
+             * @param {string} showhideaction
+             * @param {string} data
              */
-            function createshowhidemodal() {
+            function createshowhidemodal(showhideaction, data) {
                 ModalFactory.create({
                     type: ModalFactory.types.SAVE_CANCEL,
                     title: templates.render("block_mmquicklink/modal_hidecourse_title", data),
@@ -35,16 +44,22 @@ define(['jquery', 'core/config','core/templates', 'core/modal_factory', 'core/mo
                             'action': showhideaction,
                             'confirm': 1,
                             'sesskey': mdlcfg.sesskey,
-                        }).done(function(data) {
-                            // Nothing to do here.
-                            location.reload();
+                        }).done(function() {
+                            $.get(mdlcfg.wwwroot + '/blocks/mmquicklink/changevisibility.php', {
+                                'courseid': courseid,
+                                'action': showhideaction,
+                                'confirm': 1,
+                                'sesskey': mdlcfg.sesskey,
+                            }).done(function() {
+                                // Nothing to do here.
+                                location.reload();
+                            });
                         });
-                        
+
                     });
                     modal.show();
                 });
             }
-
 
             /**
              * This function creates a archive modal.
@@ -61,7 +76,7 @@ define(['jquery', 'core/config','core/templates', 'core/modal_factory', 'core/mo
                             // Nothing to do here.
                             location.reload();
                         });
-                        
+
                     });
                     modal.show();
                 });
@@ -72,7 +87,6 @@ define(['jquery', 'core/config','core/templates', 'core/modal_factory', 'core/mo
                 // Prevent default link action.
                 e.preventDefault();
                 archive();
-
             });
 
         }

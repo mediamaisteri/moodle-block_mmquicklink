@@ -34,27 +34,16 @@ require_login();
 
 // Course id & key from url variable.
 $courseid = required_param('courseid', PARAM_INT);
-$categoryid = required_param('categoryid', PARAM_INT);
+$action = required_param("action", PARAM_RAW);
 
 // Check if user has the capability to update the course.
 if (has_capability('moodle/course:update', context_course::instance($courseid))) {
-    $coursearchiveconf = get_config('local_course_archive');
-    $archcat = $coursearchiveconf->archivecategory;
-    $time = new DateTime("now");
-    $timestamp = $time->getTimestamp();
-    move_courses((array) $courseid, $archcat);
 
-    $event = \block_mmquicklink\event\course_archived::create(array(
+    $event = \block_mmquicklink\event\course_visibilitychanged::create(array(
         'objectid' => $courseid,
         'userid' => $USER->id,
         'context' => context_course::instance($courseid),
     ));
     $event->trigger();
-
-    $add = $DB->execute("INSERT INTO {local_course_archive} VALUES(null, $courseid, $categoryid, $timestamp)");
-    // Redirect user back to the course.
-    redirect($CFG->wwwroot . "/course/view.php?id=$courseid", get_string('archived', 'block_mmquicklink'), null, 'success');
-} else {
-    // If user doesn't have required capabilities, show a general error.
-    print_error('noaccess');
+    echo 1;
 }
