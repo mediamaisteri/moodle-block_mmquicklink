@@ -61,7 +61,7 @@ class admin_setting_configquicklinksort extends admin_setting {
         $style = "";
         $getsort = $DB->get_records_sql("SELECT * FROM {block_mmquicklink_sorting}");
         foreach ($getsort as $element) {
-            $style .= "li[data-button='$element->button'] {order: $element->order} ";
+            $style .= "li[data-button='$element->button'] {order: $element->sortorder} ";
         }
         return "<style>$style</style>";
     }

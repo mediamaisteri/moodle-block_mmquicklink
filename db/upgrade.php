@@ -58,5 +58,18 @@ function xmldb_block_mmquicklink_upgrade($oldversion) {
 
     }
 
+    if ($oldversion < 2020091600) {
+
+        // Rename field order on table block_mmquicklink_sorting to sortorder.
+        $table = new xmldb_table('block_mmquicklink_sorting');
+        $field = new xmldb_field('order', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null, 'button');
+
+        // Launch rename field sortorder.
+        $dbman->rename_field($table, $field, 'sortorder');
+
+        // Mmquicklink savepoint reached.
+        upgrade_block_savepoint(true, 2020091600, 'mmquicklink');
+    }
+
     return true;
 }
