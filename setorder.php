@@ -37,7 +37,7 @@ if (has_capability('moodle/category:manage', context_system::instance())) {
 
     $check = $DB->get_records_sql("SELECT * FROM {block_mmquicklink_sorting} WHERE button = '" . $button . "'");
     if (count($check) > 0) {
-        $update = $DB->execute("UPDATE {block_mmquicklink_sorting} SET `order`='$orderid' WHERE `button`='$button'");
+        $update = $DB->execute("UPDATE {block_mmquicklink_sorting} SET `sortorder`='$orderid' WHERE `button`='$button'");
     } else {
         $insert = $DB->execute("INSERT INTO {block_mmquicklink_sorting} values(null, \"$button\", $orderid)");
     }
