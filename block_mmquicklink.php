@@ -218,7 +218,9 @@ class block_mmquicklink extends block_base {
         if ($dbman->table_exists("block_mmquicklink_sorting")) {
             $getsort = $DB->get_records_sql("SELECT * FROM {block_mmquicklink_sorting}");
             foreach ($getsort as $element) {
-                $style .= ".list-$element->button {order: $element->order} ";
+                if (isset($element->button) && isset($element->sortorder)) {
+                    $style .= ".list-$element->button {order: $element->sortorder} ";
+                }
             }
             if (!empty($style)) {
                 return "<style>$style</style>";
