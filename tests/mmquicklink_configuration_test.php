@@ -32,7 +32,7 @@ class block_mmquicklink_configuration_test extends advanced_testcase {
      * Test getting block configuration
      */
     public function test_configuration() {
-        global $PAGE, $CFG, $OUTPUT;
+        global $CFG, $OUTPUT;
         require_once($CFG->dirroot . '/my/lib.php');
 
         $this->resetAfterTest(true);
@@ -50,21 +50,21 @@ class block_mmquicklink_configuration_test extends advanced_testcase {
             throw new moodle_exception('mymoodlesetup');
         }
 
-        $PAGE->set_url('/my/index.php');    // Need this because some internal API calls require the $PAGE url to be set.
-        $PAGE->set_context($context);
-        $PAGE->set_pagelayout('mydashboard');
-        $PAGE->set_pagetype('my-index');
-        $PAGE->blocks->add_region('content');   // Need to add this special regition to retrieve the central blocks.
-        $PAGE->set_subpage($currentpage->id);
+        $this->page->set_url('/my/index.php');
+        $this->page->set_context($context);
+        $this->page->set_pagelayout('mydashboard');
+        $this->page->set_pagetype('my-index');
+        $this->page->blocks->add_region('content');
+        $this->page->set_subpage($currentpage->id);
 
         // Load the block instances for all the regions.
-        $PAGE->blocks->load_blocks();
-        $PAGE->blocks->create_all_block_instances();
+        $this->page->blocks->load_blocks();
+        $this->page->blocks->create_all_block_instances();
 
-        $blocks = $PAGE->blocks->get_content_for_all_regions($OUTPUT);
+        $blocks = $this->page->blocks->get_content_for_all_regions($OUTPUT);
         $configs = null;
         foreach ($blocks as $region => $regionblocks) {
-            $regioninstances = $PAGE->blocks->get_blocks_for_region($region);
+            $regioninstances = $this->page->blocks->get_blocks_for_region($region);
 
             foreach ($regioninstances as $ri) {
                 // Look for mmquicklink block only.

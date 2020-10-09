@@ -1,17 +1,15 @@
 stages:
   - prebuild
-  - build
-  - test
-  - deploy
 
 # Check code standard for repository.
 phpcs for complete project:
-  image: samihellsten/moodlecs
+  image: registry.gitlab.com/mediamaisteri/devops/docker-images/moodlecs
   tags:
-    - moodle
+    - mm-moodle-unit-test
   stage: prebuild
   cache:
     key: "$CI_PIPELINE_ID"
     untracked: true
+  allow_failure: false
   script:
-    - phpcs --ignore=amd/*,db/install.xml,tests/* .
+    - phpcs --ignore=pix/*,*.js,login.php,*.xml .
