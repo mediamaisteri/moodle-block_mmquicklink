@@ -17,7 +17,7 @@
 /**
  * Delete a course.
  *
- * @package    theme_maisteriboost
+ * @package    block_mmquicklink
  * @copyright  2020 Mediamaisteri Oy
  * @author     Mikko Haikonen <mikko.haikonen@mediamaisteri.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
