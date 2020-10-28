@@ -42,8 +42,11 @@ if (has_capability('moodle/course:update', context_course::instance($courseid)))
     $archcat = $coursearchiveconf->archivecategory;
     $time = new DateTime("now");
     $timestamp = $time->getTimestamp();
+
+    // Move course to the archive category.
     move_courses((array) $courseid, $archcat);
 
+    // Trigger event.
     $event = \block_mmquicklink\event\course_archived::create(array(
         'objectid' => $courseid,
         'userid' => $USER->id,
@@ -51,7 +54,15 @@ if (has_capability('moodle/course:update', context_course::instance($courseid)))
     ));
     $event->trigger();
 
-    $add = $DB->execute("INSERT INTO {local_course_archive} VALUES(null, $courseid, $categoryid, $timestamp)");
+    // Define data object for the database query.
+    $data = new stdClass();
+    $data->courseid = $courseid;
+    $data->categoryid = $categoryid;
+    $data->timemodified = $timestamp;
+
+    // Insert the record.
+    $add = $DB->insert_record('local_course_archive', $data);
+
     // Redirect user back to the course.
     redirect($CFG->wwwroot . "/course/view.php?id=$courseid", get_string('archived', 'block_mmquicklink'), null, 'success');
 } else {
