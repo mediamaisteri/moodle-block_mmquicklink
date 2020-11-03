@@ -219,12 +219,14 @@ class buttons {
         if (empty(get_config('mmquicklink', 'config_hide_editsettings'))) {
             if (has_capability('moodle/course:update', context_course::instance($this->course->id))) {
                 if ($this->page->pagelayout == "course") {
-                    return $this->default_element($this->cfg->wwwroot . "/course/edit.php?id=" .
-                    $this->course->id, get_string('editcoursesettings', 'core'), 'editcoursesettings');
+                    $url = new moodle_url($this->cfg->wwwroot . "/course/edit.php",
+                        array("id" => $this->course->id));
+                    return $this->default_element($url->out(), get_string('editcoursesettings', 'core'), 'editcoursesettings');
                 } else {
                     if (!empty($this->page->cm->id)) {
-                        return $this->default_element($this->cfg->wwwroot . "/course/modedit.php?update=" .
-                        $this->page->cm->id, get_string('editsettings', 'core'), 'editsettings');
+                        $url = new moodle_url($this->cfg->wwwroot . "/course/modedit.php?update=",
+                            array("update" => $this->page->cm->id));
+                        return $this->default_element($url->out(), get_string('editsettings', 'core'), 'editsettings');
                     }
                 }
             }
