@@ -116,3 +116,7 @@ $string['areyousurehide0'] = "Are you sure you want to show the following course
 $string['hide1'] = "Hide course";
 $string['hide0'] = "Show course";
 
+$string['delete_course_modal_body'] = "Are you sure you want to delete the following course";
+$string['delete_course_modal_title'] = "Delete course";
+$string['delete_course_failed_msg'] = "Delete course failed";
+$string['delete_course_success_msg'] = "Delete course success";

@@ -118,3 +118,8 @@ $string['areyousurehide1'] = "Oletko varma, että haluat piilottaa seuraavan kur
 $string['areyousurehide0'] = "Oletko varma, että haluat näyttää seuraavan kurssin";
 $string['hide1'] = "Piilota kurssi";
 $string['hide0'] = "Näytä kurssi";
+
+$string['delete_course_modal_body'] = "Haluatko varmasti poistaa seuraavan kurssin";
+$string['delete_course_modal_title'] = "Poista kurssi";
+$string['delete_course_failed_msg'] = "Kurssin poistaminen epäonnistui";
+$string['delete_course_success_msg'] = "Kurssin poistaminen onnistui!";
