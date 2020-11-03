@@ -220,7 +220,7 @@ class buttons {
             if (has_capability('moodle/course:update', context_course::instance($this->course->id))) {
                 if ($this->page->pagelayout == "course") {
                     return $this->default_element($this->cfg->wwwroot . "/course/edit.php?id=" .
-                    $this->course->id, get_string('editsettings', 'core'), 'editsettings');
+                    $this->course->id, get_string('editcoursesettings', 'core'), 'editcoursesettings');
                 } else {
                     if (!empty($this->page->cm->id)) {
                         return $this->default_element($this->cfg->wwwroot . "/course/modedit.php?update=" .
