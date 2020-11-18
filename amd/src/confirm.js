@@ -32,41 +32,58 @@ define(['jquery', 'core/config','core/templates', 'core/modal_factory', 'core/mo
              *
              * @returns void
              */
-            async function render_delete_modal(templateData) {
+            function render_delete_modal(templateData) {
 
-                var deleteButtonText = await str.get_string('delete_course_modal_title', 'block_mmquicklink');
-
-                var modal = await ModalFactory.create({
-                    type: ModalFactory.types.SAVE_CANCEL,
-                    title: templates.render("block_mmquicklink/modal_deletecourse_title", templateData),
-                    body: templates.render("block_mmquicklink/modal_deletecourse_body", templateData),
-                });
-
-                modal.setSaveButtonText(deleteButtonText);
-                var root = modal.getRoot();
-                root.on(ModalEvents.save, async function() {
-                    var deleteSuccessMessage = await str.get_string('delete_course_success_msg', 'block_mmquicklink');
-                    var deleteFailMessage = await str.get_string('delete_course_failed_msg', 'block_mmquicklink');
-
-                    try {
-                        await $.get(mdlcfg.wwwroot + '/blocks/mmquicklink/delete.php', { 'id': courseid } );
-                        notification.addNotification({
-                            message: deleteSuccessMessage,
-                            type: "success"
-                        });
-                        setTimeout(function(){
-                            location.href = mdlcfg.wwwroot;
-                        }, 1000);
-
-                    } catch (error) {
-                        notification.addNotification({
-                            message: deleteFailMessage,
-                            type: "error"
-                        });
+                // Defined string want to get
+                var strings = [
+                    {
+                        key: 'delete_course_modal_title',
+                        component: 'block_mmquicklink'
+                    },
+                    {
+                        key: 'delete_course_success_msg',
+                        component: 'block_mmquicklink'
+                    },
+                    {
+                        key: 'delete_course_failed_msg',
+                        component: 'block_mmquicklink'
                     }
-                });
+                ];
 
-                modal.show();
+                str.get_strings(strings).then(function (translatedString) {
+                    ModalFactory.create({
+                        type: ModalFactory.types.SAVE_CANCEL,
+                        title: templates.render("block_mmquicklink/modal_deletecourse_title", templateData),
+                        body: templates.render("block_mmquicklink/modal_deletecourse_body", templateData),
+                    }).then(function(modal) {
+                        var deleteButtonText = translatedString[0];
+                        modal.setSaveButtonText(deleteButtonText);
+                        var root = modal.getRoot();
+                        root.on(ModalEvents.save, function() {
+                            var deleteSuccessMessage = translatedString[1];
+                            var deleteFailMessage = translatedString[2];
+
+                            $.get(mdlcfg.wwwroot + '/blocks/mmquicklink/delete.php', { 'id': courseid } )
+                            .then(function(){
+                                notification.addNotification({
+                                    message: deleteSuccessMessage,
+                                    type: "success"
+                                });
+                                setTimeout(function(){
+                                    location.href = mdlcfg.wwwroot;
+                                }, 1000);
+                            })
+                            .catch(function(error) {
+                                notification.addNotification({
+                                    message: deleteFailMessage,
+                                    type: "error"
+                                });
+                            });
+    
+                        });
+                        modal.show();
+                    });
+                });
             }
 
 
