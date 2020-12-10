@@ -72,6 +72,9 @@ $string['setting_pagelayouts_desc'] = "Check the pagelayouts which can show the 
 $string['setting_editsettings'] = "Edit course settings";
 $string['setting_editsettings_desc'] = "Check to hide 'edit course settings' link";
 
+$string['setting_coursecompletionsettings'] = "Course completion settings";
+$string['setting_coursecompletionsettings_desc'] = "Check to hide 'Edit course completion setting' link";
+
 $string['setting_general'] = "General settings";
 $string['setting_blocktitle'] = "Block title";
 $string['setting_blocktitle_desc'] = "If title is unset, the block uses default title.";

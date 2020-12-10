@@ -101,6 +101,23 @@ class buttons {
         return $html;
     }
 
+    public function coursecompletionsettings() {
+        // Edit course completion settings.
+        if (empty(get_config('mmquicklink', 'config_hide_coursecompletionsettings'))) {
+            if (has_capability('moodle/course:update', context_course::instance($this->course->id))) {
+
+                if ($this->page->pagelayout != "course") {
+                    return false;
+                }
+
+                $url = new moodle_url($this->cfg->wwwroot . "/course/completion.php",
+                    array("id" => $this->course->id));
+                return $this->default_element($url->out(), get_string('setting_coursecompletionsettings', 'block_mmquicklink'), 'coursecompletionsettings');
+            }
+        }
+        return false;
+    }
+
     public function coursebgimagechanger($html = "") {
         if (empty(get_config('mmquicklink', 'config_hide_coursebgimagechanger'))) {
             if ($this->page->theme->name == "maisteriboost") {
