@@ -30,3 +30,5 @@ $string['hide_course'] = 'Dölj kursen';
 $string['hide1'] = 'Dölj kursen';
 $string['switchrole'] = 'Visa som';
 $string['title'] = 'Hanteringsverktyg';
+
+$string['setting_coursecompletionsettings'] = "inställning av kurser";

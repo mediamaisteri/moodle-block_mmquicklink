@@ -408,6 +408,7 @@ class block_mmquicklink extends block_base {
 
             // Render buttons needed on course pages.
             $this->content->text .= $buttons->editcourse();
+            $this->content->text .= $buttons->coursecompletionsettings();
             $this->content->text .= $buttons->showhide();
             $this->content->text .= $buttons->deletecourse();
             $this->content->text .= $buttons->archivecourse();
