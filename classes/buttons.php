@@ -112,7 +112,8 @@ class buttons {
 
                 $url = new moodle_url($this->cfg->wwwroot . "/course/completion.php",
                     array("id" => $this->course->id));
-                return $this->default_element($url->out(), get_string('setting_coursecompletionsettings', 'block_mmquicklink'), 'coursecompletionsettings');
+                return $this->default_element($url->out(),
+                    get_string('setting_coursecompletionsettings', 'block_mmquicklink'), 'coursecompletionsettings');
             }
         }
         return false;
