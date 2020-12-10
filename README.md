@@ -5,7 +5,11 @@ A block for administrators, managers and teachers to simplify navigation in Mood
 # Supported versions
 
 Moodle 3.5. onwards.
-Tested on following themes: boost, classic, clean, maisteriboost.
+Tested on following themes: boost, classic, maisteriboost.
+
+# Customer customizations
+
+https://gitlab.com/mediamaisteri/moodle/block_mmquicklink/-/wikis/Customer-customizations
 
 # Screenshot
 
