@@ -46,8 +46,8 @@ $string['setting_delcourse_desc'] = "Valitse piilottaaksesi kurssinpoistolinkin"
 $string['setting_hidecourse'] = "Piilota/näytä kurssi";
 $string['setting_hidecourse_desc'] = "Valitse piilottaaksesi piilota/näytä kurssi -linkki.";
 
-$string['setting_coursecompletionsettings'] = "kurssien suorittaminen.";
-$string['setting_coursecompletionsettings_desc'] = "Valitse piilota Muokkaa kurssin valmistumisasetusta -vaihtoehto -linkki";
+$string['setting_coursecompletionsettings'] = "Kurssin suoritusasetukset";
+$string['setting_coursecompletionsettings_desc'] = "Valitse piilottaksesi 'Muokkaa kurssin suoritusasetuksia' -painikkeen.";
 
 
 $string['setting_archive'] = "Arkistoi kurssi";
