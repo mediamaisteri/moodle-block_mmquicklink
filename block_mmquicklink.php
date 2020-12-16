@@ -412,6 +412,7 @@ class block_mmquicklink extends block_base {
             $this->content->text .= $buttons->showhide();
             $this->content->text .= $buttons->deletecourse();
             $this->content->text .= $buttons->archivecourse();
+            $this->content->text .= $buttons->activityprogress();
             $this->content->text .= $buttons->completionprogressblock($plugins);
             $this->content->text .= $buttons->enrolmentkey();
             $this->content->text .= $buttons->participants();

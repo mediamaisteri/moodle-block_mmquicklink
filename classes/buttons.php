@@ -26,6 +26,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot . '/blocks/mmquicklink/lib.php');
+require_once("{$CFG->libdir}/completionlib.php");
 
 class buttons {
 
@@ -490,6 +491,31 @@ class buttons {
                 return $this->default_element($participanturl->out(),
                 get_string('participants'), 'participants');
             }
+        }
+    }
+
+    /**
+     * Render 'participants' element.
+     *
+     * @return html rendered element.
+     */
+    public function activityprogress() {
+
+        if (!empty(get_config('mmquicklink', 'config_hide_activityprogress'))) {
+            return '';
+        }
+
+        // Get criteria for course
+        $completion = new completion_info($this->course);
+
+        if (!$completion->has_criteria()) {
+            return '';
+        }
+
+        if (has_capability('moodle/course:update', context_course::instance($this->course->id))) {
+            return $this->default_element($this->cfg->wwwroot .
+            "/report/completion/index.php?course=" . $this->course->id, get_string('pluginname', 'report_progress'),
+            "activityprogress");
         }
     }
 

@@ -104,9 +104,13 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_editsettings',
     get_string('setting_editsettings', 'block_mmquicklink'), get_string('setting_editsettings_desc', 'block_mmquicklink'), 0));
 
+    $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_activityprogress',
+    get_string('setting_activityprogresssettings', 'block_mmquicklink'),
+    get_string('setting_activityprogresssettings_desc', 'block_mmquicklink'), 1));
+
     $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_coursecompletionsettings',
     get_string('setting_coursecompletionsettings', 'block_mmquicklink'),
-    get_string('setting_coursecompletionsettings_desc', 'block_mmquicklink'), 0));
+    get_string('setting_coursecompletionsettings_desc', 'block_mmquicklink'), 1));
 
     $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_participants',
     get_string('setting_participants', 'block_mmquicklink'), get_string('setting_participants_desc', 'block_mmquicklink'), 0));
