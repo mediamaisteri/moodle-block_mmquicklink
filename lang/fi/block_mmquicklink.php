@@ -49,6 +49,8 @@ $string['setting_hidecourse_desc'] = "Valitse piilottaaksesi piilota/näytä kur
 $string['setting_coursecompletionsettings'] = "Kurssin suoritusasetukset";
 $string['setting_coursecompletionsettings_desc'] = "Valitse piilottaksesi 'Muokkaa kurssin suoritusasetuksia' -painikkeen.";
 
+$string['setting_activityprogresssettings'] = "Kurssin aktiviteettiraportti";
+$string['setting_activityprogresssettings_desc'] = "Valitse piilottaaksesi kurssin aktiviteettiraportti -linkki.";
 
 $string['setting_archive'] = "Arkistoi kurssi";
 $string['setting_archive_desc'] = "Valitse piilottaaksesi arkistointipainikkeen. Painikkeen toiminta vaatii lisäksi local_course_archive -lisäosan.";

@@ -75,6 +75,9 @@ $string['setting_editsettings_desc'] = "Check to hide 'edit course settings' lin
 $string['setting_coursecompletionsettings'] = "Course completion settings";
 $string['setting_coursecompletionsettings_desc'] = "Check to hide 'Edit course completion setting' link";
 
+$string['setting_activityprogresssettings'] = "Course progress report";
+$string['setting_activityprogresssettings_desc'] = "Check to hide 'Activity completion' link";
+
 $string['setting_general'] = "General settings";
 $string['setting_blocktitle'] = "Block title";
 $string['setting_blocktitle_desc'] = "If title is unset, the block uses default title.";
