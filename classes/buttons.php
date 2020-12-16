@@ -505,7 +505,7 @@ class buttons {
             return '';
         }
 
-        // Get criteria for course
+        // Get criteria for course.
         $completion = new completion_info($this->course);
 
         if (!$completion->has_criteria()) {
