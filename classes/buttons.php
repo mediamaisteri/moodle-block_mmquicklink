@@ -26,6 +26,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot . '/blocks/mmquicklink/lib.php');
+require_once($CFG->dirroot . '/course/lib.php');
 require_once("{$CFG->libdir}/completionlib.php");
 
 class buttons {
