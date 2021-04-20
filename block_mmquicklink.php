@@ -422,6 +422,10 @@ class block_mmquicklink extends block_base {
             $this->content->text .= $buttons->switchrole();
             $this->content->text .= $buttons->hrd();
             $this->content->text .= $buttons->coursebgimagechanger();
+            // Question bank & $categories & backup.
+            $this->content->text .= $buttons->questionbank();
+            $this->content->text .= $buttons->questioncategory();
+            $this->content->text .= $buttons->backupbutton();
 
         } else {
 

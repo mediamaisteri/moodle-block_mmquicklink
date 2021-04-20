@@ -713,4 +713,27 @@ class buttons {
         }
     }
 
+    public function questionbank() {
+        if (empty(get_config('mmquicklink', 'config_hide_questionbank'))) {
+            // Tarvitaanko oikeustarkistelu?
+            return $this->default_element($this->cfg->wwwroot .
+            "/question/edit.php?courseid=" . $this->course->id, get_string('questionbank', 'question'), 'questionbank');
+        }
+    }
+    public function questioncategory() {
+        if (empty(get_config('mmquicklink', 'config_hide_questioncategory'))) {
+            // Tarvitaanko oikeustarkistelu?
+            return $this->default_element($this->cfg->wwwroot .
+            "/question/category.php?courseid=" . $this->course->id,
+            get_string('questioncategory', 'block_mmquicklink'), 'questioncategory');
+        }
+    }
+    public function backupbutton() {
+        if (empty(get_config('mmquicklink', 'config_hide_backup'))) {
+            if (has_capability('moodle/backup:backupcourse', context_course::instance($this->course->id))) {
+                return $this->default_element($this->cfg->wwwroot . "/backup/backup.php?id=" . $this->course->id,
+                get_string('backup'), 'backup');
+            }
+        }
+    }
 }
