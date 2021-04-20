@@ -129,3 +129,16 @@ $string['delete_course_modal_body'] = "Haluatko varmasti poistaa seuraavan kurss
 $string['delete_course_modal_title'] = "Poista kurssi";
 $string['delete_course_failed_msg'] = "Kurssin poistaminen epäonnistui";
 $string['delete_course_success_msg'] = "Kurssin poistaminen onnistui!";
+
+// Question bank & category.
+$string['questionbank'] = "Kysymyspankki";
+$string['setting_questionbank'] = "Kysymyspankki";
+$string['setting_questionbank_desc'] = "Valitse piilottaaksesi 'Kysymyspankki' -painikkeen.";
+
+$string['questioncategory'] = "Kysymyskategoriat";
+$string['setting_questioncategory'] = "Kysymyskategoriat";
+$string['setting_questioncategory_desc'] = "Valitse piilottaaksesi 'Kysymyskategoriat' -painikkeen.";
+
+$string['backup'] = "Varmuuskopiointi";
+$string['setting_backup'] = "Varmuuskopiointi";
+$string['setting_backup_desc'] = "Valitse piilottaaksesi 'Varmuuskopiointi' -painikkeen.";

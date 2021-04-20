@@ -126,3 +126,16 @@ $string['delete_course_modal_body'] = "Are you sure you want to delete the follo
 $string['delete_course_modal_title'] = "Delete course";
 $string['delete_course_failed_msg'] = "Delete course failed";
 $string['delete_course_success_msg'] = "Delete course success";
+
+// Question bank & category.
+$string['questionbank'] = "Question bank";
+$string['setting_questionbank'] = "Question bank";
+$string['setting_questionbank_desc'] = "Check to hide 'question bank' button.";
+
+$string['questioncategory'] = "Question categories";
+$string['setting_questioncategory'] = "Question categories";
+$string['setting_questioncategory_desc'] = "Check to hide 'question categories' button.";
+
+$string['backup'] = "Backup";
+$string['setting_backup'] = "Backup";
+$string['setting_backup_desc'] = "Valitse piilottaaksesi 'Backup' -painikkeen.";
