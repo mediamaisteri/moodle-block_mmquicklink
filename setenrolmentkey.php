@@ -43,8 +43,8 @@ if (has_capability('moodle/course:enrolconfig', context_course::instance($course
     ));
     $event->trigger();
 
-    // Check how many self-enrolment instances are in use in the course.
-    $self = $DB->get_records('enrol', array('courseid' => $courseid, 'enrol' => 'self', 'status' => 0), 'password');
+    // Check how many self-enrolment instances are in use in the course. Check also disabled sef-enrolments.
+    $self = $DB->get_records('enrol', array('courseid' => $courseid, 'enrol' => 'self'), 'password');
     if (count($self) > 1) {
         redirect($urltogo, get_string('toomanyselfenrolments', 'block_mmquicklink') .
         "<a href='" . $CFG->wwwroot . "/enrol/instances.php?id=" . $courseid . "'>" .
