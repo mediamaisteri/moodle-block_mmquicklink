@@ -655,7 +655,7 @@ class buttons {
                 $categorymanager = 0;
                 if (!has_capability('local/reports:viewall', context_system::instance())) {
                     if (isset($CFG->local_reports_allowcategorymanagers)) {
-                        if ($CFG->local_reports_allowcategorymanagers == 1) {
+                        if ($CFG->local_reports_allowcategorymanagers > 0) {
                             // Check if user has manager's right somewhere.
                             $role = $DB->get_records_sql("SELECT * FROM {role_assignments}
                             WHERE roleid='1' && userid='$USER->id'");
