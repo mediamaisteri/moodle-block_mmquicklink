@@ -422,6 +422,7 @@ class block_mmquicklink extends block_base {
             $this->content->text .= $buttons->switchrole();
             $this->content->text .= $buttons->hrd();
             $this->content->text .= $buttons->coursebgimagechanger();
+
             // Question bank & $categories & backup.
             $this->content->text .= $buttons->questionbank();
             $this->content->text .= $buttons->questioncategory();
@@ -436,6 +437,7 @@ class block_mmquicklink extends block_base {
             $this->content->text .= $buttons->mreportsnav($localplugins);
             $this->content->text .= $buttons->lang();
             $this->content->text .= $buttons->frontpage();
+            $this->content->text .= $buttons->switchrole();
 
         }
 
