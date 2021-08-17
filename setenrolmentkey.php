@@ -36,43 +36,17 @@ $urltogo = new moodle_url(get_local_referer(), array("id" => $courseid));
 
 // Check if user has permission to edit course enrolment methods.
 if (has_capability('moodle/course:enrolconfig', context_course::instance($courseid))) {
-    $event = \block_mmquicklink\event\enrolmentkey_updated::create(array(
-        'objectid' => $courseid,
-        'userid' => $USER->id,
-        'context' => context_course::instance($courseid),
-    ));
-    $event->trigger();
-
-    // Check how many self-enrolment instances are in use in the course. Check also disabled sef-enrolments.
-    $self = $DB->get_records('enrol', array('courseid' => $courseid, 'enrol' => 'self'), 'password');
-    if (count($self) > 1) {
-        redirect($urltogo, get_string('toomanyselfenrolments', 'block_mmquicklink') .
-        "<a href='" . $CFG->wwwroot . "/enrol/instances.php?id=" . $courseid . "'>" .
-        $CFG->wwwroot . "/enrol/instances.php?id=" . $courseid . "</a>.", null, 'error');
-    }
 
     // Update field to either set or disable enrolment key.
+    require_once($CFG->dirroot . "/blocks/mmquicklink/classes/block_mmquicklink.php");
     if ($enrolmentkey) {
-
-        // If in db self enroll line has been removed, this will make new one.
-        if (!$DB->get_records('enrol', array('courseid' => $courseid, 'enrol' => 'self'))) {
-            $DB->insert_record('enrol', array('id' => '0', 'courseid' => $courseid, 'enrol' => 'self', 'roleid' => '5'));
-        }
-        // DB queries to set enrolment key.
-        $DB->set_field('enrol', 'status', '0', array('courseid' => $courseid, 'enrol' => 'self'));
-        $DB->set_field('enrol', 'password', $enrolmentkey, array('courseid' => $courseid, 'enrol' => 'self'));
-
+        $setkey = \block_mmquicklink\mmquicklink::set_enrolmentkey($courseid, $enrolmentkey);
         // Redirect user back to course page with proper string.
         redirect($urltogo, get_string('password', 'enrol_self') . " " . strtolower(get_string('saved', 'core_completion')), 5);
-
     } else {
-        // DB queries to disable enrolment key.
-        $DB->set_field('enrol', 'status', '1', array('courseid' => $courseid, 'enrol' => 'self'));
-        $DB->set_field('enrol', 'password', '', array('courseid' => $courseid, 'enrol' => 'self'));
-
+        $disablekey = \block_mmquicklink\mmquicklink::set_enrolmentkey($courseid);
         // Redirect user back to course page with proper string.
         redirect($urltogo, get_string('password', 'enrol_self') . " " . strtolower(get_string('deleted', 'core')), 5);
-
     }
 
 } else {
