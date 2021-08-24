@@ -281,6 +281,8 @@ class buttons {
                     get_string('show_course', 'block_mmquicklink'), 'hidecourse');
                 }
             }
+        } else {
+            return null;
         }
     }
 
@@ -290,23 +292,27 @@ class buttons {
      * @return html rendered element.
      */
     public function easylink($authplugins) {
-        // Get course parent category.
-        $categorypath = explode("/", $this->page->category->path);
-        // Get allowed categories were to display easylink button.
-        $allowedcategories = explode(",", get_config('mmquicklink', 'config_allowedcategories'));
-        // Check if parent category exist on allowedcategory array or if allowedcategory config is empty.
-        if (in_array($categorypath[1], $allowedcategories) || empty(get_config('mmquicklink', 'config_allowedcategories'))) {
-            if (!empty($authplugins["easylink"]->name) && is_enabled_auth('easylink')) {
-                if (has_capability('auth/easylink:manage', context_course::instance($this->course->id))) {
-                    $url = new moodle_url($this->cfg->wwwroot . "/auth/easylink/manager.php",
-                        array(
-                            "course" => $this->course->id,
-                        )
-                    );
-                    return $this->default_element($url->out(),
-                    get_string('pluginname', 'auth_easylink'), 'easylink');
+        if (empty(get_config('mmquicklink', 'config_hide_easylink'))) {
+            // Get course parent category.
+            $categorypath = explode("/", $this->page->category->path);
+            // Get allowed categories were to display easylink button.
+            $allowedcategories = explode(",", get_config('mmquicklink', 'config_allowedcategories'));
+            // Check if parent category exist on allowedcategory array or if allowedcategory config is empty.
+            if (in_array($categorypath[1], $allowedcategories) || empty(get_config('mmquicklink', 'config_allowedcategories'))) {
+                if (!empty($authplugins["easylink"]->name) && is_enabled_auth('easylink')) {
+                    if (has_capability('auth/easylink:manage', context_course::instance($this->course->id))) {
+                        $url = new moodle_url($this->cfg->wwwroot . "/auth/easylink/manager.php",
+                            array(
+                                "course" => $this->course->id,
+                            )
+                        );
+                        return $this->default_element($url->out(),
+                        get_string('pluginname', 'auth_easylink'), 'easylink');
+                    }
                 }
             }
+        } else {
+            return null;
         }
     }
 
