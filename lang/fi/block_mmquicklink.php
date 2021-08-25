@@ -29,17 +29,18 @@ $string['visibility_settings'] = "Näkyvyysasetukset";
 $string['coursemgmt'] = "Lisää/muokkaa kursseja";
 
 $string['setting_reports'] = "Raportit";
-$string['setting_reports_desc'] = "Valitse piilottaaksesi raportit linkin";
+$string['setting_reports_desc'] = "Valitse piilottaaksesi raportit linkin.";
 
 $string['setting_participants'] = "Osallistujat";
-$string['setting_participants_desc'] = "Valitse piilottaaksesi osallistujat-linkin";
+$string['setting_participants_desc'] = "Valitse piilottaaksesi osallistujat-linkin.";
 
 $string['setting_course_grades'] = "Arvioinnit";
-$string['setting_course_grades_desc'] = "Valitse piilottaaksesi arvioinnit-linkin";
+$string['setting_course_grades_desc'] = "Valitse piilottaaksesi arvioinnit-linkin.";
 $string['setting_easylink'] = "HelppoLinkki";
+$string['setting_easylink_desc'] = "Valitse piilottaaksesi HelppoLinkki-linkin.";
 
 $string['setting_themesettings'] = "Teeman asetukset";
-$string['setting_themesettings_desc'] = "Valitse piilottaaksesi teeman asetukset -linkin";
+$string['setting_themesettings_desc'] = "Valitse piilottaaksesi teeman asetukset -linkin.";
 $string['addcourse'] = "Luo kurssi";
 $string['setting_delcourse'] = "Poista kurssi";
 $string['setting_delcourse_desc'] = "Valitse piilottaaksesi kurssinpoistolinkin";
@@ -77,7 +78,7 @@ $string['setting_pagelayouts'] = "Sallitut sivutyypit";
 $string['setting_pagelayouts_desc'] = "Valitse sivutyypit, joilla lohko on mahdollista näyttää.";
 
 $string['setting_editsettings'] = "Muokkaa kurssin asetuksia";
-$string['setting_editsettings_desc'] = "Valitse piilottaaksesi 'muokkaa kurssin asetuksia' -linkin";
+$string['setting_editsettings_desc'] = "Valitse piilottaaksesi 'muokkaa kurssin asetuksia' -linkin.";
 
 $string['setting_general'] = "Yleiset asetukset";
 $string['setting_blocktitle'] = "Lohkon otsikko";

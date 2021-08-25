@@ -128,6 +128,7 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_coursebgimagechanger',
     get_string('setting_coursebgimagechanger', 'block_mmquicklink'),
     get_string('setting_coursebgimagechanger_desc', 'block_mmquicklink'), 1));
+
     // Question bank & categories & backup.
     $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_questionbank',
     get_string('setting_questionbank', 'block_mmquicklink'),
@@ -138,6 +139,9 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_backup',
     get_string('setting_backup', 'block_mmquicklink'), get_string('setting_backup_desc', 'block_mmquicklink'), 1));
 
+    $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_easylink',
+    get_string('setting_easylink', 'block_mmquicklink'),
+    get_string('setting_easylink_desc', 'block_mmquicklink'), 0));
     $settings->add(new admin_setting_configtext('mmquicklink/config_allowedcategories', get_string('setting_allowedcategories',
     'block_mmquicklink'), get_string('setting_allowedcategories_desc', 'block_mmquicklink'), ''));
 

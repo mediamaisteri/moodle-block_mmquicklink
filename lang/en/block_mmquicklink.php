@@ -44,6 +44,7 @@ $string['setting_delcourse_desc'] = "Check to hide delete course link";
 $string['setting_hidecourse'] = "Show/hide course";
 $string['setting_hidecourse_desc'] = "Check to hide show/hide course link";
 $string['setting_easylink'] = "Easylink";
+$string['setting_easylink_desc'] = "Check to hide easylink button.";
 
 $string['setting_archive'] = "Archive course";
 $string['setting_archive_desc'] = "Check to hide 'archive course' button. This functionality required local_course_archive -plugin to be installed.";
@@ -138,4 +139,4 @@ $string['setting_questioncategory_desc'] = "Check to hide 'question categories' 
 
 $string['backup'] = "Backup";
 $string['setting_backup'] = "Backup";
-$string['setting_backup_desc'] = "Valitse piilottaaksesi 'Backup' -painikkeen.";
+$string['setting_backup_desc'] = "Check to hide 'Backup' button.";
