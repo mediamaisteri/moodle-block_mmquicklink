@@ -19,8 +19,8 @@
  * and teachers to navigate through Moodle.
  *
  * @package   block_mmquicklink
- * @copyright 2017-2019 Mediamaisteri Oy
- * @author    Mikko Haikonen <mikko.haikonen@mediamaisteri.com>
+ * @copyright 2021 Mediamaisteri Oy
+ * @author    Mikko Haiku <mikko.haiku@mediamaisteri.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -93,10 +93,188 @@ class mmquicklink {
             'userid' => $USER->id,
             'context' => \context_course::instance($courseid),
         ));
-        $event->trigger();   
+        $event->trigger();
 
         return true;
 
+    }
+
+    /**
+     * Delete a custom button.
+     *
+     * @param int $id
+     * @return bool
+     */
+    public function delete_custombutton($id) {
+        global $DB;
+        $delete = $DB->delete_records('block_mmquicklink_custombutt', array('id' => $id));
+        return $delete;
+    }
+
+    /**
+     * Render the custom button management page.
+     *
+     * @return html $html
+     */
+    public function manage_custombuttons($id = null, $action = null) {
+        global $DB, $CFG, $OUTPUT;
+
+        $data = new \stdClass();
+
+        // Handle actions.
+        if (!is_null($id) && !is_null($action)) {
+            $func = $action . "_custombutton";
+            $do = $this->$func($id);
+            $url = new \moodle_url($CFG->wwwroot . "/blocks/mmquicklink/custombuttons.php");
+            redirect($url, get_string('ok', 'block_mmquicklink'), null, \core\output\notification::NOTIFY_SUCCESS);
+        }
+
+        // Form.
+        require_once($CFG->dirroot . "/blocks/mmquicklink/forms/custombuttons.php");
+        $mform = new \block_mmquicklink_custombuttons_forms();
+        if ($fromform = $mform->get_data()) {
+            // Submit.
+            $save = $this->custombuttons_save($fromform);
+        }
+        $mform->set_data(array());
+        $mform->display();
+
+        // Fetch customized buttons.
+        $data->buttons = $this->get_custombuttons();
+
+        // Generate HTML.
+        $html = $OUTPUT->render_from_template("block_mmquicklink/custombuttons", $data);
+
+        // Finally return the html to be displayed.
+        return $html;
+    }
+
+    /**
+     * Get a list of customized buttons from the database.
+     * Depending on the case, this function returns all the buttons or just the ones
+     * we want to be displaying on the current page.
+     *
+     * @param string $context Are we getting buttons for rendering or just reviewing the list?
+     * @return array $buttons
+     */
+    public function get_custombuttons($context = null) {
+        global $DB, $USER;
+
+        // Define variables.
+        $where = array();
+        $ok = array();
+
+        // Generate $where array.
+        if (!is_null($context)) {
+            $where['context'] = $context;
+        }
+
+        // Get the buttons.
+        $buttons = $DB->get_records('block_mmquicklink_custombutt', $where);
+
+        if (count($where) > 0) {
+            $syscontext = \context_system::instance();
+            foreach ($buttons as $button) {
+
+                // Skip if the user doesn't have the required capability.
+                if (!empty($button->requiredcapability)) {
+                    if (!has_capability($button->requiredcapability, $syscontext)) {
+                        continue;
+                    }
+                }
+
+                // Skip if the user doesn't have the required role id.
+                if (!empty($button->requiredroleid)) {
+                    if (!$DB->get_record('role_assignments', array(
+                        'contextid' => $syscontext->id,
+                        'roleid' => $button->requiredroleid,
+                        'userid' => $USER->id))) {
+                        continue;
+                    }
+                }
+
+                $button->href = format_string($this->custombutton_replace($button->href, 1));
+                $button->description = format_string($this->custombutton_replace($button->description));
+
+                // This button is OK to be displayed.
+                $ok[] = $button;
+
+            }
+
+            // Return buttons printable for the current user.
+            return $ok;
+        }
+
+        // Return all buttons for template.
+        return array_values($buttons);
+    }
+
+    /**
+     * Handle adding a new custom button.
+     *
+     * @param object $data
+     * @return int DB row id.
+     */
+    public function custombuttons_save($data) {
+        global $DB, $USER;
+
+        // Make sure there is no whitespace at the end of cap.
+        $data->requiredcapability = trim($data->requiredcapability);
+        $data->requiredroleid = trim($data->requiredroleid);
+
+        if ($data->requiredcapability == 0) {
+            $data->requiredcapability = null;
+        }
+
+        if ($data->requiredroleid == 0) {
+            $data->requiredroleid = null;
+        }
+
+        // Persistent columns.
+        $data->usermodified = $USER->id;
+        $data->timemodified = time();
+
+        if (isset($data->id)) {
+            // Update it.
+            $update = $DB->update_record('block_mmquicklink_custombutt', $data);
+            return $update;
+        } else {
+            // Insert it.
+            $data->timecreated = $data->timemodified;
+            $insert = $DB->insert_record('block_mmquicklink_custombutt', $data);
+            return $insert;
+        }
+    }
+
+    /**
+     * Replace variables within string.
+     *
+     * @param string $href
+     * @param bool Is the string URL?
+     * @return string Modified string.
+     */
+    public function custombutton_replace($href, $url = null) {
+        global $COURSE, $CFG, $PAGE, $USER;
+
+        if (!is_null($url)) {
+            if (stripos($href, "http") === false) {
+                $href = $CFG->wwwroot . "/" . $href;
+            }
+        }
+
+        // Replace variables.
+        if (stripos($href, "{{id}}")) {
+            $href = str_replace("{{id}}", $COURSE->id, $href);
+        }
+        if (stripos($href, "{{contextid}}")) {
+            $href = str_replace("{{contextid}}", $PAGE->context->id, $href);
+        }
+        if (stripos($href, "{{userid}}")) {
+            $href = str_replace("{{userid}}", $USER->id, $href);
+        }
+
+        // Return the beautified string.
+        return $href;
     }
 
 }

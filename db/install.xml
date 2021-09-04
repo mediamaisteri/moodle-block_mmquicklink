@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="blocks/mmquicklink/db" VERSION="20200916" COMMENT="XMLDB file for Moodle blocks/mmquicklink"
+<XMLDB PATH="blocks/mmquicklink/db" VERSION="20210826" COMMENT="XMLDB file for Moodle blocks/mmquicklink"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
@@ -12,6 +12,24 @@
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_mmquicklink_custombutt" COMMENT="This table contains customized buttons for mmQuicklink.">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="description" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="href" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Link href"/>
+        <FIELD NAME="context" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false" COMMENT="Where the button is visible"/>
+        <FIELD NAME="requiredcapability" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false" COMMENT="Is a capability required for viewing the button"/>
+        <FIELD NAME="requiredroleid" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="adminonly" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="usermodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="usermodified" TYPE="foreign" FIELDS="usermodified" REFTABLE="user" REFFIELDS="id"/>
       </KEYS>
     </TABLE>
   </TABLES>

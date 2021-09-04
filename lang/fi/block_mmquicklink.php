@@ -143,3 +143,14 @@ $string['setting_questioncategory_desc'] = "Valitse piilottaaksesi 'Kysymyskateg
 $string['backup'] = "Varmuuskopiointi";
 $string['setting_backup'] = "Varmuuskopiointi";
 $string['setting_backup_desc'] = "Valitse piilottaaksesi 'Varmuuskopiointi' -painikkeen.";
+
+$string['requiredcapability'] = "Vaadittu kyky";
+$string['requiredroleid'] = "Vaadittu rooli";
+$string['custombuttons'] = "Omat painikkeet";
+$string['custombuttons_desc'] = "Klikkaa <a href='../../blocks/mmquicklink/custombuttons.php'>tästä</a> hallinnoidaksesi omia painikkeita.";
+$string['ok'] = "Toiminto suoritettu onnistuneesti!";
+$string['description'] = "Linkkiteksti";
+$string['variables'] = "Voit käyttää seuraavia muuttujia linkin tekstissä ja osoitteessa:<br>
+Kurssin ID: {{id}}<br>
+Kontekstin ID: {{contextid}}<br>
+Käyttäjn ID: {{userid}}";
