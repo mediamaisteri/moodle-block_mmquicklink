@@ -91,7 +91,7 @@ class buttons {
      * @param string $buttonid Button's identifier (for sorting).
      * @return html list-item element rendered via templates.
      */
-    private function default_element($url, $str, $buttonid = "null") {
+    public function default_element($url, $str, $buttonid = "null") {
         global $OUTPUT;
         $html = $this->output->render_from_template("block_mmquicklink/li",
             array(
@@ -136,6 +136,11 @@ class buttons {
         return $html;
     }
 
+    /**
+     * Get LMS's first course.
+     *
+     * @return object $course Course object.
+     */
     private function firstcourse() {
         $course = $this->db->get_record_sql("SELECT id FROM {course} WHERE id > 1 LIMIT 1");
         return $course->id;
@@ -575,6 +580,12 @@ class buttons {
         }
     }
 
+    /**
+     * Render the 'add course' button.
+     *
+     * @param object $coursetemplates
+     * @return html Default element of 'add course'.
+     */
     public function addcourse($coursetemplates) {
         // Show "add a course" button.
         if (optional_param('categoryid', '', PARAM_INT)) {
@@ -637,6 +648,11 @@ class buttons {
         }
     }
 
+    /**
+     * Render 'theme settings' link.
+     *
+     * @return html Default element.
+     */
     public function themesettings() {
         // Theme settings -link.
         // If local_extrasettings is installed & user has proper capability, show link to it.
@@ -655,6 +671,12 @@ class buttons {
         }
     }
 
+    /**
+     * Render mReports navigation.
+     *
+     * @param array $localplugins Array of locally installed plugins.
+     * @return html mmQuicklink mReports tree.
+     */
     public function mreportsnav($localplugins) {
         // Render local_reports navigation.
         if (!empty($localplugins["reports"]->name)) {
@@ -665,7 +687,7 @@ class buttons {
                     if (isset($CFG->local_reports_allowcategorymanagers)) {
                         if ($CFG->local_reports_allowcategorymanagers > 0) {
                             // Check if user has manager's right somewhere.
-                            $role = $DB->get_records_sql("SELECT * FROM {role_assignments}
+                            $role = $this->db->get_records_sql("SELECT * FROM {role_assignments}
                             WHERE roleid='1' && userid='$USER->id'");
 
                             if (count($role) > 0) {
@@ -686,8 +708,12 @@ class buttons {
         }
     }
 
+    /**
+     * Render 'course management' button.
+     *
+     * @return html Default element.
+     */
     public function coursemanagement() {
-        // Show course management button.
         if ($this->page->bodyid == 'page-course-index-category') {
             if (can_edit_in_category(optional_param('categoryid', '', PARAM_INT))) {
                 return $this->default_element($this->cfg->wwwroot .
@@ -701,8 +727,12 @@ class buttons {
         }
     }
 
+    /**
+     * Render language customization link.
+     *
+     * @return html Default element.
+     */
     public function lang() {
-        // Language customization link.
         if (empty(get_config('mmquicklink', 'config_hide_langcust')) &&
         has_capability('tool/customlang:view', context_system::instance())) {
             $custlangurl = $this->cfg->wwwroot . '/admin/tool/customlang/index.php';
@@ -711,8 +741,13 @@ class buttons {
         }
     }
 
+    /**
+     * Render 'frontpage settings' button.
+     * Link visible only on frontpage.
+     *
+     * @return html Default element.
+     */
     public function frontpage() {
-        // Frontpage settings link only on frontpage.
         if (has_capability('moodle/course:update', context_course::instance($this->course->id))) {
             if ($this->page->pagelayout == 'frontpage') {
                 return $this->default_element($this->cfg->wwwroot .
@@ -728,6 +763,7 @@ class buttons {
             "/question/edit.php?courseid=" . $this->course->id, get_string('questionbank', 'question'), 'questionbank');
         }
     }
+
     public function questioncategory() {
         if (empty(get_config('mmquicklink', 'config_hide_questioncategory'))) {
             // Tarvitaanko oikeustarkistelu?
@@ -736,6 +772,7 @@ class buttons {
             get_string('questioncategory', 'block_mmquicklink'), 'questioncategory');
         }
     }
+
     public function backupbutton() {
         if (empty(get_config('mmquicklink', 'config_hide_backup'))) {
             if (has_capability('moodle/backup:backupcourse', context_course::instance($this->course->id))) {

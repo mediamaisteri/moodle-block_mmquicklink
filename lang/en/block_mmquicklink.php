@@ -140,3 +140,17 @@ $string['setting_questioncategory_desc'] = "Check to hide 'question categories' 
 $string['backup'] = "Backup";
 $string['setting_backup'] = "Backup";
 $string['setting_backup_desc'] = "Check to hide 'Backup' button.";
+
+$string['custombuttons'] = "Custom buttons";
+$string['custombuttons_desc'] = "Click <a href='../blocks/mmquicklink/custombuttons.php'>here</a> to manage customized buttons.";
+$string['href'] = "Link address";
+$string['context'] = "Visibility";
+$string['requiredcapability'] = "Required capability";
+$string['requiredroleid'] = "Required role";
+$string['adminonly'] = "Site administrators only";
+$string['ok'] = "Action was successfully completed!";
+$string['description'] = "Link text";
+$string['variables'] = "You can use the following variables in link address & text:<br>
+Course ID: {{id}}<br>
+Context ID: {{contextid}}<br>
+User ID: {{userid}}";

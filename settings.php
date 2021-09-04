@@ -168,6 +168,12 @@ if ($ADMIN->fulltree) {
     get_string('setting_otherrole_select_desc', 'block_mmquicklink'), '5',
     $rolearray));
 
+    $settings->add(new admin_setting_description(
+        'mmquicklink/config_custombuttons',
+        get_string('custombuttons', 'block_mmquicklink'),
+        get_string('custombuttons_desc', 'block_mmquicklink')
+    ));
+
     // Sorting.
     $settings->add(new admin_setting_heading('block_mmquicklink_sorting_options',
     get_string('sorting_options', 'block_mmquicklink'), ''));

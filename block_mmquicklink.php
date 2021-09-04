@@ -362,7 +362,9 @@ class block_mmquicklink extends block_base {
         // Load required globals.
         global $CFG, $USER, $COURSE, $DB, $OUTPUT;
         require_once($CFG->dirroot . '/blocks/mmquicklink/classes/buttons.php');
+        require_once($CFG->dirroot . '/blocks/mmquicklink/classes/block_mmquicklink.php');
         $buttons = new buttons($CFG, $this->page, $USER, $COURSE, $DB, $OUTPUT);
+        $mmquicklink = new \block_mmquicklink\mmquicklink();
 
         // Prevents 'double output'.
         if ($this->content !== null) {
@@ -428,6 +430,14 @@ class block_mmquicklink extends block_base {
             $this->content->text .= $buttons->questioncategory();
             $this->content->text .= $buttons->backupbutton();
 
+            // Custom buttons.
+            foreach ($mmquicklink->get_custombuttons('course') as $button) {
+                $this->content->text .= $buttons->default_element(
+                    $button->href,
+                    $button->description
+                );
+            }
+
         } else {
 
             // Check if local_course_templates is installed.
@@ -438,6 +448,14 @@ class block_mmquicklink extends block_base {
             $this->content->text .= $buttons->lang();
             $this->content->text .= $buttons->frontpage();
             $this->content->text .= $buttons->switchrole();
+
+            // Custom buttons.
+            foreach ($mmquicklink->get_custombuttons('other') as $button) {
+                $this->content->text .= $buttons->default_element(
+                    $button->href,
+                    $button->description
+                );
+            }
 
         }
 
