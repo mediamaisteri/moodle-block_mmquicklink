@@ -354,7 +354,7 @@ class buttons {
         $conf = get_config('enrol_self');
         $defaultenrol = $conf->defaultenrol;
         // Show enrolment key add button.
-        if (has_capability('moodle/course:update', context_course::instance($this->course->id)) && $defaultenrol == 1){
+        if (has_capability('moodle/course:update', context_course::instance($this->course->id)) && $defaultenrol == 1) {
             $oldkey = $this->db->get_records('enrol', array(
                 'courseid' => $this->course->id,
                 'enrol' => 'self',
