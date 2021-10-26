@@ -168,6 +168,10 @@ if ($ADMIN->fulltree) {
     get_string('setting_otherrole_select_desc', 'block_mmquicklink'), '5',
     $rolearray));
 
+    $settings->add(new admin_setting_configcheckbox('mmquicklink/config_unique_enrolmentkey',
+    get_string('setting_unique_enrolmentkey', 'block_mmquicklink'),
+    get_string('setting_unique_enrolmentkey_desc', 'block_mmquicklink'), 0));
+
     $settings->add(new admin_setting_description(
         'mmquicklink/config_custombuttons',
         get_string('custombuttons', 'block_mmquicklink'),

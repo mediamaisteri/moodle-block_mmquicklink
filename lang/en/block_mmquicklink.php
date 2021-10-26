@@ -106,6 +106,8 @@ $string['setting_coursebgimagechanger_desc'] = "Check to hide 'course background
 $string['coursebgimagechanger'] = "Course background";
 $string['setting_allowedcategories'] = "Allowed categories where easylink button is displayed";
 $string['setting_allowedcategories_desc'] = "Use top level categories only e.g. 1,2,3. Affects to top level category subcategories.";
+$string['setting_unique_enrolmentkey'] = "Unique enrolment keys";
+$string['setting_unique_enrolmentkey_desc'] = "Check to use unique enrolment keys";
 
 $string['toomanyselfenrolments'] = 'This course has multiple self enrolment methods enabled. To use this functionality, remove extra self enrolment methods at ' . "<a href='" . '{$a}' . "'>" . '{$a}' . "</a>.";
 $string['multiplepasswords'] = "This course has multiple self enrolments enabled. Check them on 'enrolment methods' page.";
@@ -154,3 +156,5 @@ $string['variables'] = "You can use the following variables in link address & te
 Course ID: {{id}}<br>
 Context ID: {{contextid}}<br>
 User ID: {{userid}}";
+
+$string['enrolmentkey_reserved'] = "Enrolment key already in use on another course!";
