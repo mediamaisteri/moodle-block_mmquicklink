@@ -43,13 +43,15 @@ if (has_capability('moodle/course:enrolconfig', context_course::instance($course
     require_once($CFG->dirroot . "/blocks/mmquicklink/classes/block_mmquicklink.php");
     if ($enrolmentkey) {
         if ($uniquekey === '1') {
-            if (!$DB->record_exists_sql('SELECT * FROM {enrol} WHERE enrol = ? AND password = ? AND courseid != ?', array('self', $enrolmentkey, $courseid))) {
+            if (!$DB->record_exists_sql('SELECT * FROM {enrol} WHERE enrol = ? AND password = ? AND courseid != ?',
+            array('self', $enrolmentkey, $courseid))) {
                 $setkey = \block_mmquicklink\mmquicklink::set_enrolmentkey($courseid, $enrolmentkey);
                 // Redirect user back to course page with proper string.
                 redirect($urltogo, get_string('password', 'enrol_self') . " " . strtolower(get_string('saved', 'core_completion')), 5);
             } else {
                 // Redirect user back to course page with errormessage.
-                redirect($urltogo, get_string('enrolmentkey_reserved', 'block_mmquicklink'), 5, NOTIFY_ERROR);
+                redirect($urltogo, get_string('enrolmentkey_reserved', 'block_mmquicklink'), 5,
+                    \core\output\notification::NOTIFY_ERROR);
             }
         } else {
             $setkey = \block_mmquicklink\mmquicklink::set_enrolmentkey($courseid, $enrolmentkey);
