@@ -33,6 +33,8 @@ require_login();
 $courseid = optional_param('courseid', '', PARAM_TEXT);
 $enrolmentkey = optional_param('enrolmentkey', '', PARAM_TEXT);
 $urltogo = new moodle_url(get_local_referer(), array("id" => $courseid));
+$uniquekey = get_config('mmquicklink', 'config_unique_enrolmentkey');
+
 
 // Check if user has permission to edit course enrolment methods.
 if (has_capability('moodle/course:enrolconfig', context_course::instance($courseid))) {
@@ -40,9 +42,20 @@ if (has_capability('moodle/course:enrolconfig', context_course::instance($course
     // Update field to either set or disable enrolment key.
     require_once($CFG->dirroot . "/blocks/mmquicklink/classes/block_mmquicklink.php");
     if ($enrolmentkey) {
-        $setkey = \block_mmquicklink\mmquicklink::set_enrolmentkey($courseid, $enrolmentkey);
-        // Redirect user back to course page with proper string.
-        redirect($urltogo, get_string('password', 'enrol_self') . " " . strtolower(get_string('saved', 'core_completion')), 5);
+        if ($uniquekey === '1') {
+            if (!$DB->record_exists_sql('SELECT * FROM {enrol} WHERE enrol = ? AND password = ? AND courseid != ?', array('self', $enrolmentkey, $courseid))) {
+                $setkey = \block_mmquicklink\mmquicklink::set_enrolmentkey($courseid, $enrolmentkey);
+                // Redirect user back to course page with proper string.
+                redirect($urltogo, get_string('password', 'enrol_self') . " " . strtolower(get_string('saved', 'core_completion')), 5);
+            } else {
+                // Redirect user back to course page with errormessage.
+                redirect($urltogo, get_string('enrolmentkey_reserved', 'block_mmquicklink'), 5, NOTIFY_ERROR);
+            }
+        } else {
+            $setkey = \block_mmquicklink\mmquicklink::set_enrolmentkey($courseid, $enrolmentkey);
+            // Redirect user back to course page with proper string.
+            redirect($urltogo, get_string('password', 'enrol_self') . " " . strtolower(get_string('saved', 'core_completion')), 5);
+        }
     } else {
         $disablekey = \block_mmquicklink\mmquicklink::set_enrolmentkey($courseid);
         // Redirect user back to course page with proper string.
