@@ -2,7 +2,8 @@
     "name": "mediamaisteri/moodle-block_mmquicklink",
     "type": "moodle-block",
     "require": {
-        "composer/installers": "~1.0"
+        "composer/installers": "~1.0",
+        "moodle/moodle": "~3.9.0"
     },
     "extra": {
         "installer-name": "mmquicklink"
