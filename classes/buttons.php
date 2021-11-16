@@ -590,8 +590,14 @@ class buttons {
         // Show "add a course" button.
         if (optional_param('categoryid', '', PARAM_INT)) {
             // Check if user can add course to current category.
-            if (has_capability('moodle/course:create', context_coursecat::instance(optional_param('categoryid', '',
-            PARAM_INT)))) {
+            try {
+                $ctcheck = has_capability('moodle/course:create', context_coursecat::instance(optional_param('categoryid', '',
+                PARAM_INT)));
+            } catch (Exception $e) {
+                // Do nothing.
+                $ctcheck = false;
+            }
+            if ($ctcheck) {
                 if (!empty($coursetemplates)) {
                     // Render dropdown menu from templates if course_templates is installed.
                     return $this->output->render_from_template('block_mmquicklink/addnewcourse',
