@@ -47,7 +47,8 @@ if (has_capability('moodle/course:enrolconfig', context_course::instance($course
             array('self', $enrolmentkey, $courseid))) {
                 $setkey = \block_mmquicklink\mmquicklink::set_enrolmentkey($courseid, $enrolmentkey);
                 // Redirect user back to course page with proper string.
-                redirect($urltogo, get_string('password', 'enrol_self') . " " . strtolower(get_string('saved', 'core_completion')), 5);
+                redirect($urltogo, get_string('password', 'enrol_self') . " " .
+                strtolower(get_string('saved', 'core_completion')), 5);
             } else {
                 // Redirect user back to course page with errormessage.
                 redirect($urltogo, get_string('enrolmentkey_reserved', 'block_mmquicklink'), 5,
