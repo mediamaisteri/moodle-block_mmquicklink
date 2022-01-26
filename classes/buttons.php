@@ -346,6 +346,32 @@ class buttons {
     }
 
     /**
+     * Render 'restore course' element.
+     *
+     * @return html rendered element.
+     */
+    public function restorecourse() {
+        // Restore course button.
+        $coursearchiveconf = get_config('local_course_archive');
+        $isarchived = false;
+        $archcat = $coursearchiveconf->archivecategory;
+        $delcat = $coursearchiveconf->deletecategory;
+
+        if ($this->course->category == $archcat || $this->course->category == $delcat) {
+            $isarchived = true;
+        }
+
+        if (!empty($coursearchiveconf->plugin_enabled) && empty(get_config('mmquicklink', 'config_hide_restore')) && $isarchived) {
+            if (has_capability('moodle/course:update', context_course::instance($this->course->id))) {
+                    $url = new moodle_url($this->cfg->wwwroot . "/blocks/mmquicklink/confirm_restore.php",
+                    array("id" => $this->course->id));
+                    return $this->default_element($url->out(),
+                    get_string('restorecourse', 'block_mmquicklink'), 'restorecourse');
+            }
+        }
+    }
+
+    /**
      * Render 'enrolment key' element.
      *
      * @return html rendered element.

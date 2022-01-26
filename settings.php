@@ -101,6 +101,8 @@ if ($ADMIN->fulltree) {
     get_string('setting_delcourse', 'block_mmquicklink'), get_string('setting_delcourse_desc', 'block_mmquicklink'), 0));
     $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_archive',
     get_string('setting_archive', 'block_mmquicklink'), get_string('setting_archive_desc', 'block_mmquicklink'), 0));
+    $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_restore',
+    get_string('setting_restore', 'block_mmquicklink'), get_string('setting_restore_desc', 'block_mmquicklink'), 0));
     $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_editsettings',
     get_string('setting_editsettings', 'block_mmquicklink'), get_string('setting_editsettings_desc', 'block_mmquicklink'), 0));
 

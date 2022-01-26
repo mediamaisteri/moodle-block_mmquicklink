@@ -26,7 +26,7 @@
 namespace block_mmquicklink\event;
 defined('MOODLE_INTERNAL') || die();
 
-class course_archived extends \core\event\base {
+class course_restored extends \core\event\base {
 
     /**
      * Set basic properties for the event.
@@ -42,7 +42,7 @@ class course_archived extends \core\event\base {
      * @return string
      */
     public function get_description() {
-        return "The user with id '" . $this->userid . "' archived the course with the id '"
-        . $this->objectid .".";
+        return "The user with id '" . $this->userid . "' restored the course with id '"
+        . $this->objectid ."'.";
     }
 }

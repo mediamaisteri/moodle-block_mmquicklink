@@ -158,3 +158,13 @@ Kontekstin ID: {{contextid}}<br>
 Käyttäjn ID: {{userid}}";
 
 $string['enrolmentkey_reserved'] = "Kurssiavain käytössä toisella kurssilla!";
+
+$string['setting_restore'] = "Palauta kurssi";
+$string['setting_restore_desc'] = 'Valitse piilottaaksesi "Palauta kurssi arkistosta"-painikkeen. Painikkeen toiminta vaatii lisäksi local_course_archive -lisäosan.';
+$string['restorecourse'] = "Palauta kurssi arkistosta";
+$string['restorecourse_confirm'] = "Oletko varma että haluat palauttaa seuraavan kurssin";
+$string['notarchived'] = 'Kurssi ei ole arkisto- tai poistokategoriassa';
+$string['norestorecategory'] = "Kurssi tulisi palauttaa palautuskategoriaan, sillä sen alkuperäinen kategoria ei ole tiedossa. Palautuskategoriaa ei ole asetettu kurssien arkistoinnin asetuksissa.";
+$string['restored_restorecat'] = "Kurssi palautetaan palautuskategoriaan, sillä sen alkuperäinen kategoria ei ole tiedossa. Palautuskategorian ID on";
+$string['restored_originalcat'] = "Kurssi palautetaan alkuperäiseen kategoriaansa, jonka ID on";
+$string['restored'] = "Kurssi on palautettu onnistuneesti.";
