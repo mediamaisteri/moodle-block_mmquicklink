@@ -98,6 +98,11 @@ class block_mmquicklink extends block_base {
             $roles = get_config('mmquicklink', 'config_roles');
             $rolesarray = explode(",", $roles);
 
+            // If there are no roles checked.
+            if (empty($roles)) {
+                return false;
+            }
+
             // Check role assignment in course context.
             if ($COURSE->id > 1) {
                 $ccontext = context_course::instance($COURSE->id);
