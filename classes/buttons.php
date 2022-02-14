@@ -720,7 +720,8 @@ class buttons {
                         if ($CFG->local_reports_allowcategorymanagers > 0) {
                             // Check if user has manager's right somewhere.
                             $role = $this->db->get_records_sql("SELECT * FROM {role_assignments}
-                            WHERE roleid='1' && userid='$USER->id'");
+                            WHERE roleid = :roleid && userid = :userid",
+                            array('roleid' => 1, 'userid' => $USER->id));
 
                             if (count($role) > 0) {
                                 $categorymanager = 1;
