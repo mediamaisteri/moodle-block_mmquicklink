@@ -114,8 +114,11 @@ class block_mmquicklink extends block_base {
                 }
             } else {
                 // Check if user has an appropriate role anywhere in the system. If not, we don't have to do anything else.
-                $getroleoverview = $DB->get_record_sql("SELECT id,roleid,userid,contextid FROM {role_assignments}
-                WHERE roleid IN ($roles) AND userid=$USER->id LIMIT 1");
+                list($insql, $inparams) = $DB->get_in_or_equal($rolesarray);
+                $getroleoverview = $DB->get_record_sql(
+                    "SELECT id,roleid,userid,contextid FROM {role_assignments}
+                      WHERE roleid $insql
+                      AND userid = $USER->id LIMIT 1", $inparams);
                 if ($getroleoverview != false) {
                     return true;
                 }
