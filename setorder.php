@@ -35,11 +35,21 @@ if (has_capability('moodle/category:manage', context_system::instance())) {
     $button = required_param('button', PARAM_RAW);
     $orderid = required_param('order', PARAM_RAW);
 
-    $check = $DB->get_records_sql("SELECT * FROM {block_mmquicklink_sorting} WHERE button = '" . $button . "'");
+    $check = $DB->get_record_sql(
+        "SELECT * FROM {block_mmquicklink_sorting} WHERE button = :button",
+        array('button' => $button)
+    );
     if (count($check) > 0) {
-        $update = $DB->execute("UPDATE {block_mmquicklink_sorting} SET sortorder=$orderid WHERE button='$button'");
+        $btn = new \stdClass();
+        $btn->button = $button;
+        $btn->sortorder = $orderid;
+        $btn->id = $check->id;
+        $update = $DB->update_record('block_mmquicklink_sorting', $btn);
     } else {
-        $insert = $DB->execute("INSERT INTO {block_mmquicklink_sorting} (button, sortorder) values('$button', $orderid)");
+        $btn = new \stdClass();
+        $btn->button = $button;
+        $btn->sortorder = $orderid;
+        $insert = $DB->insert_record('block_mmquicklink_sorting', $btn);
     }
     // Output something.
     echo $button . "/" . $orderid;
