@@ -30,6 +30,8 @@ $string['coursemgmt'] = "Lisää/muokkaa kursseja";
 
 $string['setting_reports'] = "Raportit";
 $string['setting_reports_desc'] = "Valitse piilottaaksesi raportit linkin.";
+$string['setting_competencereport'] = "Osaamisraportti";
+$string['setting_competencereport_desc'] = "Valitse piilottaaksesi osaamisraportti-linkin mRaportointi-linkin alta";
 
 $string['setting_participants'] = "Osallistujat";
 $string['setting_participants_desc'] = "Valitse piilottaaksesi osallistujat-linkin.";

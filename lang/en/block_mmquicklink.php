@@ -29,6 +29,8 @@ $string['visibility_settings'] = 'Visibility settings';
 
 $string['setting_reports'] = "Reports";
 $string['setting_reports_desc'] = "Check to hide reports link";
+$string['setting_competencereport'] = "Competence report";
+$string['setting_competencereport_desc'] = "Check to hide competence report link under mReports";
 
 $string['setting_participants'] = "Participants";
 $string['setting_participants_desc'] = "Check to hide course participants link";

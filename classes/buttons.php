@@ -705,6 +705,12 @@ class buttons {
 
                 $reports = $this->page->navigation->find('local_reports', navigation_node::TYPE_CUSTOM);
                 if ($reports) {
+                    if (!empty($localplugins["learninghistory"]->name)
+                        && empty(get_config('mmquicklink', 'config_hide_competencereport'))
+                        && has_capability('local/learninghistory:viewreport', context_system::instance())) {
+                            $reports->add(get_string('competencesreport', 'local_learninghistory'),
+                                '/local/learninghistory/competences.php');
+                    }
                     return "<li class='list list-reports mmquicklink-reports-button'>
                     <a href='#' class='btn btn-secondary btn-reports'>" .
                     get_string('pluginname', 'local_reports') . "</a></li><li class='list list-reports m-0'>" .
