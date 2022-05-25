@@ -32,3 +32,5 @@ $string['switchrole'] = 'Visa som';
 $string['title'] = 'Hanteringsverktyg';
 
 $string['setting_coursecompletionsettings'] = "inställning av kurser";
+
+$string['mmquicklink:custombuttons'] = "Höger för att lägga till anpassade knappar";
