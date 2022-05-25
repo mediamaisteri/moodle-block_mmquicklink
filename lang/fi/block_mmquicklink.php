@@ -170,3 +170,5 @@ $string['norestorecategory'] = "Kurssi tulisi palauttaa palautuskategoriaan, sil
 $string['restored_restorecat'] = "Kurssi palautetaan palautuskategoriaan, sillä sen alkuperäinen kategoria ei ole tiedossa. Palautuskategorian ID on";
 $string['restored_originalcat'] = "Kurssi palautetaan alkuperäiseen kategoriaansa, jonka ID on";
 $string['restored'] = "Kurssi on palautettu onnistuneesti.";
+
+$string['mmquicklink:custombuttons'] = "Oikeus lisätä kustomoituja painikkeita";
