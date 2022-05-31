@@ -32,9 +32,8 @@ require_login();
 // Course id & key from url variable.
 $courseid = optional_param('courseid', '', PARAM_TEXT);
 $enrolmentkey = optional_param('enrolmentkey', '', PARAM_TEXT);
-$urltogo = new moodle_url(get_local_referer(), array("id" => $courseid));
+$urltogo = new moodle_url($CFG->wwwroot . "/course/view.php", array('id' => $courseid));
 $uniquekey = get_config('mmquicklink', 'config_unique_enrolmentkey');
-
 
 // Check if user has permission to edit course enrolment methods.
 if (has_capability('moodle/course:enrolconfig', context_course::instance($courseid))) {
