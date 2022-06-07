@@ -169,7 +169,6 @@ $string['notarchived'] = 'Course is not in archive or delete category';
 $string['restored_restorecat'] = "Course will be restored to the restore category since its original category is unknown. Restore category ID is";
 $string['norestorecategory'] = "Course should be restored to the restore category since its original category is unknown. Restore category is not set in the course archive settings";
 $string['restored_originalcat'] = "Course will be restored to its original category of: ";
-$string['restored_id'] = " with ID of: ";
 $string['restored'] = "Course has been restored succesfully.";
 
 $string['mmquicklink:custombuttons'] = "Capability to add custom buttons";
