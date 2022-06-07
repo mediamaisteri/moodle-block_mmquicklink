@@ -53,6 +53,8 @@ if (!empty($coursearchiveconf->plugin_enabled)) {
         $message = get_string('restorecourse_confirm', 'block_mmquicklink') . ": " . format_string($course->fullname) . "?";
         // Get original category from db.
         $originalcategory = $DB->get_record('local_course_archive', ['courseid' => $id], 'categoryid');
+        // Get category name.
+        $categoryname = $DB->get_record('course_categories', ['id' => $originalcategory->categoryid], 'name');
         $restorecat = null;
 
         // If original category is not known we will use the restore category.
@@ -68,7 +70,7 @@ if (!empty($coursearchiveconf->plugin_enabled)) {
             }
         } else {
             // Let the user know which category the course will be moved to (original category).
-            $message .= ' ' . get_string('restored_originalcat', 'block_mmquicklink') . " " . $originalcategory->categoryid . ".";
+            $message .= ' ' . get_string('restored_originalcat', 'block_mmquicklink') . $categoryname->name . ".";
             $restorecat = $originalcategory->categoryid;
         }
 

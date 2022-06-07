@@ -168,7 +168,8 @@ $string['restorecourse_confirm'] = "Oletko varma että haluat palauttaa seuraava
 $string['notarchived'] = 'Kurssi ei ole arkisto- tai poistokategoriassa';
 $string['norestorecategory'] = "Kurssi tulisi palauttaa palautuskategoriaan, sillä sen alkuperäinen kategoria ei ole tiedossa. Palautuskategoriaa ei ole asetettu kurssien arkistoinnin asetuksissa.";
 $string['restored_restorecat'] = "Kurssi palautetaan palautuskategoriaan, sillä sen alkuperäinen kategoria ei ole tiedossa. Palautuskategorian ID on";
-$string['restored_originalcat'] = "Kurssi palautetaan alkuperäiseen kategoriaansa, jonka ID on";
+$string['restored_originalcat'] = "Kurssi palautetaan alkuperäiseen kategoriaansa: ";
+$string['restored_id'] = ", jonka ID on: ";
 $string['restored'] = "Kurssi on palautettu onnistuneesti.";
 
 $string['mmquicklink:custombuttons'] = "Oikeus lisätä kustomoituja painikkeita";
