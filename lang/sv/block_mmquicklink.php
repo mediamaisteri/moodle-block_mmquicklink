@@ -34,3 +34,15 @@ $string['title'] = 'Hanteringsverktyg';
 $string['setting_coursecompletionsettings'] = "inställning av kurser";
 
 $string['mmquicklink:custombuttons'] = "Höger för att lägga till anpassade knappar";
+
+$string['fromtemplate'] = "Skapa från kursmall";
+$string['questionbank'] = "Frågebank";
+$string['setting_questionbank'] = "Frågebank";
+$string['setting_questionbank_desc'] = "Välj för att dölja 'Frågebank' -knappen.";
+
+$string['delete_course_modal_body'] = "Är du säker att du vill radera denna kurs?";
+$string['delete_course_modal_title'] = "Radera kurs";
+$string['delete_course_failed_msg'] = "Radering av kurs misslyckades";
+$string['delete_course_success_msg'] = "Radering av kurs lyckades!";
+$string['setting_delcourse'] = "Radera kurs";
+$string['delete_course'] = "Radera kurs";
