@@ -54,7 +54,11 @@ if (!empty($coursearchiveconf->plugin_enabled)) {
         // Get original category from db.
         $originalcategory = $DB->get_record('local_course_archive', ['courseid' => $id], 'categoryid');
         // Get category name.
-        $categoryname = $DB->get_record('course_categories', ['id' => $originalcategory->categoryid], 'name');
+        if (isset($originalcategory->categoryid)) {
+            $categoryname = $DB->get_record('course_categories', ['id' => $originalcategory->categoryid], 'name');
+        } else if (isset($coursearchiveconf->restorecategory))  {
+            $categoryname = $DB->get_record('course_categories', ['id' => $coursearchiveconf->restorecategory], 'name');
+        }
         $restorecat = null;
 
         // If original category is not known we will use the restore category.
@@ -64,13 +68,13 @@ if (!empty($coursearchiveconf->plugin_enabled)) {
                 throw new moodle_exception('norestorecategory', 'block_mmquicklink');
             } else {
                 // Let the user know which category the course will be moved to (restore category).
-                $message .= ' ' . get_string('restored_restorecat', 'block_mmquicklink') .
-                " " . $coursearchiveconf->restorecategory .".";
+                $message .= '<br>' . get_string('restored_restorecat', 'block_mmquicklink') .
+                " " . format_string($categoryname->name) .".";
                 $restorecat = $coursearchiveconf->restorecategory;
             }
         } else {
             // Let the user know which category the course will be moved to (original category).
-            $message .= '<br>' . get_string('restored_originalcat', 'block_mmquicklink') . $categoryname->name . ".";
+            $message .= '<br>' . get_string('restored_originalcat', 'block_mmquicklink') . format_string($categoryname->name) . ".";
             $restorecat = $originalcategory->categoryid;
         }
 
