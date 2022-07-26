@@ -70,7 +70,7 @@ if (!empty($coursearchiveconf->plugin_enabled)) {
             }
         } else {
             // Let the user know which category the course will be moved to (original category).
-            $message .= ' ' . get_string('restored_originalcat', 'block_mmquicklink') . $categoryname->name . ".";
+            $message .= '<br>' . get_string('restored_originalcat', 'block_mmquicklink') . $categoryname->name . ".";
             $restorecat = $originalcategory->categoryid;
         }
 
