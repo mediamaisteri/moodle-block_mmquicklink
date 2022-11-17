@@ -13,3 +13,18 @@ phpcs for complete project:
   allow_failure: false
   script:
     - phpcs --ignore=pix/*,*.js,login.php,*.xml .
+
+create_badge_svg:
+  stage: prebuild
+  image: python:3.6.6
+  tags:
+    - docker
+  script:
+    - echo "Python other dependencies installation"
+  after_script:
+    - pip install anybadge
+    - anybadge -l maisterilms -v "in the product" -f intheproduct.svg -c dodgerblue
+  artifacts:
+    paths:
+        - intheproduct.svg
+    when: always
