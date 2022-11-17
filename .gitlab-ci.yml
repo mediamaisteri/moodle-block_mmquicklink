@@ -23,7 +23,7 @@ create_badge_svg:
     - echo "Python other dependencies installation"
   after_script:
     - pip install anybadge
-    - anybadge -l maisterilms -v "in the product" -f intheproduct.svg -c dodgerblue
+    - anybadge -l maisterilms -v "in the product" -f intheproduct.svg -c "dodgerblue"
   artifacts:
     paths:
         - intheproduct.svg
