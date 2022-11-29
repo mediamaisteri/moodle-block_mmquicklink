@@ -15,34 +15,33 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * MM Quicklink Block.
+ * Confirmation box.
  *
- * @package    block_mmquicklink
- * @copyright  Mediamaisteri Oy 2019
+ * @package    theme_maisteriboost
+ * @copyright  2019 Mediamaisteri Oy
  * @author     Mikko Haikonen <mikko.haikonen@mediamaisteri.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace block_mmquicklink\event;
-defined('MOODLE_INTERNAL') || die();
+require_once("../../config.php");
+require_login();
 
-class course_archived extends \core\event\base {
+$PAGE->set_context(context_system::instance());
+$PAGE->set_title($SITE->fullname);
+$PAGE->set_heading($SITE->fullname);
+$PAGE->set_url(new moodle_url('/blocks/mmquicklink/custombuttons.php'));
+$PAGE->set_pagelayout('admin');
 
-    /**
-     * Set basic properties for the event.
-     */
-    protected function init() {
-        $this->data['objecttable'] = 'block_mmquicklink_sorting';
-        $this->data['crud'] = 'u';
-        $this->data['edulevel'] = self::LEVEL_TEACHING;
-    }
+require_capability('block/mmquicklink:custombuttons', \context_system::instance());
 
-    /**
-     * Returns description of what happened.
-     * @return string
-     */
-    public function get_description() {
-        return "The user with id '" . $this->userid . "' archived the course with the id '"
-        . $this->objectid .".";
-    }
+require_once("classes/block_mmquicklink.php");
+$mmquicklink = new \block_mmquicklink\mmquicklink();
+$id = optional_param("id", null, PARAM_INT);
+$action = optional_param("action", null, PARAM_RAW);
+
+if (!$id && !$action) {
+    echo $OUTPUT->header();
 }
+
+echo $mmquicklink->manage_custombuttons($id, $action);
+echo $OUTPUT->footer();

@@ -29,17 +29,20 @@ $string['visibility_settings'] = "Näkyvyysasetukset";
 $string['coursemgmt'] = "Lisää/muokkaa kursseja";
 
 $string['setting_reports'] = "Raportit";
-$string['setting_reports_desc'] = "Valitse piilottaaksesi raportit linkin";
+$string['setting_reports_desc'] = "Valitse piilottaaksesi raportit linkin.";
+$string['setting_competencereport'] = "Osaamisraportti";
+$string['setting_competencereport_desc'] = "Valitse piilottaaksesi osaamisraportti-linkin mRaportointi-linkin alta";
 
 $string['setting_participants'] = "Osallistujat";
-$string['setting_participants_desc'] = "Valitse piilottaaksesi osallistujat-linkin";
+$string['setting_participants_desc'] = "Valitse piilottaaksesi osallistujat-linkin.";
 
 $string['setting_course_grades'] = "Arvioinnit";
-$string['setting_course_grades_desc'] = "Valitse piilottaaksesi arvioinnit-linkin";
+$string['setting_course_grades_desc'] = "Valitse piilottaaksesi arvioinnit-linkin.";
 $string['setting_easylink'] = "HelppoLinkki";
+$string['setting_easylink_desc'] = "Valitse piilottaaksesi HelppoLinkki-linkin.";
 
 $string['setting_themesettings'] = "Teeman asetukset";
-$string['setting_themesettings_desc'] = "Valitse piilottaaksesi teeman asetukset -linkin";
+$string['setting_themesettings_desc'] = "Valitse piilottaaksesi teeman asetukset -linkin.";
 $string['addcourse'] = "Luo kurssi";
 $string['setting_delcourse'] = "Poista kurssi";
 $string['setting_delcourse_desc'] = "Valitse piilottaaksesi kurssinpoistolinkin";
@@ -77,7 +80,7 @@ $string['setting_pagelayouts'] = "Sallitut sivutyypit";
 $string['setting_pagelayouts_desc'] = "Valitse sivutyypit, joilla lohko on mahdollista näyttää.";
 
 $string['setting_editsettings'] = "Muokkaa kurssin asetuksia";
-$string['setting_editsettings_desc'] = "Valitse piilottaaksesi 'muokkaa kurssin asetuksia' -linkin";
+$string['setting_editsettings_desc'] = "Valitse piilottaaksesi 'muokkaa kurssin asetuksia' -linkin.";
 
 $string['setting_general'] = "Yleiset asetukset";
 $string['setting_blocktitle'] = "Lohkon otsikko";
@@ -107,8 +110,10 @@ $string['setting_coursebgimagechanger_desc'] = "Valitse piilottaaksesi 'kurssin 
 $string['coursebgimagechanger'] = "Kurssin taustakuva";
 $string['setting_allowedcategories'] = "Sallitut kategoriat missä helppolinkki painike näytetään";
 $string['setting_allowedcategories_desc'] = "Käytä ainoastaan ylätason kategorioita esim. 1,2,3. Vaikuttaa myös ylätason kategorian alakategorioihin.";
+$string['setting_unique_enrolmentkey'] = "Uniikit kurssiavaimet";
+$string['setting_unique_enrolmentkey_desc'] = "Valitse käyttääksesi uniikkeja kurssiavaimia.";
 
-$string['toomanyselfenrolments'] = "Kurssilla on usea itserekisteröitymistapa käytössä. Jotta tämän lohkon kautta voitaisiin asettaa kurssiavain, sinun tulee poistaa ylimääräiset itserekisteröitymiset käytöstä osoitteessa ";
+$string['toomanyselfenrolments'] = 'Kurssilla on usea itserekisteröitymistapa käytössä. Jotta tämän lohkon kautta voitaisiin asettaa kurssiavain, sinun tulee poistaa ylimääräiset itserekisteröitymiset käytöstä osoitteessa ' . "<a href='" . '{$a}' . "'>" . '{$a}' . "</a>.";
 $string['multiplepasswords'] = "Kurssilla on useampi itserekisteröitymistapa käytössä. Tarkista ne osallistujien lisäämistavoista.";
 $string['privacy:null_reason'] = "Tämä lisäosa ei käsittele henkilötietoja.";
 
@@ -129,3 +134,41 @@ $string['delete_course_modal_body'] = "Haluatko varmasti poistaa seuraavan kurss
 $string['delete_course_modal_title'] = "Poista kurssi";
 $string['delete_course_failed_msg'] = "Kurssin poistaminen epäonnistui";
 $string['delete_course_success_msg'] = "Kurssin poistaminen onnistui!";
+
+// Question bank & category.
+$string['questionbank'] = "Kysymyspankki";
+$string['setting_questionbank'] = "Kysymyspankki";
+$string['setting_questionbank_desc'] = "Valitse piilottaaksesi 'Kysymyspankki' -painikkeen.";
+
+$string['questioncategory'] = "Kysymyskategoriat";
+$string['setting_questioncategory'] = "Kysymyskategoriat";
+$string['setting_questioncategory_desc'] = "Valitse piilottaaksesi 'Kysymyskategoriat' -painikkeen.";
+
+$string['backup'] = "Varmuuskopiointi";
+$string['setting_backup'] = "Varmuuskopiointi";
+$string['setting_backup_desc'] = "Valitse piilottaaksesi 'Varmuuskopiointi' -painikkeen.";
+
+$string['requiredcapability'] = "Vaadittu kyky";
+$string['requiredroleid'] = "Vaadittu rooli";
+$string['custombuttons'] = "Omat painikkeet";
+$string['custombuttons_desc'] = "Klikkaa <a href='../../blocks/mmquicklink/custombuttons.php'>tästä</a> hallinnoidaksesi omia painikkeita.";
+$string['ok'] = "Toiminto suoritettu onnistuneesti!";
+$string['description'] = "Linkkiteksti";
+$string['variables'] = "Voit käyttää seuraavia muuttujia linkin tekstissä ja osoitteessa:<br>
+Kurssin ID: {{id}}<br>
+Kontekstin ID: {{contextid}}<br>
+Käyttäjn ID: {{userid}}";
+
+$string['enrolmentkey_reserved'] = "Kurssiavain käytössä toisella kurssilla!";
+
+$string['setting_restore'] = "Palauta kurssi";
+$string['setting_restore_desc'] = 'Valitse piilottaaksesi "Palauta kurssi arkistosta"-painikkeen. Painikkeen toiminta vaatii lisäksi local_course_archive -lisäosan.';
+$string['restorecourse'] = "Palauta kurssi arkistosta";
+$string['restorecourse_confirm'] = "Oletko varma että haluat palauttaa seuraavan kurssin";
+$string['notarchived'] = 'Kurssi ei ole arkisto- tai poistokategoriassa';
+$string['norestorecategory'] = "Kurssi tulisi palauttaa palautuskategoriaan, sillä sen alkuperäinen kategoria ei ole tiedossa. Palautuskategoriaa ei ole asetettu kurssien arkistoinnin asetuksissa.";
+$string['restored_restorecat'] = "Kurssi palautetaan palautuskategoriaan, sillä sen alkuperäinen kategoria ei ole tiedossa. Palautuskategorian ID on";
+$string['restored_originalcat'] = "Kurssi palautetaan alkuperäiseen kategoriaansa, jonka ID on";
+$string['restored'] = "Kurssi on palautettu onnistuneesti.";
+
+$string['mmquicklink:custombuttons'] = "Oikeus lisätä kustomoituja painikkeita";

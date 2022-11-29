@@ -29,6 +29,8 @@ $string['visibility_settings'] = 'Visibility settings';
 
 $string['setting_reports'] = "Reports";
 $string['setting_reports_desc'] = "Check to hide reports link";
+$string['setting_competencereport'] = "Competence report";
+$string['setting_competencereport_desc'] = "Check to hide competence report link under mReports";
 
 $string['setting_participants'] = "Participants";
 $string['setting_participants_desc'] = "Check to hide course participants link";
@@ -44,6 +46,7 @@ $string['setting_delcourse_desc'] = "Check to hide delete course link";
 $string['setting_hidecourse'] = "Show/hide course";
 $string['setting_hidecourse_desc'] = "Check to hide show/hide course link";
 $string['setting_easylink'] = "Easylink";
+$string['setting_easylink_desc'] = "Check to hide easylink button.";
 
 $string['setting_archive'] = "Archive course";
 $string['setting_archive_desc'] = "Check to hide 'archive course' button. This functionality required local_course_archive -plugin to be installed.";
@@ -105,8 +108,10 @@ $string['setting_coursebgimagechanger_desc'] = "Check to hide 'course background
 $string['coursebgimagechanger'] = "Course background";
 $string['setting_allowedcategories'] = "Allowed categories where easylink button is displayed";
 $string['setting_allowedcategories_desc'] = "Use top level categories only e.g. 1,2,3. Affects to top level category subcategories.";
+$string['setting_unique_enrolmentkey'] = "Unique enrolment keys";
+$string['setting_unique_enrolmentkey_desc'] = "Check to use unique enrolment keys";
 
-$string['toomanyselfenrolments'] = "This course has multiple self enrolment methods enabled. To use this functionality, remove extra self enrolment methods at ";
+$string['toomanyselfenrolments'] = 'This course has multiple self enrolment methods enabled. To use this functionality, remove extra self enrolment methods at ' . "<a href='" . '{$a}' . "'>" . '{$a}' . "</a>.";
 $string['multiplepasswords'] = "This course has multiple self enrolments enabled. Check them on 'enrolment methods' page.";
 $string['privacy:null_reason'] = "This plugin does not handle or store user data.";
 
@@ -126,3 +131,44 @@ $string['delete_course_modal_body'] = "Are you sure you want to delete the follo
 $string['delete_course_modal_title'] = "Delete course";
 $string['delete_course_failed_msg'] = "Delete course failed";
 $string['delete_course_success_msg'] = "Delete course success";
+
+// Question bank & category.
+$string['questionbank'] = "Question bank";
+$string['setting_questionbank'] = "Question bank";
+$string['setting_questionbank_desc'] = "Check to hide 'question bank' button.";
+
+$string['questioncategory'] = "Question categories";
+$string['setting_questioncategory'] = "Question categories";
+$string['setting_questioncategory_desc'] = "Check to hide 'question categories' button.";
+
+$string['backup'] = "Backup";
+$string['setting_backup'] = "Backup";
+$string['setting_backup_desc'] = "Check to hide 'Backup' button.";
+
+$string['custombuttons'] = "Custom buttons";
+$string['custombuttons_desc'] = "Click <a href='../blocks/mmquicklink/custombuttons.php'>here</a> to manage customized buttons.";
+$string['href'] = "Link address";
+$string['context'] = "Visibility";
+$string['requiredcapability'] = "Required capability";
+$string['requiredroleid'] = "Required role";
+$string['adminonly'] = "Site administrators only";
+$string['ok'] = "Action was successfully completed!";
+$string['description'] = "Link text";
+$string['variables'] = "You can use the following variables in link address & text:<br>
+Course ID: {{id}}<br>
+Context ID: {{contextid}}<br>
+User ID: {{userid}}";
+
+$string['enrolmentkey_reserved'] = "Enrolment key already in use on another course!";
+
+$string['setting_restore'] = "Restore course";
+$string['setting_restore_desc'] = 'Check to hide "Restore course from archive" button. This functionality requires local_course_archive -plugin to be installed.';
+$string['restorecourse'] = "Restore course from archive";
+$string['restorecourse_confirm'] = "Are you sure you want to restore the following course";
+$string['notarchived'] = 'Course is not in archive or delete category';
+$string['restored_restorecat'] = "Course will be restored to the restore category since its original category is unknown. Restore category ID is";
+$string['norestorecategory'] = "Course should be restored to the restore category since its original category is unknown. Restore category is not set in the course archive settings";
+$string['restored_originalcat'] = "Course will be restored to its original category with an ID of";
+$string['restored'] = "Course has been restored succesfully.";
+
+$string['mmquicklink:custombuttons'] = "Capability to add custom buttons";

@@ -95,12 +95,17 @@ if ($ADMIN->fulltree) {
     get_string('visibility_settings', 'block_mmquicklink'), ''));
     $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_reports',
     get_string('setting_reports', 'block_mmquicklink'), get_string('setting_reports_desc', 'block_mmquicklink'), 0));
+    $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_competencereport',
+    get_string('setting_competencereport', 'block_mmquicklink'),
+    get_string('setting_competencereport_desc', 'block_mmquicklink'), 0));
     $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_hidecourse',
     get_string('setting_hidecourse', 'block_mmquicklink'), get_string('setting_hidecourse_desc', 'block_mmquicklink'), 0));
     $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_delcourse',
     get_string('setting_delcourse', 'block_mmquicklink'), get_string('setting_delcourse_desc', 'block_mmquicklink'), 0));
     $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_archive',
     get_string('setting_archive', 'block_mmquicklink'), get_string('setting_archive_desc', 'block_mmquicklink'), 0));
+    $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_restore',
+    get_string('setting_restore', 'block_mmquicklink'), get_string('setting_restore_desc', 'block_mmquicklink'), 0));
     $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_editsettings',
     get_string('setting_editsettings', 'block_mmquicklink'), get_string('setting_editsettings_desc', 'block_mmquicklink'), 0));
 
@@ -129,6 +134,19 @@ if ($ADMIN->fulltree) {
     get_string('setting_coursebgimagechanger', 'block_mmquicklink'),
     get_string('setting_coursebgimagechanger_desc', 'block_mmquicklink'), 1));
 
+    // Question bank & categories & backup.
+    $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_questionbank',
+    get_string('setting_questionbank', 'block_mmquicklink'),
+    get_string('setting_questionbank_desc', 'block_mmquicklink'), 1));
+    $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_questioncategory',
+    get_string('setting_questioncategory', 'block_mmquicklink'),
+    get_string('setting_questioncategory_desc', 'block_mmquicklink'), 1));
+    $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_backup',
+    get_string('setting_backup', 'block_mmquicklink'), get_string('setting_backup_desc', 'block_mmquicklink'), 1));
+
+    $settings->add(new admin_setting_configcheckbox('mmquicklink/config_hide_easylink',
+    get_string('setting_easylink', 'block_mmquicklink'),
+    get_string('setting_easylink_desc', 'block_mmquicklink'), 0));
     $settings->add(new admin_setting_configtext('mmquicklink/config_allowedcategories', get_string('setting_allowedcategories',
     'block_mmquicklink'), get_string('setting_allowedcategories_desc', 'block_mmquicklink'), ''));
 
@@ -154,6 +172,16 @@ if ($ADMIN->fulltree) {
     get_string('setting_otherrole_select', 'block_mmquicklink'),
     get_string('setting_otherrole_select_desc', 'block_mmquicklink'), '5',
     $rolearray));
+
+    $settings->add(new admin_setting_configcheckbox('mmquicklink/config_unique_enrolmentkey',
+    get_string('setting_unique_enrolmentkey', 'block_mmquicklink'),
+    get_string('setting_unique_enrolmentkey_desc', 'block_mmquicklink'), 0));
+
+    $settings->add(new admin_setting_description(
+        'mmquicklink/config_custombuttons',
+        get_string('custombuttons', 'block_mmquicklink'),
+        get_string('custombuttons_desc', 'block_mmquicklink')
+    ));
 
     // Sorting.
     $settings->add(new admin_setting_heading('block_mmquicklink_sorting_options',

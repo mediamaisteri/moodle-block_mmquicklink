@@ -98,6 +98,11 @@ class block_mmquicklink extends block_base {
             $roles = get_config('mmquicklink', 'config_roles');
             $rolesarray = explode(",", $roles);
 
+            // If there are no roles checked.
+            if (empty($roles)) {
+                return false;
+            }
+
             // Check role assignment in course context.
             if ($COURSE->id > 1) {
                 $ccontext = context_course::instance($COURSE->id);
@@ -109,8 +114,11 @@ class block_mmquicklink extends block_base {
                 }
             } else {
                 // Check if user has an appropriate role anywhere in the system. If not, we don't have to do anything else.
-                $getroleoverview = $DB->get_record_sql("SELECT id,roleid,userid,contextid FROM {role_assignments}
-                WHERE roleid IN ($roles) AND userid=$USER->id LIMIT 1");
+                list($insql, $inparams) = $DB->get_in_or_equal($rolesarray);
+                $getroleoverview = $DB->get_record_sql(
+                    "SELECT id,roleid,userid,contextid FROM {role_assignments}
+                      WHERE roleid $insql
+                      AND userid = $USER->id LIMIT 1", $inparams);
                 if ($getroleoverview != false) {
                     return true;
                 }
@@ -362,7 +370,9 @@ class block_mmquicklink extends block_base {
         // Load required globals.
         global $CFG, $USER, $COURSE, $DB, $OUTPUT;
         require_once($CFG->dirroot . '/blocks/mmquicklink/classes/buttons.php');
+        require_once($CFG->dirroot . '/blocks/mmquicklink/classes/block_mmquicklink.php');
         $buttons = new buttons($CFG, $this->page, $USER, $COURSE, $DB, $OUTPUT);
+        $mmquicklink = new \block_mmquicklink\mmquicklink();
 
         // Prevents 'double output'.
         if ($this->content !== null) {
@@ -412,6 +422,7 @@ class block_mmquicklink extends block_base {
             $this->content->text .= $buttons->showhide();
             $this->content->text .= $buttons->deletecourse();
             $this->content->text .= $buttons->archivecourse();
+            $this->content->text .= $buttons->restorecourse();
             $this->content->text .= $buttons->activityprogress();
             $this->content->text .= $buttons->completionprogressblock($plugins);
             $this->content->text .= $buttons->enrolmentkey();
@@ -423,6 +434,19 @@ class block_mmquicklink extends block_base {
             $this->content->text .= $buttons->hrd();
             $this->content->text .= $buttons->coursebgimagechanger();
 
+            // Question bank & $categories & backup.
+            $this->content->text .= $buttons->questionbank();
+            $this->content->text .= $buttons->questioncategory();
+            $this->content->text .= $buttons->backupbutton();
+
+            // Custom buttons.
+            foreach ($mmquicklink->get_custombuttons('course') as $button) {
+                $this->content->text .= $buttons->default_element(
+                    $button->href,
+                    $button->description
+                );
+            }
+
         } else {
 
             // Check if local_course_templates is installed.
@@ -432,6 +456,15 @@ class block_mmquicklink extends block_base {
             $this->content->text .= $buttons->mreportsnav($localplugins);
             $this->content->text .= $buttons->lang();
             $this->content->text .= $buttons->frontpage();
+            $this->content->text .= $buttons->switchrole();
+
+            // Custom buttons.
+            foreach ($mmquicklink->get_custombuttons('other') as $button) {
+                $this->content->text .= $buttons->default_element(
+                    $button->href,
+                    $button->description
+                );
+            }
 
         }
 

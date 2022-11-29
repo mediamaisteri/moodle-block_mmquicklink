@@ -32,15 +32,24 @@ require_login();
 
 // Check if user has capability.
 if (has_capability('moodle/category:manage', context_system::instance())) {
-    $button = required_param('button', PARAM_RAW);
-    $orderid = required_param('order', PARAM_RAW);
+    $button = required_param('button', PARAM_TEXT);
+    $orderid = required_param('order', PARAM_INT);
 
-    $check = $DB->get_records_sql("SELECT * FROM {block_mmquicklink_sorting} WHERE button = '" . $button . "'");
-    if (count($check) > 0) {
-        $update = $DB->execute("UPDATE {block_mmquicklink_sorting} SET sortorder=$orderid WHERE button='$button'");
+    $check = $DB->get_record_sql(
+        "SELECT * FROM {block_mmquicklink_sorting}
+        WHERE button = :button LIMIT 1", array('button' => $button));
+    if (isset($check->id)) {
+        $upd = new \stdClass();
+        $upd->id = $check->id;
+        $upd->button = $button;
+        $upd->sortorder = $orderid;
+        $update = $DB->update_record('block_mmquicklink_sorting', $upd);
     } else {
-        $insert = $DB->execute("INSERT INTO {block_mmquicklink_sorting} (button, sortorder) values('$button', $orderid)");
+        $newb = new \stdClass();
+        $newb->button = $button;
+        $newb->sortorder = $orderid;
+        $insert = $DB->insert_record('block_mmquicklink_sorting', $newb);
     }
     // Output something.
-    echo $button . "/" . $orderid;
+    echo 1;
 }

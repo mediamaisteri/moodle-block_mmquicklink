@@ -1,0 +1,28 @@
+<table class="generaltable table table-sm">
+<thead>
+    <tr>
+        <th>ID</th>
+        <th>{{#str}} description, block_mmquicklink {{/str}}</th>
+        <th>{{#str}} href, block_mmquicklink {{/str}}</th>
+        <th>{{#str}} context, block_mmquicklink {{/str}}</th>
+        <th>{{#str}} requiredcapability, block_mmquicklink {{/str}}</th>
+        <th>{{#str}} requiredroleid, block_mmquicklink {{/str}}</th>
+        <th>{{#str}} adminonly, block_mmquicklink {{/str}}</th>
+        <th></th>
+    </tr>
+</thead>
+<tbody>
+{{#buttons}}
+    <tr>
+        <td>{{id}}</td>
+        <td>{{description}}</td>
+        <td>{{href}}</td>
+        <td>{{context}}</td>
+        <td>{{requiredcapability}}</td>
+        <td>{{requiredroleid}}</td>
+        <td>{{adminonly}}</td>
+        <td>{{>block_mmquicklink/custombuttons_buttons}}</td>
+    </tr>
+{{/buttons}}
+</tbody>
+</table>

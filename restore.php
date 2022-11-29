@@ -15,11 +15,11 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Move selected course to 'archive' category.
+ * Restore selected course to its original or restore category.
  *
  * @package   block_mmquicklink
- * @copyright 2019 Mediamaisteri Oy
- * @author    Mikko Haikonen <mikko.haikonen@mediamaisteri.com>
+ * @copyright 2022 Mediamaisteri Oy
+ * @author    Rosa Siuruainen <rosa.siuruainen@mediamaisteri.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -32,41 +32,30 @@ require_once($CFG->libdir.'/filelib.php');
 
 require_login();
 
-// Course id & key from url variable.
+// Course id and restore category id from url params.
 $courseid = required_param('courseid', PARAM_INT);
-$categoryid = required_param('categoryid', PARAM_INT);
+$restorecat = required_param('restorecat', PARAM_INT);
 
 // Check if user has the capability to update the course.
 if (has_capability('moodle/course:update', context_course::instance($courseid))) {
-    $coursearchiveconf = get_config('local_course_archive');
-    $archcat = $coursearchiveconf->archivecategory;
-    $time = new DateTime("now");
-    $timestamp = $time->getTimestamp();
 
-    // Move course to the archive category.
-    move_courses((array) $courseid, $archcat);
+    // Move course to the restore category.
+    move_courses((array) $courseid, $restorecat);
+
+    // Delete from course_archive database.
+    $DB->delete_records('local_course_archive', ['courseid' => $courseid]);
 
     // Trigger event.
-    $event = \block_mmquicklink\event\course_archived::create(array(
+    $event = \block_mmquicklink\event\course_restored::create(array(
         'objectid' => $courseid,
         'userid' => $USER->id,
         'context' => context_course::instance($courseid),
     ));
     $event->trigger();
 
-    // Define data object for the database query.
-    $data = new stdClass();
-    $data->courseid = $courseid;
-    $data->categoryid = $categoryid;
-    $data->timemodified = $timestamp;
-    $data->archivingmethod = 'manual';
-
-    // Insert the record.
-    $add = $DB->insert_record('local_course_archive', $data);
-
     // Redirect user back to the course.
-    redirect($CFG->wwwroot . "/course/view.php?id=$courseid", get_string('archived', 'block_mmquicklink'), null, 'success');
+    redirect($CFG->wwwroot . "/course/view.php?id=$courseid", get_string('restored', 'block_mmquicklink'), null, 'success');
 } else {
     // If user doesn't have required capabilities, show a general error.
-    print_error('noaccess');
+    throw new moodle_exception('noaccess');
 }

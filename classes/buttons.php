@@ -26,6 +26,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot . '/blocks/mmquicklink/lib.php');
+require_once($CFG->dirroot . '/course/lib.php');
 require_once("{$CFG->libdir}/completionlib.php");
 
 class buttons {
@@ -90,7 +91,7 @@ class buttons {
      * @param string $buttonid Button's identifier (for sorting).
      * @return html list-item element rendered via templates.
      */
-    private function default_element($url, $str, $buttonid = "null") {
+    public function default_element($url, $str, $buttonid = "null") {
         global $OUTPUT;
         $html = $this->output->render_from_template("block_mmquicklink/li",
             array(
@@ -135,6 +136,11 @@ class buttons {
         return $html;
     }
 
+    /**
+     * Get LMS's first course.
+     *
+     * @return object $course Course object.
+     */
     private function firstcourse() {
         $course = $this->db->get_record_sql("SELECT id FROM {course} WHERE id > 1 LIMIT 1");
         return $course->id;
@@ -280,6 +286,8 @@ class buttons {
                     get_string('show_course', 'block_mmquicklink'), 'hidecourse');
                 }
             }
+        } else {
+            return null;
         }
     }
 
@@ -289,23 +297,27 @@ class buttons {
      * @return html rendered element.
      */
     public function easylink($authplugins) {
-        // Get course parent category.
-        $categorypath = explode("/", $this->page->category->path);
-        // Get allowed categories were to display easylink button.
-        $allowedcategories = explode(",", get_config('mmquicklink', 'config_allowedcategories'));
-        // Check if parent category exist on allowedcategory array or if allowedcategory config is empty.
-        if (in_array($categorypath[1], $allowedcategories) || empty(get_config('mmquicklink', 'config_allowedcategories'))) {
-            if (!empty($authplugins["easylink"]->name) && is_enabled_auth('easylink')) {
-                if (has_capability('auth/easylink:manage', context_course::instance($this->course->id))) {
-                    $url = new moodle_url($this->cfg->wwwroot . "/auth/easylink/manager.php",
-                        array(
-                            "course" => $this->course->id,
-                        )
-                    );
-                    return $this->default_element($url->out(),
-                    get_string('pluginname', 'auth_easylink'), 'easylink');
+        if (empty(get_config('mmquicklink', 'config_hide_easylink'))) {
+            // Get course parent category.
+            $categorypath = explode("/", $this->page->category->path);
+            // Get allowed categories were to display easylink button.
+            $allowedcategories = explode(",", get_config('mmquicklink', 'config_allowedcategories'));
+            // Check if parent category exist on allowedcategory array or if allowedcategory config is empty.
+            if (in_array($categorypath[1], $allowedcategories) || empty(get_config('mmquicklink', 'config_allowedcategories'))) {
+                if (!empty($authplugins["easylink"]->name) && is_enabled_auth('easylink')) {
+                    if (has_capability('auth/easylink:manage', context_course::instance($this->course->id))) {
+                        $url = new moodle_url($this->cfg->wwwroot . "/auth/easylink/manager.php",
+                            array(
+                                "course" => $this->course->id,
+                            )
+                        );
+                        return $this->default_element($url->out(),
+                        get_string('pluginname', 'auth_easylink'), 'easylink');
+                    }
                 }
             }
+        } else {
+            return null;
         }
     }
 
@@ -334,13 +346,41 @@ class buttons {
     }
 
     /**
+     * Render 'restore course' element.
+     *
+     * @return html rendered element.
+     */
+    public function restorecourse() {
+        // Restore course button.
+        $coursearchiveconf = get_config('local_course_archive');
+        $isarchived = false;
+        $archcat = $coursearchiveconf->archivecategory;
+        $delcat = $coursearchiveconf->deletecategory;
+
+        if ($this->course->category == $archcat || $this->course->category == $delcat) {
+            $isarchived = true;
+        }
+
+        if (!empty($coursearchiveconf->plugin_enabled) && empty(get_config('mmquicklink', 'config_hide_restore')) && $isarchived) {
+            if (has_capability('moodle/course:update', context_course::instance($this->course->id))) {
+                    $url = new moodle_url($this->cfg->wwwroot . "/blocks/mmquicklink/confirm_restore.php",
+                    array("id" => $this->course->id));
+                    return $this->default_element($url->out(),
+                    get_string('restorecourse', 'block_mmquicklink'), 'restorecourse');
+            }
+        }
+    }
+
+    /**
      * Render 'enrolment key' element.
      *
      * @return html rendered element.
      */
     public function enrolmentkey() {
+        $conf = get_config('enrol_self');
+        $defaultenrol = $conf->defaultenrol;
         // Show enrolment key add button.
-        if (has_capability('moodle/course:update', context_course::instance($this->course->id))) {
+        if (has_capability('moodle/course:update', context_course::instance($this->course->id)) && $defaultenrol == 1) {
             $oldkey = $this->db->get_records('enrol', array(
                 'courseid' => $this->course->id,
                 'enrol' => 'self',
@@ -566,12 +606,24 @@ class buttons {
         }
     }
 
+    /**
+     * Render the 'add course' button.
+     *
+     * @param object $coursetemplates
+     * @return html Default element of 'add course'.
+     */
     public function addcourse($coursetemplates) {
         // Show "add a course" button.
         if (optional_param('categoryid', '', PARAM_INT)) {
             // Check if user can add course to current category.
-            if (has_capability('moodle/course:create', context_coursecat::instance(optional_param('categoryid', '',
-            PARAM_INT)))) {
+            try {
+                $ctcheck = has_capability('moodle/course:create', context_coursecat::instance(optional_param('categoryid', '',
+                PARAM_INT)));
+            } catch (Exception $e) {
+                // Do nothing.
+                $ctcheck = false;
+            }
+            if ($ctcheck) {
                 if (!empty($coursetemplates)) {
                     // Render dropdown menu from templates if course_templates is installed.
                     return $this->output->render_from_template('block_mmquicklink/addnewcourse',
@@ -628,6 +680,11 @@ class buttons {
         }
     }
 
+    /**
+     * Render 'theme settings' link.
+     *
+     * @return html Default element.
+     */
     public function themesettings() {
         // Theme settings -link.
         // If local_extrasettings is installed & user has proper capability, show link to it.
@@ -646,6 +703,12 @@ class buttons {
         }
     }
 
+    /**
+     * Render mReports navigation.
+     *
+     * @param array $localplugins Array of locally installed plugins.
+     * @return html mmQuicklink mReports tree.
+     */
     public function mreportsnav($localplugins) {
         // Render local_reports navigation.
         if (!empty($localplugins["reports"]->name)) {
@@ -654,10 +717,11 @@ class buttons {
                 $categorymanager = 0;
                 if (!has_capability('local/reports:viewall', context_system::instance())) {
                     if (isset($CFG->local_reports_allowcategorymanagers)) {
-                        if ($CFG->local_reports_allowcategorymanagers == 1) {
+                        if ($CFG->local_reports_allowcategorymanagers > 0) {
                             // Check if user has manager's right somewhere.
-                            $role = $DB->get_records_sql("SELECT * FROM {role_assignments}
-                            WHERE roleid='1' && userid='$USER->id'");
+                            $role = $this->db->get_records_sql("SELECT * FROM {role_assignments}
+                            WHERE roleid = :roleid && userid = :userid",
+                            array('roleid' => 1, 'userid' => $USER->id));
 
                             if (count($role) > 0) {
                                 $categorymanager = 1;
@@ -668,6 +732,12 @@ class buttons {
 
                 $reports = $this->page->navigation->find('local_reports', navigation_node::TYPE_CUSTOM);
                 if ($reports) {
+                    if (!empty($localplugins["learninghistory"]->name)
+                        && empty(get_config('mmquicklink', 'config_hide_competencereport'))
+                        && has_capability('local/learninghistory:viewreport', context_system::instance())) {
+                            $reports->add(get_string('competencesreport', 'local_learninghistory'),
+                                '/local/learninghistory/competences.php');
+                    }
                     return "<li class='list list-reports mmquicklink-reports-button'>
                     <a href='#' class='btn btn-secondary btn-reports'>" .
                     get_string('pluginname', 'local_reports') . "</a></li><li class='list list-reports m-0'>" .
@@ -677,8 +747,12 @@ class buttons {
         }
     }
 
+    /**
+     * Render 'course management' button.
+     *
+     * @return html Default element.
+     */
     public function coursemanagement() {
-        // Show course management button.
         if ($this->page->bodyid == 'page-course-index-category') {
             if (can_edit_in_category(optional_param('categoryid', '', PARAM_INT))) {
                 return $this->default_element($this->cfg->wwwroot .
@@ -692,8 +766,12 @@ class buttons {
         }
     }
 
+    /**
+     * Render language customization link.
+     *
+     * @return html Default element.
+     */
     public function lang() {
-        // Language customization link.
         if (empty(get_config('mmquicklink', 'config_hide_langcust')) &&
         has_capability('tool/customlang:view', context_system::instance())) {
             $custlangurl = $this->cfg->wwwroot . '/admin/tool/customlang/index.php';
@@ -702,8 +780,13 @@ class buttons {
         }
     }
 
+    /**
+     * Render 'frontpage settings' button.
+     * Link visible only on frontpage.
+     *
+     * @return html Default element.
+     */
     public function frontpage() {
-        // Frontpage settings link only on frontpage.
         if (has_capability('moodle/course:update', context_course::instance($this->course->id))) {
             if ($this->page->pagelayout == 'frontpage') {
                 return $this->default_element($this->cfg->wwwroot .
@@ -712,4 +795,29 @@ class buttons {
         }
     }
 
+    public function questionbank() {
+        if (empty(get_config('mmquicklink', 'config_hide_questionbank'))) {
+            // Tarvitaanko oikeustarkistelu?
+            return $this->default_element($this->cfg->wwwroot .
+            "/question/edit.php?courseid=" . $this->course->id, get_string('questionbank', 'question'), 'questionbank');
+        }
+    }
+
+    public function questioncategory() {
+        if (empty(get_config('mmquicklink', 'config_hide_questioncategory'))) {
+            // Tarvitaanko oikeustarkistelu?
+            return $this->default_element($this->cfg->wwwroot .
+            "/question/category.php?courseid=" . $this->course->id,
+            get_string('questioncategory', 'block_mmquicklink'), 'questioncategory');
+        }
+    }
+
+    public function backupbutton() {
+        if (empty(get_config('mmquicklink', 'config_hide_backup'))) {
+            if (has_capability('moodle/backup:backupcourse', context_course::instance($this->course->id))) {
+                return $this->default_element($this->cfg->wwwroot . "/backup/backup.php?id=" . $this->course->id,
+                get_string('backup'), 'backup');
+            }
+        }
+    }
 }
