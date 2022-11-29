@@ -6,11 +6,3 @@ A block for administrators, managers and teachers to simplify navigation in Mood
 
 Moodle 3.5. onwards.
 Tested on following themes: boost, classic, maisteriboost.
-
-# Customer customizations
-
-https://gitlab.com/mediamaisteri/moodle/block_mmquicklink/-/wikis/Customer-customizations
-
-# Screenshot
-
-![image](/uploads/37ef52d8b2ed8b9531723d19a8e74633/image.png)
