@@ -56,7 +56,7 @@ if (!empty($coursearchiveconf->plugin_enabled)) {
         // Get category name.
         if (isset($originalcategory->categoryid)) {
             $categoryname = $DB->get_record('course_categories', ['id' => $originalcategory->categoryid], 'name');
-        } else if (isset($coursearchiveconf->restorecategory))  {
+        } else if (isset($coursearchiveconf->restorecategory)) {
             $categoryname = $DB->get_record('course_categories', ['id' => $coursearchiveconf->restorecategory], 'name');
         }
         $restorecat = null;

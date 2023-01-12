@@ -195,7 +195,7 @@ class buttons {
         }
 
         // Admin page editing mode.
-        if ($this->page->pagelayout == "admin" OR $indexsys[count($indexsys) - 1] == "indexsys.php") {
+        if ($this->page->pagelayout == "admin" || $indexsys[count($indexsys) - 1] == "indexsys.php") {
             $adminurl = new moodle_url($this->page->url, array(
                 "adminedit" => $this->editingmode,
                 "sesskey" => $this->user->sesskey,
@@ -422,7 +422,7 @@ class buttons {
 
                 // Prioritize custom full name, if set in role configuration.
                 if (strlen($otherrolename->name) > 0) {
-                    $otherroleshowname = $otherrolename->name;
+                    $otherroleshowname = format_string($otherrolename->name);
                 } else {
                     // Use Moodle's core function to retrieve localized role name.
                     $otherroleshowname = role_get_name($otherrolename, context_system::instance(), ROLENAME_ALIAS);
@@ -519,7 +519,7 @@ class buttons {
         // Course participants.
         if (empty(get_config('mmquicklink', 'config_hide_participants'))) {
             if (has_capability('moodle/course:viewparticipants', context_course::instance($this->course->id))) {
-                if (get_config('mmquicklink', 'config_participants_select') == 0 OR $this->cfg->version >= 2018051700.00) {
+                if (get_config('mmquicklink', 'config_participants_select') == 0 || $this->cfg->version >= 2018051700.00) {
                     $participanturl = new moodle_url($this->cfg->wwwroot . "/user/index.php", array(
                         "id" => $this->page->course->id,
                     ));

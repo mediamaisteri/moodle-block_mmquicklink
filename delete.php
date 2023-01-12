@@ -41,7 +41,7 @@ require_login();
 
 // Can not delete frontpage or don't have permission to delete the course.
 if ($SITE->id == $course->id || !can_delete_course($id)) {
-    print_error('cannotdeletecourse');
+    throw new \moodle_exception('cannotdeletecourse');
 }
 
 // Raise PHP time limit to prevent problems.

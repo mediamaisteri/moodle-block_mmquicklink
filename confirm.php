@@ -39,11 +39,11 @@ $coursecontext = context_course::instance($course->id);
 
 echo $OUTPUT->header();
 if ($SITE->id == $course->id) {
-    print_error('cannotdeletecourse');
+    throw new \moodle_exception('cannotdeletecourse');
 }
 
 if (!has_capability('moodle/course:update', context_course::instance($course->id))) {
-    print_error('noaccess', 'local_reports');
+    throw new \moodle_exception('noaccess');
 }
 
 $courseshortname = format_string($course->shortname, true, array('context' => $coursecontext));
@@ -65,7 +65,7 @@ if (!empty($coursearchiveconf->plugin_enabled)) {
 
         echo $OUTPUT->confirm($message, $continuebutton, $cancelurl);
     } else {
-        print_error('alreadyarchived', 'block_mmquicklink');
+        throw new \moodle_exception('alreadyarchived');
     }
 }
 
