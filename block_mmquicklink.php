@@ -404,9 +404,16 @@ class block_mmquicklink extends block_base {
 
         // Set content variable.
         $this->content = new stdClass;
+        $blockbuttons = [];
+
+        // Main buttons.
+        $blockbuttons[] = $buttons->courseparent();
+        $blockbuttons[] = $buttons->pageparent();
+        $blockbuttons[] = $buttons->completionparent();
+        $blockbuttons[] = $buttons->participantsparent();
 
         // Editing mode button.
-        $this->content->text = $buttons->editingmode();
+        $blockbuttons[] = $buttons->editingmode();
 
         // Links to show on course pages.
         if ($this->page->pagelayout == 'course' ||
@@ -417,68 +424,138 @@ class block_mmquicklink extends block_base {
             "hide" => $COURSE->visible, "coursename" => $COURSE->fullname, "category" => $COURSE->category));
 
             // Render buttons needed on course pages.
-            $this->content->text .= $buttons->editcourse();
-            $this->content->text .= $buttons->coursecompletionsettings();
-            $this->content->text .= $buttons->showhide();
-            $this->content->text .= $buttons->deletecourse();
-            $this->content->text .= $buttons->archivecourse();
-            $this->content->text .= $buttons->restorecourse();
-            $this->content->text .= $buttons->activityprogress();
-            $this->content->text .= $buttons->completionprogressblock($plugins);
-            $this->content->text .= $buttons->enrolmentkey();
-            $this->content->text .= $buttons->participants();
-            $this->content->text .= $buttons->easylink($authplugins);
-            $this->content->text .= $buttons->grading();
-            $this->content->text .= $buttons->mreports($localplugins);
-            $this->content->text .= $buttons->switchrole();
-            $this->content->text .= $buttons->hrd();
-            $this->content->text .= $buttons->coursebgimagechanger();
+
+            $blockbuttons[] = $buttons->editcourse();
+            $blockbuttons[] = $buttons->coursecompletionsettings();
+            $blockbuttons[] = $buttons->showhide();
+            $blockbuttons[] = $buttons->deletecourse();
+            $blockbuttons[] = $buttons->archivecourse();
+            $blockbuttons[] = $buttons->restorecourse();
+            $blockbuttons[] = $buttons->activityprogress();
+            $blockbuttons[] = $buttons->completionprogressblock($plugins);
+            $blockbuttons[] = $buttons->enrolmentkey();
+            $blockbuttons[] = $buttons->participants();
+            $blockbuttons[] = $buttons->easylink($authplugins);
+            $blockbuttons[] = $buttons->grading();
+            $blockbuttons[] = $buttons->mreports($localplugins);
+            $blockbuttons[] = $buttons->switchrole();
+            $blockbuttons[] = $buttons->hrd();
+            $blockbuttons[] = $buttons->coursebgimagechanger();
 
             // Question bank & $categories & backup.
-            $this->content->text .= $buttons->questionbank();
-            $this->content->text .= $buttons->questioncategory();
-            $this->content->text .= $buttons->backupbutton();
+            $blockbuttons[] = $buttons->questionbank();
+            $blockbuttons[] = $buttons->questioncategory();
+            $blockbuttons[] = $buttons->backupbutton();
 
             // Custom buttons.
             foreach ($mmquicklink->get_custombuttons('course') as $button) {
-                $this->content->text .= $buttons->default_element(
+                $blockbuttons[] = $buttons->default_element(
                     $button->href,
                     $button->description
                 );
             }
 
         } else {
-
-            // Check if local_course_templates is installed.
-            $this->content->text .= $buttons->addcourse($this->coursetemplates());
-            $this->content->text .= $buttons->coursemanagement();
-            $this->content->text .= $buttons->themesettings();
-            $this->content->text .= $buttons->mreportsnav($localplugins);
-            $this->content->text .= $buttons->lang();
-            $this->content->text .= $buttons->frontpage();
-            $this->content->text .= $buttons->switchrole();
-
+            $blockbuttons[] = $buttons->addcourse($this->coursetemplates());
+            $blockbuttons[] = $buttons->coursemanagement();
+            $blockbuttons[] = $buttons->themesettings();
+            $blockbuttons[] = $buttons->mreportsnav($localplugins);
+            $blockbuttons[] = $buttons->lang();
+            $blockbuttons[] = $buttons->frontpage();
+            $blockbuttons[] = $buttons->switchrole();
             // Custom buttons.
             foreach ($mmquicklink->get_custombuttons('other') as $button) {
-                $this->content->text .= $buttons->default_element(
+                $blockbuttons[] = $buttons->default_element(
                     $button->href,
-                    $button->description
+                    $button->description,
+                    "custom_$button->id"
                 );
             }
 
         }
 
         // Show placeholder text if block has no content.
-        if (strlen($this->content->text) < 10) {
+        if (empty($blockbuttons)) {
             $this->content->text .= $OUTPUT->render_from_template("block_mmquicklink/empty", array());
             $this->page->requires->js_call_amd('block_mmquicklink/blockhider', 'init', []);
             return $this->content;
         } else {
-            // Wrap everything into one unsorted list.
-            $this->content->text .= $this->get_sort();
-            $this->content->text = $OUTPUT->render_from_template("block_mmquicklink/wrap",
-                array("content" => $this->content->text)
-            );
+            $buttons = [];
+
+            foreach ($blockbuttons as $blockbutton) {
+                if (isset($blockbutton->buttonid)) {
+                    $buttons[$blockbutton->buttonid] = $blockbutton;
+                }
+            }
+
+            $defaultorder = mmquicklink_get_default_button_order();
+            $order = $DB->get_records('block_mmquicklink_sorting', null, 'sortorder ASC');
+
+            if (!$order) {
+                mmquicklink_set_default_order();
+                $order = $DB->get_records('block_mmquicklink_sorting', null, 'sortorder ASC');
+            }
+            $parents = [];
+
+            // Construct button tree.
+            foreach ($order as $key => $value) {
+                if ($value->parent == "main-list") {
+                    $parent = $value;
+                    $parent->html = (isset($buttons[$parent->button]->html)) ? $buttons[$parent->button]->html : null;
+                    unset($buttons[$value->button]);
+                    $children = [];
+                    foreach ($order as $key => $value2) {
+                        if ($value2->parent == $value->button && array_key_exists($value2->button, $buttons)) {
+                            $value2->html2 = $buttons[$value2->button]->html;
+                            unset($buttons[$value2->button]);
+                            $children[] = $value2;
+                            unset($order[$key]);
+                        }
+                    }
+
+                    if ($value->button == 'completionparent' || $value->button == 'courseparent' ||
+                        $value->button == 'pageparent' || $value->button == 'participantsparent') {
+                        if (empty($children)) {
+                            continue;
+                        }
+                    }
+                    $parent->children = $children;
+                    $parents[] = $parent;
+                    unset($order[$key]);
+                }
+            }
+
+            // If there are some buttons left that have not been handled earlier, add them under correct parent.
+            foreach ($buttons as $button) {
+                $parentbtn = false;
+                $button->button = $button->buttonid;
+                foreach ($defaultorder as $defaultbtn) {
+                    if ($defaultbtn->button == $button->buttonid) {
+                        $parentbtn = $defaultbtn->parent;
+                        break;
+                    }
+                }
+                if (!$parentbtn) {
+                    $button->parent = 'main-list';
+                    $parents[] = $button;
+                } else if ($parentbtn == 'main-list') {
+                    $parents[] = $button;
+                } else {
+                    foreach ($parents as $parent) {
+                        if ($parent->button == $parentbtn) {
+                            $button->html2 = $button->html;
+                            $parent->children[] = $button;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            $context = [
+                'mainbuttons' => $parents
+            ];
+
+            $this->content->text = $OUTPUT->render_from_template("block_mmquicklink/blockbuttons", $context);
         }
 
         // Return data to block. Finally!

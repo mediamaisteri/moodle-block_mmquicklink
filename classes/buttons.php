@@ -73,7 +73,7 @@ class buttons {
         $this->page = $PAGE;
 
         // Editingmode variables.
-        $this->editbuttonid = "turneditingon";
+        $this->editbuttonid = "turneditingon list-turneditingon";
         if ($this->page->user_is_editing()) {
             $this->editingmode = "off";
             $this->editingmodestring = get_string("turneditingoff");
@@ -91,16 +91,17 @@ class buttons {
      * @param string $buttonid Button's identifier (for sorting).
      * @return html list-item element rendered via templates.
      */
-    public function default_element($url, $str, $buttonid = "null") {
+    public function default_element($url, $str, $buttonid, $expandbtn = false) {
         global $OUTPUT;
         $html = $this->output->render_from_template("block_mmquicklink/li",
             array(
                 "url" => $url,
                 "str" => $str,
-                "buttonid" => $buttonid
+                "buttonid" => $buttonid,
+                "expandbtn" => $expandbtn
             )
         );
-        return $html;
+        return (object) ['html' => $html, 'buttonid' => $buttonid, 'str' => $str, 'expandbtn' => $expandbtn];
     }
 
     public function coursecompletionsettings() {
@@ -126,14 +127,13 @@ class buttons {
             if ($this->page->theme->name == "maisteriboost") {
                 if (file_exists($this->cfg->dirroot . "/theme/maisteriboost/classes/coursebgimagechanger.php")) {
                     if (has_capability('moodle/course:update', context_course::instance($this->course->id))) {
-                        $html = $this->default_element($this->cfg->wwwroot .
+                        return $this->default_element($this->cfg->wwwroot .
                         "/theme/maisteriboost/classes/coursebgimagechanger.php?id=" . $this->course->id,
                         get_string('coursebgimagechanger', 'block_mmquicklink'), 'coursebgimagechanger');
                     }
                 }
             }
         }
-        return $html;
     }
 
     /**
@@ -161,7 +161,7 @@ class buttons {
                 "sesskey" => $this->user->sesskey,
             ));
             return $this->default_element($url->out(),
-            $this->editingmodestring, $this->editbuttonid . " list-turneditingon");
+            $this->editingmodestring, $this->editbuttonid);
         }
 
         // Frontpage.
@@ -173,7 +173,7 @@ class buttons {
                 "id" => $this->course->id,
             ));
             return $this->default_element($url->out(),
-            $this->editingmodestring, $this->editbuttonid . " list-turneditingon");
+            $this->editingmodestring, $this->editbuttonid);
         }
 
         // Grader requires a specialized editmode link.
@@ -190,7 +190,7 @@ class buttons {
                 "sesskey" => $this->user->sesskey,
             ));
             return $this->default_element($adminurl->out(),
-            $this->editingmodestring, $this->editbuttonid . " list-turneditingon");
+            $this->editingmodestring, $this->editbuttonid);
 
         }
 
@@ -201,7 +201,7 @@ class buttons {
                 "sesskey" => $this->user->sesskey,
             ));
             return $this->default_element($adminurl->out(),
-            $this->editingmodestring, $this->editbuttonid . " list-turneditingon");
+            $this->editingmodestring, $this->editbuttonid);
         }
 
         if ($this->page->user_allowed_editing()) {
@@ -398,12 +398,13 @@ class buttons {
                 $keyclass = "mmquicklink-enrolmentkey-unset";
             }
             $setstring .= " " . strtolower(get_string('password', 'enrol_self'));
-            return $this->output->render_from_template("block_mmquicklink/li-enrolmentkey", array(
+            $html = $this->output->render_from_template("block_mmquicklink/li-enrolmentkey", array(
                 "keyclass" => $keyclass,
                 "setstring" => $setstring,
                 "courseid" => $this->course->id,
                 "realoldkey" => $realoldkey
             ));
+            return (object) ['html' => $html, 'buttonid' => 'enrolmentkey', 'str' => $setstring];
         }
     }
 
@@ -429,7 +430,7 @@ class buttons {
                 }
 
                 // Render from template.
-                return $this->output->render_from_template("block_mmquicklink/li-otherrole", array(
+                $html = $this->output->render_from_template("block_mmquicklink/li-otherrole", array(
                     "courseid" => $this->course->id,
                     "otherrole" => $otherrole,
                     "sesskey" => $this->user->sesskey,
@@ -437,6 +438,7 @@ class buttons {
                     "otherroleshortname" => $otherrolename->shortname,
                     "otherroleshowname" => $otherroleshowname,
                 ));
+                return (object) ['html' => $html, 'buttonid' => 'otherrole'];
             } else {
                 $url = new moodle_url($this->cfg->wwwroot . "/course/switchrole.php", array(
                     "id" => $this->course->id,
@@ -542,14 +544,14 @@ class buttons {
     public function activityprogress() {
 
         if (!empty(get_config('mmquicklink', 'config_hide_activityprogress'))) {
-            return '';
+            return false;
         }
 
         // Get criteria for course.
         $completion = new completion_info($this->course);
 
         if (!$completion->has_criteria()) {
-            return '';
+            return false;
         }
 
         if (has_capability('moodle/course:update', context_course::instance($this->course->id))) {
@@ -738,10 +740,10 @@ class buttons {
                             $reports->add(get_string('competencesreport', 'local_learninghistory'),
                                 '/local/learninghistory/competences.php');
                     }
-                    return "<li class='list list-reports mmquicklink-reports-button'>
+                    return (object) ['buttonid' => 'reports', 'html' => "<li class='list list-reports mmquicklink-reports-button'>
                     <a href='#' class='btn btn-secondary btn-reports'>" .
                     get_string('pluginname', 'local_reports') . "</a></li><li class='list list-reports m-0'>" .
-                    $this->page->get_renderer('block_mmquicklink')->mmquicklink_tree($reports) . "</li>";
+                    $this->page->get_renderer('block_mmquicklink')->mmquicklink_tree($reports) . "</li>"];
                 }
             }
         }
@@ -820,4 +822,21 @@ class buttons {
             }
         }
     }
+
+    public function participantsparent() {
+        return $this->default_element(null, get_string('setting_participantsparent', 'block_mmquicklink'),
+            'participantsparent', true);
+    }
+    public function courseparent() {
+        return $this->default_element(null, get_string('setting_courseparent', 'block_mmquicklink'), 'courseparent', true);
+    }
+
+    public function pageparent() {
+        return $this->default_element(null, get_string('setting_pageparent', 'block_mmquicklink'), 'pageparent', true);
+    }
+
+    public function completionparent() {
+        return $this->default_element(null, get_string('setting_completionparent', 'block_mmquicklink'), 'completionparent', true);
+    }
+
 }

@@ -107,7 +107,8 @@ class mmquicklink {
      */
     public function delete_custombutton($id) {
         global $DB;
-        $delete = $DB->delete_records('block_mmquicklink_custombutt', array('id' => $id));
+        $delete = $DB->delete_records('block_mmquicklink_custombutt', ['id' => $id]);
+        $sorting = $DB->delete_records('block_mmquicklink_sorting', ['button' => "custom_$id"]);
         return $delete;
     }
 

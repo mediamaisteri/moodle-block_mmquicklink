@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="blocks/mmquicklink/db" VERSION="20210826" COMMENT="XMLDB file for Moodle blocks/mmquicklink"
+<XMLDB PATH="blocks/mmquicklink/db" VERSION="20230208" COMMENT="XMLDB file for Moodle blocks/mmquicklink"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
@@ -7,8 +7,9 @@
     <TABLE NAME="block_mmquicklink_sorting" COMMENT="MM Quicklink Sorting Table">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
-        <FIELD NAME="button" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="Button name"/>
-        <FIELD NAME="sortorder" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Order weight"/>
+        <FIELD NAME="button" TYPE="char" LENGTH="50" NOTNULL="true" SEQUENCE="false" COMMENT="Button name"/>
+        <FIELD NAME="parent" TYPE="char" LENGTH="50" NOTNULL="true" SEQUENCE="false" COMMENT="Parent list"/>
+        <FIELD NAME="sortorder" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="Place in parent list"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>

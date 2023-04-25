@@ -146,7 +146,7 @@ $string['setting_backup'] = "Backup";
 $string['setting_backup_desc'] = "Check to hide 'Backup' button.";
 
 $string['custombuttons'] = "Custom buttons";
-$string['custombuttons_desc'] = "Click <a href='../blocks/mmquicklink/custombuttons.php'>here</a> to manage customized buttons.";
+$string['custombuttons_desc'] = 'Click <a href={$a}>here</a> to manage customized buttons.';
 $string['href'] = "Link address";
 $string['context'] = "Visibility";
 $string['requiredcapability'] = "Required capability";
@@ -172,3 +172,7 @@ $string['restored_originalcat'] = "Course will be restored to its original categ
 $string['restored'] = "Course has been restored succesfully.";
 
 $string['mmquicklink:custombuttons'] = "Capability to add custom buttons";
+$string['setting_courseparent'] = "Course management";
+$string['setting_pageparent'] = "Page management";
+$string['setting_participantsparent'] = "Participant management";
+$string['setting_completionparent'] = "Progress & Completion";
