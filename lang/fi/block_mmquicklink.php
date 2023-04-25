@@ -151,7 +151,7 @@ $string['setting_backup_desc'] = "Valitse piilottaaksesi 'Varmuuskopiointi' -pai
 $string['requiredcapability'] = "Vaadittu kyky";
 $string['requiredroleid'] = "Vaadittu rooli";
 $string['custombuttons'] = "Omat painikkeet";
-$string['custombuttons_desc'] = "Klikkaa <a href='../../blocks/mmquicklink/custombuttons.php'>tästä</a> hallinnoidaksesi omia painikkeita.";
+$string['custombuttons_desc'] = 'Klikkaa <a href={$a}>tästä</a> hallinnoidaksesi omia painikkeita.';
 $string['ok'] = "Toiminto suoritettu onnistuneesti!";
 $string['description'] = "Linkkiteksti";
 $string['variables'] = "Voit käyttää seuraavia muuttujia linkin tekstissä ja osoitteessa:<br>
@@ -172,3 +172,7 @@ $string['restored_originalcat'] = "Kurssi palautetaan alkuperäiseen kategoriaan
 $string['restored'] = "Kurssi on palautettu onnistuneesti.";
 
 $string['mmquicklink:custombuttons'] = "Oikeus lisätä kustomoituja painikkeita";
+$string['courseparent'] = "Kurssin hallinta";
+$string['pageparent'] = "Sivun hallinta";
+$string['participantsparent'] = "Osallistujien hallinta";
+$string['completionparent'] = "Edistyminen & suoritus";

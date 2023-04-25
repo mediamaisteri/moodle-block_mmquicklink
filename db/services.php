@@ -15,18 +15,35 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * MM Quicklink block.
+ * Web service functions for MM Quicklink Block.
  *
  * @package   block_mmquicklink
- * @copyright 2019 Mediamaisteri Oy
- * @author    Mikko Haikonen <mikko.haikonen@mediamaisteri.com>
+ * @copyright 2023 Mediamaisteri Oy
+ * @author    Rosa Siuruainen <rosa.siuruainen@mediamaisteri.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+defined('MOODLE_INTERNAL') || die;
 
-$plugin->component = 'block_mmquicklink';
-$plugin->version = 2023030601;
-$plugin->requires = 2016052300;
-$plugin->maturity = MATURITY_STABLE;
-$plugin->release = "1.11.5";
+$services = array(
+    'block_mmquicklink' => array(
+    'functions' => array(
+        'block_mmquicklink_update_sort',
+    ),
+    'requiredcapability' => '',
+    'restrictedusers' => 0,
+    'enabled' => 1,
+    )
+);
+
+
+$functions = [
+    'block_mmquicklink_update_sorting' => [
+        'classname'   => 'block_mmquicklink_external',
+        'methodname'  => 'update_sorting',
+        'classpath'   => 'blocks/mmquicklink/externallib.php',
+        'description' => 'Updates button sorting.',
+        'type'        => 'write',
+        'ajax'        => true,
+    ],
+];

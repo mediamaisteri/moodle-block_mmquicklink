@@ -10,29 +10,23 @@
     </button>
 </div>
 <a href="{{{config.wwwroot}}}/blocks/mmquicklink/resetsorting.php" class="mb-2 btn btn-primary">{{#str}}clicktoreset, block_mmquicklink{{/str}}</a>
-<ul id="quicklink-sort">
-    <li id='19' data-button="editcoursesettings" class="btn btn-block btn-default text-center">{{#str}}editcoursesettings, core{{/str}}</li>
-    <li id='1' data-button="turneditingon" class="btn btn-block btn-default text-center">{{#str}}turneditingon{{/str}}</li>
-    <li id='2' data-button="addnewcourse" class="btn btn-block btn-default text-center">{{#str}}addcourse, block_mmquicklink{{/str}}</li>
-    <li id='3' data-button="coursemgmt" class="btn btn-block btn-default text-center">{{#str}}coursemgmt, block_mmquicklink{{/str}}</li>
-    <li id='23' data-button="restorecourse" class="btn btn-block btn-default text-center">{{#str}}restorecourse, block_mmquicklink{{/str}}</li>
-    <li id='4' data-button="deletecourse" class="btn btn-block btn-default text-center">{{#str}}setting_delcourse, block_mmquicklink{{/str}}</li>
-    <li id='5' data-button="archivecourse" class="btn btn-block btn-default text-center">{{#str}}setting_archive, block_mmquicklink{{/str}}</li>
-    <li id='6' data-button="editsettings" class="btn btn-block btn-default text-center">{{#str}}editsettings, core{{/str}}</li>
-    <li id='7' data-button="participants" class="btn btn-block btn-default text-center">{{#str}}setting_participants, block_mmquicklink{{/str}}</li>
-    <li id='8' data-button="easylink" class="btn btn-block btn-default text-center">{{#str}}setting_easylink, block_mmquicklink{{/str}}</li>
-    <li id='9' data-button="grades" class="btn btn-block btn-default text-center">{{#str}}setting_course_grades, block_mmquicklink{{/str}}</li>
-    <li id='10' data-button="hidecourse" class="btn btn-block btn-default text-center">{{#str}}setting_hidecourse, block_mmquicklink{{/str}}</li>
-    <li id='11' data-button="otherrole" class="btn btn-block btn-default text-center">{{#str}}setting_otherrole_select, block_mmquicklink{{/str}}</li>
-    <li id='12' data-button="localreportssummary" class="btn btn-block btn-default text-center">{{#str}}local_reports_summary, block_mmquicklink{{/str}}</li>
-    <li id='13' data-button="reports" class="btn btn-block btn-default text-center">{{#str}}setting_reports, block_mmquicklink{{/str}}</li>
-    <li id='14' data-button="customlang" class="btn btn-block btn-default text-center">{{#str}}setting_langcust, block_mmquicklink{{/str}}</li>
-    <li id='15' data-button="themesettings" class="btn btn-block btn-default text-center">{{#str}}setting_themesettings, block_mmquicklink{{/str}}</li>
-    <li id='16' data-button="enrolmentkey" class="btn btn-block btn-default text-center">{{#str}}enrolmentkey, block_mmquicklink{{/str}}</li>
-    <li id='17' data-button="coursebgimagechanger" class="btn btn-block btn-default text-center">{{#str}}coursebgimagechanger, block_mmquicklink{{/str}}</li>
-    <li id='18' data-button="coursecompletionsettings" class="btn btn-block btn-default text-center">{{#str}}setting_coursecompletionsettings, block_mmquicklink{{/str}}</li>
-    <li id='19' data-button="activityprogress" class="btn btn-block btn-default text-center">{{#str}}pluginname, report_progress{{/str}}</li>
-    <li id='20' data-button="questionbank" class="btn btn-block btn-default text-center">{{#str}}questionbank, block_mmquicklink{{/str}}</li>
-    <li id='21' data-button="questioncategory" class="btn btn-block btn-default text-center">{{#str}}questioncategory, block_mmquicklink{{/str}}</li>
-    <li id='22' data-button="backup" class="btn btn-block btn-default text-center">{{#str}}backup, block_mmquicklink{{/str}}</li>
-</ul>
+
+<div id="main-list" class="list-group col nested-sortable mb-3">
+    {{#parents}}
+        <div class="list-group-item nested-1 main-level {{#expandbutton}}expand mmquicklink-mainbtn{{/expandbutton}} {{^expandbutton}}draggable-btn{{/expandbutton}} px-0 py-2" data-sortable-id="{{button}}">
+            <div class="list-group-item nested-1 btn btn-default border-0 {{#expandbutton}} btn-secondary mb-2{{/expandbutton}}">{{string}}</div>
+            {{#expandbutton}}
+                <div class="list-group nested-sortable ml-5" id="{{button}}">
+                    {{#children}}
+                    <div class="list-group-item nested-2  btn btn-block btn-default draggable-btn text-center nested-2 pb-1" data-put="false" data-sortable-id="{{button}}">
+                        {{string}}
+                    </div>
+                    {{/children}}
+                </div>
+            {{/expandbutton}}
+        </div>
+
+    {{/parents}}
+
+</div>
+

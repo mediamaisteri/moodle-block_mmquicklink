@@ -52,3 +52,16 @@
 .mmquicklink-otherrole-div form {
     margin-bottom: 0;
 }
+.list-group-item {
+    border: none !important;
+}
+.list-group-item.btn {
+    box-shadow: none;
+    border:none;
+}
+
+.btn-default {
+    box-shadow: none !important;
+}
+
+
