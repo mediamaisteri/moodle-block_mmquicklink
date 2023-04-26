@@ -137,5 +137,17 @@ function xmldb_block_mmquicklink_upgrade($oldversion) {
 
     }
 
+    if ($oldversion < 2023042600) {
+
+        $table = new xmldb_table('block_mmquicklink_sorting');
+        if ($dbman->table_exists($table)) {
+            $DB->execute("UPDATE {block_mmquicklink_sorting} SET parent = 'main-list'");
+        }
+
+        // Mmquicklink savepoint reached.
+        upgrade_block_savepoint(true, 2023042600, 'mmquicklink');
+
+    }
+
     return true;
 }
