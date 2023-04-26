@@ -118,7 +118,8 @@ $string['multiplepasswords'] = "Kurssilla on useampi itserekisteröitymistapa k�
 $string['privacy:null_reason'] = "Tämä lisäosa ei käsittele henkilötietoja.";
 
 $string['buttonsorting'] = "Raahaa & pudota nappeja siirrelläksesi niiden paikkoja.";
-$string['clicktoreset'] = "Klikkaa nollataksesi järjestyksen";
+$string['clicktoresetgroup'] = "Nollaa järjestys (ryhmittely)";
+$string['clicktoresetlist'] = "Nollaa järjestys (1-tasoinen lista)";
 $string['saved'] = "Muutokset tallennettiin onnistuneesti!";
 $string['saving'] = "Muutoksia tallennetaan...";
 
