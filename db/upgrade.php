@@ -105,8 +105,6 @@ function xmldb_block_mmquicklink_upgrade($oldversion) {
     }
 
     if ($oldversion < 2023030601) {
-       
-
         // Define table block_mmquicklink_sorting to be dropped.
         $table = new xmldb_table('block_mmquicklink_sorting');
 
