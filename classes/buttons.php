@@ -419,6 +419,9 @@ class buttons {
         has_capability('moodle/role:switchroles', context_course::instance($this->course->id))) {
             if (!is_role_switched($this->course->id)) {
                 $otherrole = get_config('mmquicklink', 'config_otherrole_select');
+                if (empty($otherrole)) {
+                    return;
+                }
                 $otherrolename = $this->db->get_record('role', array('id' => $otherrole));
 
                 // Prioritize custom full name, if set in role configuration.
