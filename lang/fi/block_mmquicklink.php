@@ -128,6 +128,7 @@ $string['fromtemplate'] = "Luo mallipohjasta";
 $string['areyousure'] = "Oletko varma, että haluat arkistoida seuraavan kurssin";
 $string['areyousurehide1'] = "Oletko varma, että haluat piilottaa seuraavan kurssin";
 $string['areyousurehide0'] = "Oletko varma, että haluat näyttää seuraavan kurssin";
+$string['completionnotok'] = 'Kurssin aktiviteetilla on edistymisen seuranta käytössä, mutta kurssille ei ole määritelty suoritukseen johtavia ehtoja. Kurssin suoritusasetuksia pääset muokkaamaan <a href="{$a}">täällä</a>.';
 $string['hide1'] = "Piilota kurssi";
 $string['hide0'] = "Näytä kurssi";
 
