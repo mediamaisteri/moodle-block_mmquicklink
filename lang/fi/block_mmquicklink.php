@@ -173,7 +173,7 @@ $string['restored_originalcat'] = "Kurssi palautetaan alkuperäiseen kategoriaan
 $string['restored'] = "Kurssi on palautettu onnistuneesti.";
 
 $string['mmquicklink:custombuttons'] = "Oikeus lisätä kustomoituja painikkeita";
-$string['courseparent'] = "Kurssin hallinta";
-$string['pageparent'] = "Sivun hallinta";
-$string['participantsparent'] = "Osallistujien hallinta";
-$string['completionparent'] = "Edistyminen & suoritus";
+$string['setting_courseparent'] = "Kurssin asetukset";
+$string['setting_pageparent'] = "Sivun hallinta";
+$string['setting_participantsparent'] = "Osallistujien hallinta";
+$string['setting_completionparent'] = "Edistyminen & suoritus";
