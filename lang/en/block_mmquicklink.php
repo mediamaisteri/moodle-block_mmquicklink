@@ -125,6 +125,7 @@ $string['fromtemplate'] = "Add from a template";
 $string['areyousure'] = "Are you sure you want to archive the following course";
 $string['areyousurehide1'] = "Are you sure you want to hide the following course";
 $string['areyousurehide0'] = "Are you sure you want to show the following course";
+$string['completionnotok'] = 'An activity in the course has completion tracking enabled but the conditions leading to course completion have not been defined. You can edit the course completion settings <a href="{$a}">here</a>.';
 $string['hide1'] = "Hide course";
 $string['hide0'] = "Show course";
 

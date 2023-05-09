@@ -102,33 +102,48 @@ define(['jquery', 'core/config','core/templates', 'core/modal_factory', 'core/mo
              * @param {string} data
              */
             function createshowhidemodal(showhideaction, data) {
-                ModalFactory.create({
-                    type: ModalFactory.types.SAVE_CANCEL,
-                    title: templates.render("block_mmquicklink/modal_hidecourse_title", data),
-                    body: templates.render("block_mmquicklink/modal_hidecourse_body", data),
-                }).then(function(modal) {
-                    var root = modal.getRoot();
-                    root.on(ModalEvents.save, function() {
-                        $.get(mdlcfg.wwwroot + '/course/ajax/management.php', {
-                            'courseid': courseid,
-                            'action': showhideaction,
-                            'confirm': 1,
-                            'sesskey': mdlcfg.sesskey,
-                        }).done(function() {
-                            $.get(mdlcfg.wwwroot + '/blocks/mmquicklink/changevisibility.php', {
+                console.log(showhideaction); //showcourse hidecourse
+                $.get(mdlcfg.wwwroot + '/blocks/mmquicklink/checkcompletionsettings.php', {
+                    'courseid': courseid,
+                    'action' : showhideaction,
+                    'confirm': true,
+                    'sesskey': mdlcfg.sesskey,
+                }).done(function(result) {
+                    data.completionok = result;
+                    data.url = mdlcfg.wwwroot + `/course/completion.php/?id=${courseid}`;
+                    ModalFactory.create({
+                        type: ModalFactory.types.SAVE_CANCEL,
+                        title: templates.render("block_mmquicklink/modal_hidecourse_title", data),
+                        body: templates.render("block_mmquicklink/modal_hidecourse_body", data),
+                    }).then(function(modal) {
+                        var root = modal.getRoot();
+                        root.on(ModalEvents.save, function() {
+                            $.get(mdlcfg.wwwroot + '/course/ajax/management.php', {
                                 'courseid': courseid,
                                 'action': showhideaction,
                                 'confirm': 1,
                                 'sesskey': mdlcfg.sesskey,
                             }).done(function() {
-                                // Nothing to do here.
-                                location.reload();
+                                $.get(mdlcfg.wwwroot + '/blocks/mmquicklink/changevisibility.php', {
+                                    'courseid': courseid,
+                                    'action': showhideaction,
+                                    'confirm': 1,
+                                    'sesskey': mdlcfg.sesskey,
+                                }).done(function() {
+                                    // Nothing to do here.
+                                    location.reload();
+                                });
                             });
+    
                         });
-
+                        modal.show();
                     });
-                    modal.show();
+
+
+
+
                 });
+                
             }
 
             /**
