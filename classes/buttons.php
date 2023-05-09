@@ -633,8 +633,12 @@ class buttons {
             if ($ctcheck) {
                 if (!empty($coursetemplates)) {
                     // Render dropdown menu from templates if course_templates is installed.
-                    return $this->output->render_from_template('block_mmquicklink/addnewcourse',
-                        array("categoryid" => optional_param('categoryid', '', PARAM_INT)));
+                    $html = $this->output->render_from_template('block_mmquicklink/addnewcourse',
+                            array("categoryid" => optional_param('categoryid', '', PARAM_INT)));
+                    return (object) ['html' => $html,
+                                    'buttonid' => 'addnewcourse',
+                                    'str' => get_string('addnewcourse')
+                                    ];
                 } else {
                     $url = new moodle_url($this->cfg->wwwroot . "/course/edit.php", array(
                         "category" => optional_param('categoryid', '', PARAM_INT),
@@ -654,8 +658,12 @@ class buttons {
                         if (has_capability('moodle/course:create', context_coursecat::instance($defaultcategory))) {
                             if (!empty($coursetemplates)) {
                                 // Render dropdown menu from templates if course_templates is installed.
-                                return $this->output->render_from_template('block_mmquicklink/addnewcourse',
-                                    array("categoryid" => $defaultcategory));
+                                $html = $this->output->render_from_template('block_mmquicklink/addnewcourse',
+                                        array("categoryid" => $defaultcategory));
+                                return (object) ['html' => $html,
+                                                'buttonid' => 'addnewcourse',
+                                                'str' => get_string('addnewcourse')
+                                                ];
                             } else {
                                 return $this->default_element($this->cfg->wwwroot .
                                 "/course/edit.php?category=" . $defaultcategory, get_string('addnewcourse'), 'addnewcourse');
@@ -672,8 +680,12 @@ class buttons {
                         if (has_capability('moodle/course:create', context_coursecat::instance($category->id))) {
                             if (!empty($coursetemplates)) {
                                 // Render dropdown menu from templates if course_templates is installed.
-                                return $this->output->render_from_template('block_mmquicklink/addnewcourse',
-                                    array("categoryid" => $category->id));
+                                $html = $this->output->render_from_template('block_mmquicklink/addnewcourse',
+                                        array("categoryid" => $category->id));
+                                return (object) ['html' => $html,
+                                                'buttonid' => 'addnewcourse',
+                                                'str' => get_string('addnewcourse')
+                                                ];
                                 break;
                             } else {
                                 return $this->default_element($this->cfg->wwwroot .
