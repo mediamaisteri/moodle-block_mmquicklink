@@ -429,7 +429,9 @@ class buttons {
                     $otherroleshowname = format_string($otherrolename->name);
                 } else {
                     // Use Moodle's core function to retrieve localized role name.
-                    $otherroleshowname = role_get_name($otherrolename, context_system::instance(), ROLENAME_ALIAS);
+                    if (is_object($otherrolename)) {
+                        $otherroleshowname = role_get_name($otherrolename, context_system::instance(), ROLENAME_ALIAS);
+                    }
                 }
 
                 // Render from template.
