@@ -354,8 +354,8 @@ class buttons {
         // Restore course button.
         $coursearchiveconf = get_config('local_course_archive');
         $isarchived = false;
-        $archcat = $coursearchiveconf->archivecategory;
-        $delcat = $coursearchiveconf->deletecategory;
+        $archcat = isset($coursearchiveconf->archivecategory) ? $coursearchiveconf->archivecategory : false;
+        $delcat = isset($coursearchiveconf->deletecategory) ? $coursearchiveconf->deletecategory : false;
 
         if ($this->course->category == $archcat || $this->course->category == $delcat) {
             $isarchived = true;
