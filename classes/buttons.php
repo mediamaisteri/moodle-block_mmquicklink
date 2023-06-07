@@ -376,7 +376,14 @@ class buttons {
      *
      * @return html rendered element.
      */
-    public function enrolmentkey() {
+    public function enrolmentkey($selfenrolments) {
+
+        $extratxt = '';
+        if (count($selfenrolments) > 1) {
+            $url = new \moodle_url($this->cfg->wwwroot . "/enrol/instances.php", array('id' => $this->course->id));
+            $extratxt = get_string('toomanyselfenrolments', 'block_mmquicklink', $url->out());
+        }
+
         $conf = get_config('enrol_self');
         $defaultenrol = $conf->defaultenrol;
         // Show enrolment key add button.
@@ -402,7 +409,8 @@ class buttons {
                 "keyclass" => $keyclass,
                 "setstring" => $setstring,
                 "courseid" => $this->course->id,
-                "realoldkey" => $realoldkey
+                "realoldkey" => $realoldkey,
+                "extratxt" => $extratxt,
             ));
             return (object) ['html' => $html, 'buttonid' => 'enrolmentkey', 'str' => $setstring];
         }

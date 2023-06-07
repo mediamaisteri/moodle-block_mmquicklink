@@ -2,9 +2,14 @@
     <a class='btn btn-secondary btn-enrolmentkey' href=''>{{{setstring}}}</a>
 </li>
 <div class='list-enrolmentkey mmquicklink-enrolmentkey-div'>
+    {{#extratxt}}
+        {{{extratxt}}}
+    {{/extratxt}}
+    {{^extratxt}}
     <form method='get' action='{{{config.wwwroot}}}/blocks/mmquicklink/setenrolmentkey.php'>
     <input type='hidden' name='courseid' value='{{{courseid}}}'>
     <input class='form-control' type='text' name='enrolmentkey' value='{{{realoldkey}}}'>
     <input class='btn btn-primary' type='submit' value='{{#str}} save, core_admin {{/str}}'>
     </form>
+    {{/extratxt}}
 </div>
