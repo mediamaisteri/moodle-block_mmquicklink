@@ -451,7 +451,8 @@ class block_mmquicklink extends block_base {
             foreach ($mmquicklink->get_custombuttons('course') as $button) {
                 $blockbuttons[] = $buttons->default_element(
                     $button->href,
-                    $button->description
+                    $button->description,
+                    "custom_$button->id",
                 );
             }
 
@@ -468,7 +469,7 @@ class block_mmquicklink extends block_base {
                 $blockbuttons[] = $buttons->default_element(
                     $button->href,
                     $button->description,
-                    "custom_$button->id"
+                    "custom_$button->id",
                 );
             }
 
