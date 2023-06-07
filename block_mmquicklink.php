@@ -433,7 +433,7 @@ class block_mmquicklink extends block_base {
             $blockbuttons[] = $buttons->restorecourse();
             $blockbuttons[] = $buttons->activityprogress();
             $blockbuttons[] = $buttons->completionprogressblock($plugins);
-            $blockbuttons[] = $buttons->enrolmentkey();
+            $blockbuttons[] = $buttons->enrolmentkey($mmquicklink->get_self_enrolments($COURSE->id));
             $blockbuttons[] = $buttons->participants();
             $blockbuttons[] = $buttons->easylink($authplugins);
             $blockbuttons[] = $buttons->grading();
