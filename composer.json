@@ -3,7 +3,7 @@
     "type": "moodle-block",
     "require": {
         "composer/installers": "~1.0",
-        "moodle/moodle": "~3.9.0"
+        "moodle/moodle": "~4.1.0"
     },
     "extra": {
         "installer-name": "mmquicklink"

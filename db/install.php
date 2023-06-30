@@ -56,6 +56,7 @@ function xmldb_block_mmquicklink_install() {
 
     // Set mmquicklink as an undeletable block.
     require_once($CFG->dirroot . "/lib/blocklib.php");
+    require_once($CFG->dirroot . "/blocks/mmquicklink/lib.php");
     $page = $PAGE;
     $blockmanager = new block_manager($page);
     $undeletableblocktypes = $blockmanager->get_undeletable_block_types();

@@ -34,6 +34,11 @@ class mmquicklink {
      */
     const STUDENTROLEID = 5;
 
+    public static function get_self_enrolments($courseid) {
+        global $DB;
+        return $DB->get_records('enrol', array('courseid' => $courseid, 'enrol' => 'self'), 'password');
+    }
+
     /**
      * Enable/disable & set enrolment key.
      * Trigger an event when succesful.
@@ -46,7 +51,7 @@ class mmquicklink {
         global $DB, $USER, $CFG;
 
         // Check how many self-enrolment instances are in use in the course. Check also disabled sef-enrolments.
-        $self = $DB->get_records('enrol', array('courseid' => $courseid, 'enrol' => 'self'), 'password');
+        $self = self::get_self_enrolments($courseid);
         if (count($self) > 1) {
             $url = new \moodle_url($CFG->wwwroot . "/enrol/instances.php", array('id' => $courseid));
             $urltogo = new \moodle_url(get_local_referer(), array('id' => $courseid));
@@ -107,7 +112,8 @@ class mmquicklink {
      */
     public function delete_custombutton($id) {
         global $DB;
-        $delete = $DB->delete_records('block_mmquicklink_custombutt', array('id' => $id));
+        $delete = $DB->delete_records('block_mmquicklink_custombutt', ['id' => $id]);
+        $sorting = $DB->delete_records('block_mmquicklink_sorting', ['button' => "custom_$id"]);
         return $delete;
     }
 

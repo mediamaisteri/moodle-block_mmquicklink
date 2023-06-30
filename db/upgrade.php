@@ -24,6 +24,7 @@
  */
 defined('MOODLE_INTERNAL') || die();
 
+
 /**
  * Upgrading the plugin.
  *
@@ -31,7 +32,9 @@ defined('MOODLE_INTERNAL') || die();
  * @return bool always true
  */
 function xmldb_block_mmquicklink_upgrade($oldversion) {
-    global $CFG, $DB;
+
+    global $DB, $CFG;
+    require_once($CFG->dirroot . '/blocks/mmquicklink/lib.php');
 
     $dbman = $DB->get_manager();
 
@@ -99,6 +102,49 @@ function xmldb_block_mmquicklink_upgrade($oldversion) {
 
         // Mmquicklink savepoint reached.
         upgrade_block_savepoint(true, 2021082600, 'mmquicklink');
+    }
+
+    if ($oldversion < 2023030601) {
+        // Define table block_mmquicklink_sorting to be dropped.
+        $table = new xmldb_table('block_mmquicklink_sorting');
+
+        // Conditionally launch drop table for block_mmquicklink_sorting.
+        if ($dbman->table_exists($table)) {
+            $dbman->drop_table($table);
+        }
+
+        // Define table block_mmquicklink_sorting to be created.
+        $table = new xmldb_table('block_mmquicklink_sorting');
+
+        // Adding fields to table block_mmquicklink_sorting.
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('button', XMLDB_TYPE_CHAR, '50', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('parent', XMLDB_TYPE_CHAR, '50', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('sortorder', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, null);
+
+        // Adding keys to table block_mmquicklink_sorting.
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, ['id']);
+
+        // Conditionally launch create table for block_mmquicklink_sorting.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        // Mmquicklink savepoint reached.
+        upgrade_block_savepoint(true, 2023030601, 'mmquicklink');
+
+    }
+
+    if ($oldversion < 2023042600) {
+
+        $table = new xmldb_table('block_mmquicklink_sorting');
+        if ($dbman->table_exists($table)) {
+            $DB->execute("UPDATE {block_mmquicklink_sorting} SET parent = 'main-list'");
+        }
+
+        // Mmquicklink savepoint reached.
+        upgrade_block_savepoint(true, 2023042600, 'mmquicklink');
+
     }
 
     return true;

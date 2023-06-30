@@ -116,7 +116,8 @@ $string['multiplepasswords'] = "This course has multiple self enrolments enabled
 $string['privacy:null_reason'] = "This plugin does not handle or store user data.";
 
 $string['buttonsorting'] = "Drag and drop buttons to sort them.";
-$string['clicktoreset'] = "Click to reset sorting";
+$string['clicktoresetgroup'] = "Click to reset sorting (grouped)";
+$string['clicktoresetlist'] = "Click to reset sorting (list only)";
 $string['saved'] = "Changes have been succesfully saved!";
 $string['saving'] = "Saving changes...";
 
@@ -124,6 +125,7 @@ $string['fromtemplate'] = "Add from a template";
 $string['areyousure'] = "Are you sure you want to archive the following course";
 $string['areyousurehide1'] = "Are you sure you want to hide the following course";
 $string['areyousurehide0'] = "Are you sure you want to show the following course";
+$string['completionnotok'] = 'An activity in the course has completion tracking enabled but the conditions leading to course completion have not been defined. You can edit the course completion settings <a href="{$a}">here</a>.';
 $string['hide1'] = "Hide course";
 $string['hide0'] = "Show course";
 
@@ -146,7 +148,7 @@ $string['setting_backup'] = "Backup";
 $string['setting_backup_desc'] = "Check to hide 'Backup' button.";
 
 $string['custombuttons'] = "Custom buttons";
-$string['custombuttons_desc'] = "Click <a href='../blocks/mmquicklink/custombuttons.php'>here</a> to manage customized buttons.";
+$string['custombuttons_desc'] = 'Click <a href={$a}>here</a> to manage customized buttons.';
 $string['href'] = "Link address";
 $string['context'] = "Visibility";
 $string['requiredcapability'] = "Required capability";
@@ -172,3 +174,7 @@ $string['restored_originalcat'] = "Course will be restored to its original categ
 $string['restored'] = "Course has been restored succesfully.";
 
 $string['mmquicklink:custombuttons'] = "Capability to add custom buttons";
+$string['setting_courseparent'] = "Course management";
+$string['setting_pageparent'] = "Page management";
+$string['setting_participantsparent'] = "Participant management";
+$string['setting_completionparent'] = "Progress & Completion";
