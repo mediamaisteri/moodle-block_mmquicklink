@@ -35,12 +35,12 @@ $action = required_param('action', PARAM_RAW);
 if (has_capability('moodle/course:update', context_course::instance($courseid))) {
     global $DB;
     if ($action == "showcourse") {
-        $sql = "SELECT cm.id
-            FROM {course_modules} cm
-            JOIN {course_completion_criteria} ccc ON cm.course = ccc.course
-            WHERE cm.completion > 0 AND ccc.criteriatype IS NOT NULL";
+        $sql = "SELECT cm.id, ccc.criteriatype
+        FROM {course_modules} cm
+        JOIN {course_completion_criteria} ccc ON cm.id = ccc.moduleinstance
+        WHERE cm.completion > 0 AND cm.course = ?";
 
-        $completionok = $DB->get_record_sql($sql, []);
+        $completionok = $DB->get_records_sql($sql, [$courseid]);
 
         $result = ($completionok) ? true : false;
 
