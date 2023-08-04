@@ -135,15 +135,21 @@ function xmldb_block_mmquicklink_upgrade($oldversion) {
 
     }
 
-    if ($oldversion < 2023042600) {
+    if ($oldversion < 2023080402) {
 
         $table = new xmldb_table('block_mmquicklink_sorting');
         if ($dbman->table_exists($table)) {
-            $DB->execute("UPDATE {block_mmquicklink_sorting} SET parent = 'main-list'");
+            // Make sure buttons are not grouped.
+            $buttons = $DB->get_records('block_mmquicklink_sorting');
+            foreach ($buttons as $button) {
+                $btn = clone $button;
+                $btn->parent = 'main-list';
+                $update = $DB->update_record('block_mmquicklink_sorting', $btn);
+            }
         }
 
         // Mmquicklink savepoint reached.
-        upgrade_block_savepoint(true, 2023042600, 'mmquicklink');
+        upgrade_block_savepoint(true, 2023080402, 'mmquicklink');
 
     }
 
