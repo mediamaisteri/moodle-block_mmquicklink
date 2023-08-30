@@ -473,7 +473,7 @@ class buttons {
         if (isset($this->cfg->drupal_url) && has_capability('moodle/user:create', context_system::instance())) {
             $hrdurl = "{$this->cfg->drupal_url}/training_by_moodle_id/{$this->page->course->id}";
             return $this->default_element($hrdurl,
-            get_string('trainingmanagement', 'block_mmquicklink', 'hrd'));
+            get_string('trainingmanagement', 'block_mmquicklink'), 'hrd');
         }
     }
 
