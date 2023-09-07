@@ -63,4 +63,8 @@
     box-shadow: none !important;
 }
 
+.block_mmquicklink ul {
+    padding-left: 0;
+}
+
 
