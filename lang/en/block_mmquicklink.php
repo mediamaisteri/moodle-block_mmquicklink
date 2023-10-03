@@ -22,7 +22,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'MM Quicklink';
+$string['pluginname'] = 'Quicklinks';
 $string['title'] = "Managing tools";
 $string['coursemgmt'] = "Manage courses/categories";
 $string['visibility_settings'] = 'Visibility settings';
