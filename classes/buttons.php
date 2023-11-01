@@ -761,7 +761,8 @@ class buttons {
                 if ($reports) {
                     if (!empty($localplugins["learninghistory"]->name)
                         && empty(get_config('mmquicklink', 'config_hide_competencereport'))
-                        && has_capability('local/learninghistory:viewreport', context_system::instance())) {
+                        && (has_capability('local/learninghistory:viewreport', context_system::instance()) ||
+                            has_capability('local/learninghistory:viewsubordinatereport', context_system::instance()))) {
                             $reports->add(get_string('competencesreport', 'local_learninghistory'),
                                 '/local/learninghistory/competences.php');
                     }
