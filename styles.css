@@ -52,16 +52,19 @@
 .mmquicklink-otherrole-div form {
     margin-bottom: 0;
 }
-.list-group-item {
+#page-admin-setting-blocksettingmmquicklink .list-group-item {
     border: none !important;
 }
-.list-group-item.btn {
+#page-admin-setting-blocksettingmmquicklink .list-group-item.btn {
     box-shadow: none;
     border:none;
 }
-
-.btn-default {
+#page-admin-setting-blocksettingmmquicklink .btn-default {
     box-shadow: none !important;
+}
+
+.block_mmquicklink ul {
+    padding-left: 0;
 }
 
 

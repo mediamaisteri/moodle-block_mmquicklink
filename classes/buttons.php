@@ -473,7 +473,7 @@ class buttons {
         if (isset($this->cfg->drupal_url) && has_capability('moodle/user:create', context_system::instance())) {
             $hrdurl = "{$this->cfg->drupal_url}/training_by_moodle_id/{$this->page->course->id}";
             return $this->default_element($hrdurl,
-            get_string('trainingmanagement', 'block_mmquicklink', 'hrd'));
+            get_string('trainingmanagement', 'block_mmquicklink'), 'hrd');
         }
     }
 
@@ -716,11 +716,7 @@ class buttons {
         // Theme settings -link.
         // If local_extrasettings is installed & user has proper capability, show link to it.
         if (empty(get_config('mmquicklink', 'config_hide_themesettings'))) {
-            if (is_siteadmin()) {
-                $adminurl = ($this->cfg->wwwroot . '/admin/settings.php?section=themesetting' . $this->page->theme->name);
-                return $this->default_element($adminurl, get_string('themesettings', 'core_admin'),
-                'themesettings');
-            } else if (!empty(core_plugin_manager::instance()->get_plugins_of_type('local')["extrasettings"]->name)) {
+            if (!empty(core_plugin_manager::instance()->get_plugins_of_type('local')["extrasettings"]->name)) {
                 if (has_capability('local/extrasettings:accesssettings', context_system::instance())) {
                     $extrasettingsurl = $this->cfg->wwwroot . "/local/extrasettings/";
                     return $this->default_element($extrasettingsurl, get_string('themesettings', 'core_admin'),

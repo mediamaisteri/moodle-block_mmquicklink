@@ -182,6 +182,11 @@ class mmquicklink {
             $syscontext = \context_system::instance();
             foreach ($buttons as $button) {
 
+                // Skip if button should be displayed only for admins and the user is not an admin.
+                if ($button->adminonly && !is_siteadmin($USER->id)) {
+                    continue;
+                }
+
                 // Skip if the user doesn't have the required capability.
                 if (!empty($button->requiredcapability)) {
                     if (!has_capability($button->requiredcapability, $syscontext)) {
