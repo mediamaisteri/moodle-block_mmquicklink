@@ -59,6 +59,7 @@ if (has_capability('moodle/course:update', context_course::instance($courseid)))
     $data->courseid = $courseid;
     $data->categoryid = $categoryid;
     $data->timemodified = $timestamp;
+    $data->timearchived = $timestamp;
     $data->archivingmethod = 'manual';
 
     // Insert the record.
