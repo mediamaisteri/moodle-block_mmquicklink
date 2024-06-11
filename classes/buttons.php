@@ -73,7 +73,7 @@ class buttons {
         $this->page = $PAGE;
 
         // Editingmode variables.
-        $this->editbuttonid = "turneditingon";
+        $this->editbuttonid = "turneditingon list-turneditingon";
         if ($this->page->user_is_editing()) {
             $this->editingmode = "off";
             $this->editingmodestring = get_string("turneditingoff");
@@ -91,16 +91,17 @@ class buttons {
      * @param string $buttonid Button's identifier (for sorting).
      * @return html list-item element rendered via templates.
      */
-    public function default_element($url, $str, $buttonid = "null") {
+    public function default_element($url, $str, $buttonid, $expandbtn = false) {
         global $OUTPUT;
         $html = $this->output->render_from_template("block_mmquicklink/li",
             array(
                 "url" => $url,
                 "str" => $str,
-                "buttonid" => $buttonid
+                "buttonid" => $buttonid,
+                "expandbtn" => $expandbtn
             )
         );
-        return $html;
+        return (object) ['html' => $html, 'buttonid' => $buttonid, 'str' => $str, 'expandbtn' => $expandbtn];
     }
 
     public function coursecompletionsettings() {
@@ -126,14 +127,13 @@ class buttons {
             if ($this->page->theme->name == "maisteriboost") {
                 if (file_exists($this->cfg->dirroot . "/theme/maisteriboost/classes/coursebgimagechanger.php")) {
                     if (has_capability('moodle/course:update', context_course::instance($this->course->id))) {
-                        $html = $this->default_element($this->cfg->wwwroot .
+                        return $this->default_element($this->cfg->wwwroot .
                         "/theme/maisteriboost/classes/coursebgimagechanger.php?id=" . $this->course->id,
                         get_string('coursebgimagechanger', 'block_mmquicklink'), 'coursebgimagechanger');
                     }
                 }
             }
         }
-        return $html;
     }
 
     /**
@@ -161,7 +161,7 @@ class buttons {
                 "sesskey" => $this->user->sesskey,
             ));
             return $this->default_element($url->out(),
-            $this->editingmodestring, $this->editbuttonid . " list-turneditingon");
+            $this->editingmodestring, $this->editbuttonid);
         }
 
         // Frontpage.
@@ -173,7 +173,7 @@ class buttons {
                 "id" => $this->course->id,
             ));
             return $this->default_element($url->out(),
-            $this->editingmodestring, $this->editbuttonid . " list-turneditingon");
+            $this->editingmodestring, $this->editbuttonid);
         }
 
         // Grader requires a specialized editmode link.
@@ -190,18 +190,18 @@ class buttons {
                 "sesskey" => $this->user->sesskey,
             ));
             return $this->default_element($adminurl->out(),
-            $this->editingmodestring, $this->editbuttonid . " list-turneditingon");
+            $this->editingmodestring, $this->editbuttonid);
 
         }
 
         // Admin page editing mode.
-        if ($this->page->pagelayout == "admin" OR $indexsys[count($indexsys) - 1] == "indexsys.php") {
+        if ($this->page->pagelayout == "admin" || $indexsys[count($indexsys) - 1] == "indexsys.php") {
             $adminurl = new moodle_url($this->page->url, array(
                 "adminedit" => $this->editingmode,
                 "sesskey" => $this->user->sesskey,
             ));
             return $this->default_element($adminurl->out(),
-            $this->editingmodestring, $this->editbuttonid . " list-turneditingon");
+            $this->editingmodestring, $this->editbuttonid);
         }
 
         if ($this->page->user_allowed_editing()) {
@@ -354,8 +354,8 @@ class buttons {
         // Restore course button.
         $coursearchiveconf = get_config('local_course_archive');
         $isarchived = false;
-        $archcat = $coursearchiveconf->archivecategory;
-        $delcat = $coursearchiveconf->deletecategory;
+        $archcat = isset($coursearchiveconf->archivecategory) ? $coursearchiveconf->archivecategory : false;
+        $delcat = isset($coursearchiveconf->deletecategory) ? $coursearchiveconf->deletecategory : false;
 
         if ($this->course->category == $archcat || $this->course->category == $delcat) {
             $isarchived = true;
@@ -376,7 +376,14 @@ class buttons {
      *
      * @return html rendered element.
      */
-    public function enrolmentkey() {
+    public function enrolmentkey($selfenrolments) {
+
+        $extratxt = '';
+        if (count($selfenrolments) > 1) {
+            $url = new \moodle_url($this->cfg->wwwroot . "/enrol/instances.php", array('id' => $this->course->id));
+            $extratxt = get_string('toomanyselfenrolments', 'block_mmquicklink', $url->out());
+        }
+
         $conf = get_config('enrol_self');
         $defaultenrol = $conf->defaultenrol;
         // Show enrolment key add button.
@@ -398,12 +405,14 @@ class buttons {
                 $keyclass = "mmquicklink-enrolmentkey-unset";
             }
             $setstring .= " " . strtolower(get_string('password', 'enrol_self'));
-            return $this->output->render_from_template("block_mmquicklink/li-enrolmentkey", array(
+            $html = $this->output->render_from_template("block_mmquicklink/li-enrolmentkey", array(
                 "keyclass" => $keyclass,
                 "setstring" => $setstring,
                 "courseid" => $this->course->id,
-                "realoldkey" => $realoldkey
+                "realoldkey" => $realoldkey,
+                "extratxt" => $extratxt,
             ));
+            return (object) ['html' => $html, 'buttonid' => 'enrolmentkey', 'str' => $setstring];
         }
     }
 
@@ -418,18 +427,23 @@ class buttons {
         has_capability('moodle/role:switchroles', context_course::instance($this->course->id))) {
             if (!is_role_switched($this->course->id)) {
                 $otherrole = get_config('mmquicklink', 'config_otherrole_select');
+                if (empty($otherrole)) {
+                    return;
+                }
                 $otherrolename = $this->db->get_record('role', array('id' => $otherrole));
 
                 // Prioritize custom full name, if set in role configuration.
                 if (strlen($otherrolename->name) > 0) {
-                    $otherroleshowname = $otherrolename->name;
+                    $otherroleshowname = format_string($otherrolename->name);
                 } else {
                     // Use Moodle's core function to retrieve localized role name.
-                    $otherroleshowname = role_get_name($otherrolename, context_system::instance(), ROLENAME_ALIAS);
+                    if (is_object($otherrolename)) {
+                        $otherroleshowname = role_get_name($otherrolename, context_system::instance(), ROLENAME_ALIAS);
+                    }
                 }
 
                 // Render from template.
-                return $this->output->render_from_template("block_mmquicklink/li-otherrole", array(
+                $html = $this->output->render_from_template("block_mmquicklink/li-otherrole", array(
                     "courseid" => $this->course->id,
                     "otherrole" => $otherrole,
                     "sesskey" => $this->user->sesskey,
@@ -437,6 +451,7 @@ class buttons {
                     "otherroleshortname" => $otherrolename->shortname,
                     "otherroleshowname" => $otherroleshowname,
                 ));
+                return (object) ['html' => $html, 'buttonid' => 'otherrole'];
             } else {
                 $url = new moodle_url($this->cfg->wwwroot . "/course/switchrole.php", array(
                     "id" => $this->course->id,
@@ -458,7 +473,7 @@ class buttons {
         if (isset($this->cfg->drupal_url) && has_capability('moodle/user:create', context_system::instance())) {
             $hrdurl = "{$this->cfg->drupal_url}/training_by_moodle_id/{$this->page->course->id}";
             return $this->default_element($hrdurl,
-            get_string('trainingmanagement', 'block_mmquicklink', 'hrd'));
+            get_string('trainingmanagement', 'block_mmquicklink'), 'hrd');
         }
     }
 
@@ -519,7 +534,7 @@ class buttons {
         // Course participants.
         if (empty(get_config('mmquicklink', 'config_hide_participants'))) {
             if (has_capability('moodle/course:viewparticipants', context_course::instance($this->course->id))) {
-                if (get_config('mmquicklink', 'config_participants_select') == 0 OR $this->cfg->version >= 2018051700.00) {
+                if (get_config('mmquicklink', 'config_participants_select') == 0 || $this->cfg->version >= 2018051700.00) {
                     $participanturl = new moodle_url($this->cfg->wwwroot . "/user/index.php", array(
                         "id" => $this->page->course->id,
                     ));
@@ -542,14 +557,14 @@ class buttons {
     public function activityprogress() {
 
         if (!empty(get_config('mmquicklink', 'config_hide_activityprogress'))) {
-            return '';
+            return false;
         }
 
         // Get criteria for course.
         $completion = new completion_info($this->course);
 
         if (!$completion->has_criteria()) {
-            return '';
+            return false;
         }
 
         if (has_capability('moodle/course:update', context_course::instance($this->course->id))) {
@@ -626,8 +641,12 @@ class buttons {
             if ($ctcheck) {
                 if (!empty($coursetemplates)) {
                     // Render dropdown menu from templates if course_templates is installed.
-                    return $this->output->render_from_template('block_mmquicklink/addnewcourse',
-                        array("categoryid" => optional_param('categoryid', '', PARAM_INT)));
+                    $html = $this->output->render_from_template('block_mmquicklink/addnewcourse',
+                            array("categoryid" => optional_param('categoryid', '', PARAM_INT)));
+                    return (object) ['html' => $html,
+                                    'buttonid' => 'addnewcourse',
+                                    'str' => get_string('addnewcourse')
+                                    ];
                 } else {
                     $url = new moodle_url($this->cfg->wwwroot . "/course/edit.php", array(
                         "category" => optional_param('categoryid', '', PARAM_INT),
@@ -647,8 +666,12 @@ class buttons {
                         if (has_capability('moodle/course:create', context_coursecat::instance($defaultcategory))) {
                             if (!empty($coursetemplates)) {
                                 // Render dropdown menu from templates if course_templates is installed.
-                                return $this->output->render_from_template('block_mmquicklink/addnewcourse',
-                                    array("categoryid" => $defaultcategory));
+                                $html = $this->output->render_from_template('block_mmquicklink/addnewcourse',
+                                        array("categoryid" => $defaultcategory));
+                                return (object) ['html' => $html,
+                                                'buttonid' => 'addnewcourse',
+                                                'str' => get_string('addnewcourse')
+                                                ];
                             } else {
                                 return $this->default_element($this->cfg->wwwroot .
                                 "/course/edit.php?category=" . $defaultcategory, get_string('addnewcourse'), 'addnewcourse');
@@ -665,8 +688,12 @@ class buttons {
                         if (has_capability('moodle/course:create', context_coursecat::instance($category->id))) {
                             if (!empty($coursetemplates)) {
                                 // Render dropdown menu from templates if course_templates is installed.
-                                return $this->output->render_from_template('block_mmquicklink/addnewcourse',
-                                    array("categoryid" => $category->id));
+                                $html = $this->output->render_from_template('block_mmquicklink/addnewcourse',
+                                        array("categoryid" => $category->id));
+                                return (object) ['html' => $html,
+                                                'buttonid' => 'addnewcourse',
+                                                'str' => get_string('addnewcourse')
+                                                ];
                                 break;
                             } else {
                                 return $this->default_element($this->cfg->wwwroot .
@@ -689,11 +716,7 @@ class buttons {
         // Theme settings -link.
         // If local_extrasettings is installed & user has proper capability, show link to it.
         if (empty(get_config('mmquicklink', 'config_hide_themesettings'))) {
-            if (is_siteadmin()) {
-                $adminurl = ($this->cfg->wwwroot . '/admin/settings.php?section=themesetting' . $this->page->theme->name);
-                return $this->default_element($adminurl, get_string('themesettings', 'core_admin'),
-                'themesettings');
-            } else if (!empty(core_plugin_manager::instance()->get_plugins_of_type('local')["extrasettings"]->name)) {
+            if (!empty(core_plugin_manager::instance()->get_plugins_of_type('local')["extrasettings"]->name)) {
                 if (has_capability('local/extrasettings:accesssettings', context_system::instance())) {
                     $extrasettingsurl = $this->cfg->wwwroot . "/local/extrasettings/";
                     return $this->default_element($extrasettingsurl, get_string('themesettings', 'core_admin'),
@@ -734,14 +757,15 @@ class buttons {
                 if ($reports) {
                     if (!empty($localplugins["learninghistory"]->name)
                         && empty(get_config('mmquicklink', 'config_hide_competencereport'))
-                        && has_capability('local/learninghistory:viewreport', context_system::instance())) {
+                        && (has_capability('local/learninghistory:viewreport', context_system::instance()) ||
+                            has_capability('local/learninghistory:viewsubordinatereport', context_system::instance()))) {
                             $reports->add(get_string('competencesreport', 'local_learninghistory'),
                                 '/local/learninghistory/competences.php');
                     }
-                    return "<li class='list list-reports mmquicklink-reports-button'>
+                    return (object) ['buttonid' => 'reports', 'html' => "<li class='list list-reports mmquicklink-reports-button'>
                     <a href='#' class='btn btn-secondary btn-reports'>" .
                     get_string('pluginname', 'local_reports') . "</a></li><li class='list list-reports m-0'>" .
-                    $this->page->get_renderer('block_mmquicklink')->mmquicklink_tree($reports) . "</li>";
+                    $this->page->get_renderer('block_mmquicklink')->mmquicklink_tree($reports) . "</li>"];
                 }
             }
         }
@@ -820,4 +844,21 @@ class buttons {
             }
         }
     }
+
+    public function participantsparent() {
+        return $this->default_element(null, get_string('setting_participantsparent', 'block_mmquicklink'),
+            'participantsparent', true);
+    }
+    public function courseparent() {
+        return $this->default_element(null, get_string('setting_courseparent', 'block_mmquicklink'), 'courseparent', true);
+    }
+
+    public function pageparent() {
+        return $this->default_element(null, get_string('setting_pageparent', 'block_mmquicklink'), 'pageparent', true);
+    }
+
+    public function completionparent() {
+        return $this->default_element(null, get_string('setting_completionparent', 'block_mmquicklink'), 'completionparent', true);
+    }
+
 }

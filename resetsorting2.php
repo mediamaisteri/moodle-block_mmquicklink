@@ -13,45 +13,30 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
 /**
- * Delete a course.
+ * Reset sorting.
  *
  * @package    block_mmquicklink
  * @copyright  2020 Mediamaisteri Oy
  * @author     Mikko Haikonen <mikko.haikonen@mediamaisteri.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ *
  */
+require_once(dirname(__FILE__) . '/../../config.php');
+require_once($CFG->dirroot . '/my/lib.php');
+require_once($CFG->dirroot . '/user/profile/lib.php');
+require_once($CFG->dirroot . '/user/lib.php');
+require_once($CFG->libdir.'/filelib.php');
 
-// Require needed classes and configuration.
-require_once("../../config.php");
-require_once($CFG->dirroot . '/course/lib.php');
-
-// Course ID as parameter.
-$id = required_param('id', PARAM_INT);
-
-// Course object from database.
-$course = $DB->get_record('course', array('id' => $id), '*', MUST_EXIST);
-
-// Course context.
-$coursecontext = context_course::instance($course->id);
-
-// Require login.
 require_login();
 
-// Can not delete frontpage or don't have permission to delete the course.
-if ($SITE->id == $course->id || !can_delete_course($id)) {
-    throw new \moodle_exception('cannotdeletecourse');
+if (is_siteadmin()) {
+
+    $DB->execute("UPDATE {block_mmquicklink_sorting} SET parent = 'main-list'");
+    $url = $CFG->wwwroot . "/admin/settings.php?section=blocksettingmmquicklink";
+    redirect($url, 'Reset OK', null,
+    \core\output\notification::NOTIFY_SUCCESS);
+
+} else {
+    throw new moodle_exception("noaccess");
 }
-
-// Raise PHP time limit to prevent problems.
-core_php_time_limit::raise();
-
-// Do the actual deletion.
-delete_course($course);
-
-// Course sortorder table has to be reordered to prevent errors.
-fix_course_sortorder();
-
-// Exit.
-exit;

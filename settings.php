@@ -25,7 +25,8 @@
 
 defined('MOODLE_INTERNAL') || die;
 if ($ADMIN->fulltree) {
-    $PAGE->requires->js_call_amd('block_mmquicklink/jquery-sortable', 'init', []);
+    $PAGE->requires->js_call_amd('block_mmquicklink/sorting', 'init', []);
+
     global $DB;
 
     // Load course categories from DB.
@@ -177,10 +178,12 @@ if ($ADMIN->fulltree) {
     get_string('setting_unique_enrolmentkey', 'block_mmquicklink'),
     get_string('setting_unique_enrolmentkey_desc', 'block_mmquicklink'), 0));
 
+    $url = new moodle_url('/blocks/mmquicklink/custombuttons.php');
     $settings->add(new admin_setting_description(
         'mmquicklink/config_custombuttons',
         get_string('custombuttons', 'block_mmquicklink'),
-        get_string('custombuttons_desc', 'block_mmquicklink')
+        get_string('custombuttons_desc', 'block_mmquicklink', $url->out())
+
     ));
 
     // Sorting.

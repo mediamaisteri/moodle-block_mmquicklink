@@ -2,5 +2,10 @@
     {{#str}}areyousurehide1, block_mmquicklink {{/str}}: {{coursename}}?
 {{/hide}}
 {{^hide}}
+    {{^completionok}}
+    <div class="alert alert-warning mt-2" role="alert">
+        {{#str}}completionnotok, block_mmquicklink, {{url}} {{/str}}
+      </div>
+    {{/completionok}}
     {{#str}}areyousurehide0, block_mmquicklink {{/str}}: {{coursename}}?
 {{/hide}}

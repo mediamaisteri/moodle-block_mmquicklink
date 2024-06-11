@@ -15,35 +15,44 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Move selected course to 'archive' category.
+ * Check completion settings.
  *
  * @package   block_mmquicklink
- * @copyright 2019 Mediamaisteri Oy
- * @author    Mikko Haikonen <mikko.haikonen@mediamaisteri.com>
+ * @copyright 2023 Mediamaisteri Oy
+ * @author    Rosa Siuruainen <rosa.siuruainen@mediamaisteri.com>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 require_once(dirname(__FILE__) . '/../../config.php');
-require_once($CFG->dirroot . '/course/lib.php');
-require_once($CFG->dirroot . '/my/lib.php');
-require_once($CFG->dirroot . '/user/profile/lib.php');
-require_once($CFG->dirroot . '/user/lib.php');
-require_once($CFG->libdir.'/filelib.php');
 
 require_login();
 
 // Course id & key from url variable.
 $courseid = required_param('courseid', PARAM_INT);
-$action = required_param("action", PARAM_RAW);
+$action = required_param('action', PARAM_RAW);
 
 // Check if user has the capability to update the course.
 if (has_capability('moodle/course:update', context_course::instance($courseid))) {
+    global $DB;
+    if ($action == "showcourse") {
+        $course  = get_course($courseid);
+        // Check if course completion is enabled.
+        if (!$course->enablecompletion) {
+            echo true;
+        } else {
+            // Check if course has completion criteria set correctly.
+            $sql = "SELECT cm.id, ccc.criteriatype
+            FROM {course_modules} cm
+            JOIN {course_completion_criteria} ccc ON cm.id = ccc.moduleinstance
+            WHERE cm.completion > 0 AND cm.course = ?";
 
-    $event = \block_mmquicklink\event\course_visibilitychanged::create(array(
-        'objectid' => $courseid,
-        'userid' => $USER->id,
-        'context' => context_course::instance($courseid),
-    ));
-    $event->trigger();
-    echo 1;
+            $completionok = $DB->get_records_sql($sql, [$courseid]);
+
+            $result = ($completionok) ? true : false;
+
+            echo $result;
+        }
+    } else {
+        echo true;
+    }
 }

@@ -1,5 +1,5 @@
 <li class='list list-{{ buttonid }}'>
-    <a class='btn btn-secondary btn-{{ buttonid }}' href='{{{url}}}'>
+    <a class='btn btn-secondary btn-{{ buttonid }}' {{#expandbtn}}data-toggle="collapse" href="#collapse-{{buttonid}}" aria-expanded="false" aria-controls="collapse-{{buttonid}}"{{/expandbtn}} {{#url}} href='{{{url}}}' {{/url}}>
         {{ str }}
     </a>
 </li>

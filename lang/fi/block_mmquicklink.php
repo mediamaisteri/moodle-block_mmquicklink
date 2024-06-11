@@ -22,7 +22,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'MM Quicklink / hallintatyökalut';
+$string['pluginname'] = 'Quicklinks / Hallintatyökalut';
 $string['title'] = "Hallintatyökalut";
 
 $string['visibility_settings'] = "Näkyvyysasetukset";
@@ -118,7 +118,8 @@ $string['multiplepasswords'] = "Kurssilla on useampi itserekisteröitymistapa k�
 $string['privacy:null_reason'] = "Tämä lisäosa ei käsittele henkilötietoja.";
 
 $string['buttonsorting'] = "Raahaa & pudota nappeja siirrelläksesi niiden paikkoja.";
-$string['clicktoreset'] = "Klikkaa nollataksesi järjestyksen";
+$string['clicktoresetgroup'] = "Nollaa järjestys (ryhmittely)";
+$string['clicktoresetlist'] = "Nollaa järjestys (1-tasoinen lista)";
 $string['saved'] = "Muutokset tallennettiin onnistuneesti!";
 $string['saving'] = "Muutoksia tallennetaan...";
 
@@ -127,6 +128,7 @@ $string['fromtemplate'] = "Luo mallipohjasta";
 $string['areyousure'] = "Oletko varma, että haluat arkistoida seuraavan kurssin";
 $string['areyousurehide1'] = "Oletko varma, että haluat piilottaa seuraavan kurssin";
 $string['areyousurehide0'] = "Oletko varma, että haluat näyttää seuraavan kurssin";
+$string['completionnotok'] = 'Kurssin aktiviteetilla on edistymisen seuranta käytössä, mutta kurssille ei ole määritelty suoritukseen johtavia ehtoja. Kurssin suoritusasetuksia pääset muokkaamaan <a href="{$a}">täällä</a>.';
 $string['hide1'] = "Piilota kurssi";
 $string['hide0'] = "Näytä kurssi";
 
@@ -151,7 +153,8 @@ $string['setting_backup_desc'] = "Valitse piilottaaksesi 'Varmuuskopiointi' -pai
 $string['requiredcapability'] = "Vaadittu kyky";
 $string['requiredroleid'] = "Vaadittu rooli";
 $string['custombuttons'] = "Omat painikkeet";
-$string['custombuttons_desc'] = "Klikkaa <a href='../../blocks/mmquicklink/custombuttons.php'>tästä</a> hallinnoidaksesi omia painikkeita.";
+
+$string['custombuttons_desc'] = 'Klikkaa <a href={$a}>tästä</a> hallinnoidaksesi omia painikkeita.';
 $string['ok'] = "Toiminto suoritettu onnistuneesti!";
 $string['description'] = "Linkkiteksti";
 $string['variables'] = "Voit käyttää seuraavia muuttujia linkin tekstissä ja osoitteessa:<br>
@@ -164,11 +167,16 @@ $string['enrolmentkey_reserved'] = "Kurssiavain käytössä toisella kurssilla!"
 $string['setting_restore'] = "Palauta kurssi";
 $string['setting_restore_desc'] = 'Valitse piilottaaksesi "Palauta kurssi arkistosta"-painikkeen. Painikkeen toiminta vaatii lisäksi local_course_archive -lisäosan.';
 $string['restorecourse'] = "Palauta kurssi arkistosta";
-$string['restorecourse_confirm'] = "Oletko varma että haluat palauttaa seuraavan kurssin";
+
+$string['restorecourse_confirm'] = "Oletko varma, että haluat palauttaa kurssin";
 $string['notarchived'] = 'Kurssi ei ole arkisto- tai poistokategoriassa';
 $string['norestorecategory'] = "Kurssi tulisi palauttaa palautuskategoriaan, sillä sen alkuperäinen kategoria ei ole tiedossa. Palautuskategoriaa ei ole asetettu kurssien arkistoinnin asetuksissa.";
-$string['restored_restorecat'] = "Kurssi palautetaan palautuskategoriaan, sillä sen alkuperäinen kategoria ei ole tiedossa. Palautuskategorian ID on";
-$string['restored_originalcat'] = "Kurssi palautetaan alkuperäiseen kategoriaansa, jonka ID on";
+$string['restored_restorecat'] = "Kurssi palautetaan palautuskategoriaan, sillä sen alkuperäinen kategoria ei ole tiedossa. Palautuskategoria on:";
+$string['restored_originalcat'] = "Kurssi palautetaan alkuperäiseen kategoriaan: ";
 $string['restored'] = "Kurssi on palautettu onnistuneesti.";
 
 $string['mmquicklink:custombuttons'] = "Oikeus lisätä kustomoituja painikkeita";
+$string['setting_courseparent'] = "Kurssin asetukset";
+$string['setting_pageparent'] = "Sivun hallinta";
+$string['setting_participantsparent'] = "Osallistujien hallinta";
+$string['setting_completionparent'] = "Edistyminen & suoritus";

@@ -52,3 +52,19 @@
 .mmquicklink-otherrole-div form {
     margin-bottom: 0;
 }
+#page-admin-setting-blocksettingmmquicklink .list-group-item {
+    border: none !important;
+}
+#page-admin-setting-blocksettingmmquicklink .list-group-item.btn {
+    box-shadow: none;
+    border:none;
+}
+#page-admin-setting-blocksettingmmquicklink .btn-default {
+    box-shadow: none !important;
+}
+
+.block_mmquicklink ul {
+    padding-left: 0;
+}
+
+
