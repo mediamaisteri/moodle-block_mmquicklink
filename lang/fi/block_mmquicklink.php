@@ -153,6 +153,7 @@ $string['setting_backup_desc'] = "Valitse piilottaaksesi 'Varmuuskopiointi' -pai
 $string['requiredcapability'] = "Vaadittu kyky";
 $string['requiredroleid'] = "Vaadittu rooli";
 $string['custombuttons'] = "Omat painikkeet";
+
 $string['custombuttons_desc'] = 'Klikkaa <a href={$a}>tästä</a> hallinnoidaksesi omia painikkeita.';
 $string['ok'] = "Toiminto suoritettu onnistuneesti!";
 $string['description'] = "Linkkiteksti";
@@ -166,6 +167,7 @@ $string['enrolmentkey_reserved'] = "Kurssiavain käytössä toisella kurssilla!"
 $string['setting_restore'] = "Palauta kurssi";
 $string['setting_restore_desc'] = 'Valitse piilottaaksesi "Palauta kurssi arkistosta"-painikkeen. Painikkeen toiminta vaatii lisäksi local_course_archive -lisäosan.';
 $string['restorecourse'] = "Palauta kurssi arkistosta";
+
 $string['restorecourse_confirm'] = "Oletko varma, että haluat palauttaa kurssin";
 $string['notarchived'] = 'Kurssi ei ole arkisto- tai poistokategoriassa';
 $string['norestorecategory'] = "Kurssi tulisi palauttaa palautuskategoriaan, sillä sen alkuperäinen kategoria ei ole tiedossa. Palautuskategoriaa ei ole asetettu kurssien arkistoinnin asetuksissa.";

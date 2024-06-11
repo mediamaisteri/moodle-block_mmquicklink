@@ -183,6 +183,7 @@ if ($ADMIN->fulltree) {
         'mmquicklink/config_custombuttons',
         get_string('custombuttons', 'block_mmquicklink'),
         get_string('custombuttons_desc', 'block_mmquicklink', $url->out())
+
     ));
 
     // Sorting.

@@ -168,6 +168,7 @@ $string['setting_restore_desc'] = 'Check to hide "Restore course from archive" b
 $string['restorecourse'] = "Restore course from archive";
 $string['restorecourse_confirm'] = "Are you sure you want to restore the following course";
 $string['notarchived'] = 'Course is not in archive or delete category';
+
 $string['restored_restorecat'] = "Course will be restored to the restore category since its original category is unknown. Restore category is:";
 $string['norestorecategory'] = "Course should be restored to the restore category since its original category is unknown. Restore category is not set in the course archive settings";
 $string['restored_originalcat'] = "Course will be restored to its original category of: ";
@@ -178,3 +179,4 @@ $string['setting_courseparent'] = "Course management";
 $string['setting_pageparent'] = "Page management";
 $string['setting_participantsparent'] = "Participant management";
 $string['setting_completionparent'] = "Progress & Completion";
+

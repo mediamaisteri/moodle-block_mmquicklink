@@ -470,6 +470,7 @@ class block_mmquicklink extends block_base {
                     $button->href,
                     $button->description,
                     "custom_$button->id",
+
                 );
             }
 
